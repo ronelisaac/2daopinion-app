@@ -50,6 +50,8 @@ Compatibilidad: `firebase_core 4.13.0` y `firebase_core_web 3.10.0` quedan fijad
 
 ## Diseño y ajustes
 
+Inicio actualizado el 08/09/2026: segunda fila con resumen del borrador guardado, fecha, campos principales pendientes y acceso para retomarlo. Se actualiza al entrar, regresar del formulario o pulsar Actualizar; no muestra el texto clínico ni simula consultas enviadas. La vista previa incluye un ejemplo claramente identificado y no consulta borradores de cuentas. Ver [E2-02 Home y resumen](docs/E2-02-HOME-Y-RESUMEN.md).
+
 Footer actualizado el 08/09/2026: Acerca de, Términos y condiciones y Privacidad se ubican en el pie inferior de inicio/vista previa, registro conectado y páginas informativas. Ocupa todo el ancho, sin tarjeta flotante entre los servicios; Scaffold reserva su espacio para no cubrir el contenido desplazable. Los enlaces se distribuyen en varias líneas en pantallas pequeñas. Pruebas de posición inferior, navegación y formularios con teclado incluidas.
 
 Referencia: [Figma 2daOpinion](https://www.figma.com/design/g5clOtGxXBf5VETTbi4WAU/2daOpinion?node-id=0-1).
@@ -68,7 +70,7 @@ La marca gráfica «2nd opinion» se conserva como en Figma; su unificación con
 2. Acceso por correo implementado para pruebas; proveedores sociales no habilitados. Ver [entrega de identidad](docs/E1-03-IDENTIDAD-Y-PERFIL.md).
 3. Cerrar consentimientos y textos legales antes de admitir pacientes reales; la aceptación actual es exclusivamente de desarrollo.
 4. Firestore dev en Santiago con permisos privados de perfil; definir Storage y permisos clínicos por caso antes de almacenar documentación.
-5. Borrador persistente y aceptación de almacenamiento de prueba implementados. Próximo bloque: resumen en home, estados y consentimiento clínico definitivo; posteriormente documentación privada por caso.
+5. Borrador persistente, aceptación de almacenamiento de prueba y resumen en home implementados. Próximo bloque: estados/envío de casos y consentimiento clínico definitivo; posteriormente documentación privada por caso.
 6. Integración del panel y permisos. Aún no hay backend de panel ni repositorio compartido.
 7. Registrar Android/iOS después de acordar identificadores definitivos.
 

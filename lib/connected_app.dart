@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'controllers/account_controller.dart';
+import 'controllers/draft_overview_controller.dart';
+import 'domain/draft_overview.dart';
+import 'widgets/draft_overview_card.dart';
+import 'views/patient_home_screen.dart';
 import 'controllers/consultation_controller.dart';
 import 'controllers/consultation_draft_controller.dart';
 import 'domain/repositories/consultation_draft_repository.dart';
@@ -94,8 +98,8 @@ class _ConnectedAppState extends State<ConnectedApp> {
     ),
   );
 
-  Widget _home(BuildContext context) => HomeScreen(
-    showFooter: true,
+  Widget _home(BuildContext context) => PatientHomeScreen(
+    controller: DraftOverviewController(widget.draftRepository),
     onSignOut: () async {
       try {
         await _session.signOut();
@@ -142,9 +146,17 @@ class _ConnectedAppState extends State<ConnectedApp> {
               ),
             ),
           ),
-          '/preview': (_) => const HomeScreen(
+          '/preview': (context) => HomeScreen(
             requestRoute: '/preview/request',
             showFooter: true,
+            secondaryContent: DraftOverviewCard(
+              preview: true,
+              overview: DraftOverview(
+                updatedAt: DateTime.utc(2026, 9, 8),
+                hasRequiredDetails: false,
+              ),
+              onOpen: () => Navigator.pushNamed(context, '/preview/request'),
+            ),
           ),
           '/preview/request': (_) => _request(),
           '/loading': (_) => const LoadingScreen(preview: true),

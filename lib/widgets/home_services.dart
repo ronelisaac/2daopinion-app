@@ -11,9 +11,11 @@ class HomeServices extends StatelessWidget {
     super.key,
     this.requestRoute = '/request',
     this.draftMode = false,
+    this.onRequest,
   });
   final String requestRoute;
   final bool draftMode;
+  final VoidCallback? onRequest;
 
   @override
   Widget build(BuildContext context) => ResponsiveLayout(
@@ -42,7 +44,8 @@ class HomeServices extends StatelessWidget {
                 height: 49,
                 excludeFromSemantics: true,
               ),
-              onTap: () => Navigator.pushNamed(context, requestRoute),
+              onTap:
+                  onRequest ?? () => Navigator.pushNamed(context, requestRoute),
             ),
           ),
           SizedBox(

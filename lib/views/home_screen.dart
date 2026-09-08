@@ -16,10 +16,14 @@ class HomeScreen extends StatelessWidget {
     this.onSignOut,
     this.requestRoute = '/request',
     this.showFooter = false,
+    this.secondaryContent,
+    this.onRequest,
   });
   final VoidCallback? onSignOut;
   final String requestRoute;
   final bool showFooter;
+  final Widget? secondaryContent;
+  final VoidCallback? onRequest;
 
   @override
   Widget build(BuildContext context) => ResponsiveLayout(
@@ -94,7 +98,12 @@ class HomeScreen extends StatelessWidget {
                         HomeServices(
                           requestRoute: requestRoute,
                           draftMode: onSignOut != null,
+                          onRequest: onRequest,
                         ),
+                        if (secondaryContent != null) ...[
+                          const SizedBox(height: 32),
+                          secondaryContent!,
+                        ],
                       ],
                     ),
                   ),

@@ -345,10 +345,10 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(drafts.loads, 0);
+    expect(drafts.loads, 1);
     Navigator.of(tester.element(find.byType(HomeScreen))).pushNamed('/request');
     await tester.pumpAndSettle();
-    expect(drafts.loads, 1);
+    expect(drafts.loads, 2);
     expect(find.byType(DraftRequestScreen), findsOneWidget);
     await tester.enterText(
       find.byType(TextFormField).first,
@@ -359,9 +359,47 @@ void main() {
     expect(find.byType(WelcomeScreen), findsOneWidget);
     expect(find.text('Texto ficticio no guardado'), findsNothing);
     expect(find.byType(DraftRequestScreen), findsNothing);
+    expect(find.byKey(const ValueKey('draftOverview')), findsNothing);
     expect(drafts.saves, 0);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets(
+    'preview overview is explicitly fictional and never loads drafts',
+    (tester) async {
+      final repository = FakeIdentity();
+      final drafts = FakeDraftRepository();
+      addTearDown(repository.events.close);
+      await tester.pumpWidget(
+        ConnectedApp(
+          initialize: () async {},
+          identityRepository: repository,
+          accountRepository: repository,
+          draftRepository: drafts,
+        ),
+      );
+      await tester.pumpAndSettle();
+      Navigator.of(
+        tester.element(find.byType(WelcomeScreen)),
+      ).pushNamed('/preview');
+      await tester.pumpAndSettle();
+      expect(find.text('Ejemplo de solicitud en preparación'), findsOneWidget);
+      expect(
+        find.textContaining('No corresponde a una solicitud real'),
+        findsOneWidget,
+      );
+      final example = find.text('VER FORMULARIO DE EJEMPLO');
+      await tester.ensureVisible(example);
+      await tester.pumpAndSettle();
+      await tester.tap(example);
+      await tester.pumpAndSettle();
+      expect(find.byType(TextFormField), findsWidgets);
+      expect(find.byType(DraftRequestScreen), findsNothing);
+      expect(drafts.loads, 0);
+      expect(drafts.saves, 0);
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   testWidgets('unverified identity cannot open private home', (tester) async {
     final repository = FakeIdentity()

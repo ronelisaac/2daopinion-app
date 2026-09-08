@@ -316,6 +316,57 @@ class AppLocalizationsEs extends AppLocalizations {
   String get draftTitle => 'Borrador de segunda opinión';
 
   @override
+  String get overviewTitle => 'Tu solicitud en preparación';
+
+  @override
+  String get overviewPreviewTitle => 'Ejemplo de solicitud en preparación';
+
+  @override
+  String get overviewPreviewNotice =>
+      'Ejemplo visual · No corresponde a una solicitud real ni a tu cuenta.';
+
+  @override
+  String get overviewRefresh => 'Actualizar resumen';
+
+  @override
+  String get overviewLoading => 'Consultando tu borrador guardado…';
+
+  @override
+  String get overviewFailed =>
+      'No pudimos consultar tu borrador. Esto no significa que no exista. Reintenta para comprobar su estado.';
+
+  @override
+  String get overviewEmpty => 'Aún no tienes un borrador guardado';
+
+  @override
+  String get overviewEmptyBody =>
+      'Empieza con datos ficticios y guarda tu avance para retomarlo después. No se enviará a un médico.';
+
+  @override
+  String get overviewStart => 'PREPARAR BORRADOR';
+
+  @override
+  String get overviewResume => 'RETOMAR BORRADOR';
+
+  @override
+  String get overviewExplore => 'VER FORMULARIO DE EJEMPLO';
+
+  @override
+  String get overviewDraftStatus => 'Borrador · Sin enviar';
+
+  @override
+  String get overviewRequiredComplete =>
+      'Motivo y detalles completados. Puedes seguir revisándolos.';
+
+  @override
+  String get overviewRequiredPending =>
+      'Falta completar el motivo o los detalles de tu solicitud.';
+
+  @override
+  String get overviewNotSent =>
+      'No hay médico asignado ni cobros. El envío clínico todavía no está habilitado.';
+
+  @override
   String get draftServiceSubtitle => 'Crea o retoma tu borrador de prueba';
 
   @override

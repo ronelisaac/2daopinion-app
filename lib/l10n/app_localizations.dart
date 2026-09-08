@@ -658,6 +658,96 @@ abstract class AppLocalizations {
   /// **'Borrador de segunda opinión'**
   String get draftTitle;
 
+  /// No description provided for @overviewTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu solicitud en preparación'**
+  String get overviewTitle;
+
+  /// No description provided for @overviewPreviewTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Ejemplo de solicitud en preparación'**
+  String get overviewPreviewTitle;
+
+  /// No description provided for @overviewPreviewNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Ejemplo visual · No corresponde a una solicitud real ni a tu cuenta.'**
+  String get overviewPreviewNotice;
+
+  /// No description provided for @overviewRefresh.
+  ///
+  /// In es, this message translates to:
+  /// **'Actualizar resumen'**
+  String get overviewRefresh;
+
+  /// No description provided for @overviewLoading.
+  ///
+  /// In es, this message translates to:
+  /// **'Consultando tu borrador guardado…'**
+  String get overviewLoading;
+
+  /// No description provided for @overviewFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos consultar tu borrador. Esto no significa que no exista. Reintenta para comprobar su estado.'**
+  String get overviewFailed;
+
+  /// No description provided for @overviewEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Aún no tienes un borrador guardado'**
+  String get overviewEmpty;
+
+  /// No description provided for @overviewEmptyBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Empieza con datos ficticios y guarda tu avance para retomarlo después. No se enviará a un médico.'**
+  String get overviewEmptyBody;
+
+  /// No description provided for @overviewStart.
+  ///
+  /// In es, this message translates to:
+  /// **'PREPARAR BORRADOR'**
+  String get overviewStart;
+
+  /// No description provided for @overviewResume.
+  ///
+  /// In es, this message translates to:
+  /// **'RETOMAR BORRADOR'**
+  String get overviewResume;
+
+  /// No description provided for @overviewExplore.
+  ///
+  /// In es, this message translates to:
+  /// **'VER FORMULARIO DE EJEMPLO'**
+  String get overviewExplore;
+
+  /// No description provided for @overviewDraftStatus.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrador · Sin enviar'**
+  String get overviewDraftStatus;
+
+  /// No description provided for @overviewRequiredComplete.
+  ///
+  /// In es, this message translates to:
+  /// **'Motivo y detalles completados. Puedes seguir revisándolos.'**
+  String get overviewRequiredComplete;
+
+  /// No description provided for @overviewRequiredPending.
+  ///
+  /// In es, this message translates to:
+  /// **'Falta completar el motivo o los detalles de tu solicitud.'**
+  String get overviewRequiredPending;
+
+  /// No description provided for @overviewNotSent.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay médico asignado ni cobros. El envío clínico todavía no está habilitado.'**
+  String get overviewNotSent;
+
   /// No description provided for @draftServiceSubtitle.
   ///
   /// In es, this message translates to:
