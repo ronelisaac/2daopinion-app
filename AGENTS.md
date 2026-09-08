@@ -1,6 +1,7 @@
 # Convenciones de 2daOpinion Pacientes
 
 - Flutter y Firebase directo. No crear una API propia en esta etapa.
+- Próximo paso pedido por Ronel: reemplazar adjuntar video por grabación directa en la app, opcional y hasta 30 s. PENDIENTE; criterios en docs/PENDIENTE-GRABACION-EN-APP.md. No activar cámara/micrófono al entrar ni dar por implementada la captura.
 - E2-08: avisos persistentes solo en emuladores; ejemplo público separado. No hay productor automático ni push/email. Ver docs/E2-08-CENTRO-DE-AVISOS.md. No activar consultas remotas ni desplegar reglas candidatas sin resolver productor/IAM y autorización.
 - E2-06: la carga privada solo se inyecta con USE_FIREBASE_EMULATORS=true en debug, proyecto demo-2daopinion. No activar el adaptador remoto ni crear buckets sin confirmar costos y validar permisos. Ver docs/E2-06-ARCHIVOS-PRIVADOS-LOCALES.md; cuota de reservas acumulativa, borrado de bytes no libera cuota.
 - E2-07: video explicativo opcional, nunca requisito. Documentos JPG/JPEG, PNG, DOC, XLS y PDF; video MP4/MOV hasta 30 s. Ver docs/E2-07-VIDEO-OPCIONAL-Y-FORMATOS.md. La duración se comprueba en cliente; las reglas solo validan metadatos declarados, no contenido ni malware.
