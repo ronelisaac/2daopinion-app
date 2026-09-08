@@ -19,7 +19,20 @@ class DocumentSelectionController extends ChangeNotifier {
   DocumentSelectionIssue? issue;
   int get totalBytes =>
       _documents.fold(0, (total, document) => total + document.bytes.length);
-  Future<bool> select({bool video = false}) async {
+  Future<bool> select({bool video = false}) => _select(video: video);
+
+  Future<bool> record(Future<PendingDocument?> Function() capture) => _select(
+    video: true,
+    source: () async {
+      final recorded = await capture();
+      return recorded == null ? [] : [recorded];
+    },
+  );
+
+  Future<bool> _select({
+    bool video = false,
+    Future<List<PendingDocument>> Function()? source,
+  }) async {
     if (busy || _disposed) return false;
     issue = video
         ? (videos.isNotEmpty ? DocumentSelectionIssue.videoLimit : null)
@@ -34,11 +47,13 @@ class DocumentSelectionController extends ChangeNotifier {
     busy = true;
     notifyListeners();
     try {
-      final selected = await _repository.select(
-        maxFiles: video ? 1 : FormLimits.documents - studies.length,
-        maxTotalBytes: FormLimits.totalDocumentBytes - totalBytes,
-        video: video,
-      );
+      final selected = source != null
+          ? await source()
+          : await _repository.select(
+              maxFiles: video ? 1 : FormLimits.documents - studies.length,
+              maxTotalBytes: FormLimits.totalDocumentBytes - totalBytes,
+              video: video,
+            );
       if (_disposed || generation != _generation || selected.isEmpty) {
         return false;
       }

@@ -78,10 +78,69 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get optionalVideoHint =>
-      'Si quieres, adjunta un video explicando tu consulta en hasta 30 segundos. No es obligatorio ni reemplaza el formulario o los estudios. Un video MP4 o MOV de hasta 20 MB; recomendamos MP4. No se graba desde la app. Usa solo contenido ficticio en desarrollo.';
+      'Si quieres, graba un video explicando tu consulta en hasta 30 segundos. Es opcional, no reemplaza el formulario ni los estudios. Máximo 20 MB; grabación MP4 en navegadores compatibles. Usa solo contenido ficticio en desarrollo.';
 
   @override
-  String get selectOptionalVideo => 'ADJUNTAR VIDEO OPCIONAL';
+  String get selectOptionalVideo => 'GRABAR VIDEO OPCIONAL';
+
+  @override
+  String get recordVideoTitle => 'Grabar video opcional';
+
+  @override
+  String get recordVideoPrivacy =>
+      'La cámara y el micrófono se activan solo cuando lo permitas. Después deberás iniciar la grabación. Puedes revisarla o descartarla antes de usarla. No se subirá automáticamente; utiliza solo contenido ficticio en desarrollo.';
+
+  @override
+  String get recordVideoPreparing => 'Esperando permiso de cámara y micrófono…';
+
+  @override
+  String get recordVideoFinishing => 'Preparando y comprobando la grabación…';
+
+  @override
+  String get recordVideoUnsupported =>
+      'La grabación MP4 no está disponible en este dispositivo o navegador. Usa un navegador compatible en HTTPS o continúa sin video. La captura en la app nativa todavía no está habilitada.';
+
+  @override
+  String get recordVideoPermission =>
+      'No pudimos acceder a la cámara y al micrófono. Revisa sus permisos y disponibilidad, o continúa sin video.';
+
+  @override
+  String get recordVideoInterrupted =>
+      'La captura se interrumpió y los dispositivos se apagaron. Vuelve al formulario para iniciar una nueva grabación si lo deseas.';
+
+  @override
+  String get recordVideoFailed =>
+      'No pudimos grabar el video. Inténtalo nuevamente o continúa sin él.';
+
+  @override
+  String get recordVideoEnable => 'ACTIVAR CÁMARA Y MICRÓFONO';
+
+  @override
+  String get recordVideoReady => 'Cámara lista. Aún no estás grabando.';
+
+  @override
+  String get recordVideoStart => 'INICIAR GRABACIÓN';
+
+  @override
+  String get recordVideoStop => 'DETENER GRABACIÓN';
+
+  @override
+  String recordVideoTimer(int seconds) {
+    return 'Grabando · $seconds / 30 segundos';
+  }
+
+  @override
+  String get recordVideoReview =>
+      'Reproduce el video para revisarlo. La cámara y el micrófono ya están apagados.';
+
+  @override
+  String get recordVideoUse => 'USAR ESTE VIDEO';
+
+  @override
+  String get recordVideoAgain => 'Descartar y volver a grabar';
+
+  @override
+  String get recordVideoCancel => 'Volver sin agregar video';
 
   @override
   String get noOptionalVideo =>

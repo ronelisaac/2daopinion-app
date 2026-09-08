@@ -42,6 +42,7 @@ import 'domain/repositories/notice_repository.dart';
 import 'repositories/preview_notice_repository.dart';
 import 'views/notices_screen.dart';
 import 'widgets/notice_bell.dart';
+import 'ui/video_recording_route.dart';
 
 class ConnectedApp extends StatefulWidget {
   const ConnectedApp({
@@ -207,6 +208,7 @@ class _ConnectedAppState extends State<ConnectedApp> {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         initialRoute: '/',
         routes: {
+          '/record-video': (_) => const VideoRecordingRoute(),
           '/': (context) => _guard(_home(context), welcome: true),
           '/account': _account,
           '/login': _login,

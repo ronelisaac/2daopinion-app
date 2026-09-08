@@ -1,6 +1,6 @@
 # E2-07 · Video opcional y formatos permitidos
 
-Decisión posterior de Ronel: el siguiente paso reemplazará adjuntar video por grabarlo directamente en la app, opcional y de hasta 30 segundos. **Pendiente de implementar**; ver [criterios de grabación](PENDIENTE-GRABACION-EN-APP.md). La descripción siguiente conserva el historial de E2-07.
+Decisión posterior de Ronel: reemplazar adjuntar video por grabarlo directamente en la app, opcional y de hasta 30 segundos. [E2-09](E2-09-GRABACION-WEB.md) implementa captura web MP4; captura nativa y hardware real pendientes. La descripción siguiente conserva el historial de E2-07.
 
 8 de septiembre de 2026 · Desarrollo con contenido ficticio
 

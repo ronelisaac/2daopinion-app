@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../controllers/document_selection_controller.dart';
 import '../core/localization.dart';
+import '../domain/pending_document.dart';
 
 class OptionalVideoPanel extends StatelessWidget {
   const OptionalVideoPanel({
@@ -30,8 +31,14 @@ class OptionalVideoPanel extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: controller.busy
                   ? null
-                  : () => controller.select(video: true),
-              icon: const Icon(Icons.video_file_outlined),
+                  : () => controller.record(() async {
+                      final result = await Navigator.pushNamed(
+                        context,
+                        '/record-video',
+                      );
+                      return result is PendingDocument ? result : null;
+                    }),
+              icon: const Icon(Icons.videocam_outlined),
               label: Text(text.selectOptionalVideo),
             ),
         for (final video in controller.videos)

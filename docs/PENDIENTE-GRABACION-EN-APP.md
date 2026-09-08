@@ -1,6 +1,6 @@
 # Próximo paso · Grabar el video dentro de la aplicación
 
-8 de septiembre de 2026 · Solicitud de Ronel · PENDIENTE, no implementado
+8 de septiembre de 2026 · Solicitud de Ronel · Parcial: grabación web implementada en [E2-09](E2-09-GRABACION-WEB.md); captura nativa y validación con hardware real pendientes. Los criterios siguientes conservan la decisión original.
 
 ## Decisión
 
@@ -20,4 +20,4 @@ Reemplazar adjuntar un video existente por grabación directa dentro de la aplic
 
 ## Estado
 
-Este registro no activa cámara/micrófono, infraestructura ni costos. La carga remota sigue apagada y las pruebas de captura real requieren el permiso correspondiente. Hasta implementar y verificar el reemplazo, continúa el selector de E2-07. La grabación en la app no está terminada.
+E2-09 reemplaza el selector visible de E2-07 por grabación en navegadores web compatibles con MP4. La carga remota sigue apagada y las pruebas de captura real requieren el permiso correspondiente. La captura nativa y la validación completa por plataforma siguen pendientes; no se declara DEV-044 terminado.

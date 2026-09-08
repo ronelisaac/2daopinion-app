@@ -9,7 +9,8 @@ import 'package:segunda_opinion_app/domain/pending_document.dart';
 import 'package:segunda_opinion_app/controllers/document_selection_controller.dart';
 import 'package:segunda_opinion_app/repositories/local_document_selection_repository.dart';
 import 'package:segunda_opinion_app/widgets/document_selection_panel.dart';
-import 'consultation_steps_test.dart' show app;
+import 'package:segunda_opinion_app/core/app_theme.dart';
+import 'package:segunda_opinion_app/l10n/app_localizations.dart';
 import 'form_inputs_test.dart' show FakeSelection;
 
 PendingDocument video({Duration duration = const Duration(seconds: 30)}) =>
@@ -204,22 +205,36 @@ void main() {
       tester.view.physicalSize = Size(width, 900);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.reset);
-      final repository = FakeSelection()
-        ..pending = (Completer<List<PendingDocument>>()..complete([video()]));
+      final repository = FakeSelection();
       final controller = DocumentSelectionController(repository);
       addTearDown(controller.dispose);
       await tester.pumpWidget(
-        app(
-          Scaffold(
+        MaterialApp(
+          theme: buildAppTheme(),
+          locale: const Locale('es'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          routes: {
+            '/record-video': (context) => Scaffold(
+              body: TextButton(
+                onPressed: () => Navigator.pop(context, video()),
+                child: const Text('Confirm fixture'),
+              ),
+            ),
+          },
+          home: Scaffold(
             body: SingleChildScrollView(
               child: DocumentSelectionPanel(controller: controller),
             ),
           ),
         ),
       );
-      await tester.ensureVisible(find.text('ADJUNTAR VIDEO OPCIONAL'));
+      await tester.ensureVisible(find.text('GRABAR VIDEO OPCIONAL'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('ADJUNTAR VIDEO OPCIONAL'));
+      await tester.tap(find.text('GRABAR VIDEO OPCIONAL'));
+      await tester.pumpAndSettle();
+      expect(controller.videos, isEmpty);
+      await tester.tap(find.text('Confirm fixture'));
       await tester.pumpAndSettle();
       expect(find.text('30 segundos · Video opcional'), findsOneWidget);
       expect(find.text('0 de 20 archivos seleccionados'), findsOneWidget);

@@ -4,6 +4,8 @@ Base Flutter web responsive con identidad Firebase para desarrollo y vista previ
 
 ## Estado
 
+Actualización E2-09: grabación web MP4 dentro de la aplicación, opcional hasta 30 s, con permisos explícitos, revisión, descarte y confirmación. Reemplaza el botón de adjuntar video. Captura nativa y pruebas en hardware real pendientes; no sube videos remotos. [Alcance y pruebas](docs/E2-09-GRABACION-WEB.md).
+
 Actualización E2-08: campana, centro de avisos, paginación y leído/no leído. Ejemplo público claramente rotulado; persistencia y permisos verificados únicamente en emuladores. No hay emisor automático, push/email ni activación remota. [Entrega, pruebas y pendientes](docs/E2-08-CENTRO-DE-AVISOS.md).
 
 Actualización E2-07: video explicativo **opcional**, separado de los estudios, hasta 30 segundos; documentos restringidos a JPG/JPEG, PNG, DOC, XLS y PDF. Validaciones de formato/tamaño/duración, cuota compartida y reglas locales actualizadas. Sin carga remota ni recursos nuevos. [Decisión, límites y pruebas](docs/E2-07-VIDEO-OPCIONAL-Y-FORMATOS.md).

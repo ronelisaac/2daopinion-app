@@ -217,14 +217,116 @@ abstract class AppLocalizations {
   /// No description provided for @optionalVideoHint.
   ///
   /// In es, this message translates to:
-  /// **'Si quieres, adjunta un video explicando tu consulta en hasta 30 segundos. No es obligatorio ni reemplaza el formulario o los estudios. Un video MP4 o MOV de hasta 20 MB; recomendamos MP4. No se graba desde la app. Usa solo contenido ficticio en desarrollo.'**
+  /// **'Si quieres, graba un video explicando tu consulta en hasta 30 segundos. Es opcional, no reemplaza el formulario ni los estudios. Máximo 20 MB; grabación MP4 en navegadores compatibles. Usa solo contenido ficticio en desarrollo.'**
   String get optionalVideoHint;
 
   /// No description provided for @selectOptionalVideo.
   ///
   /// In es, this message translates to:
-  /// **'ADJUNTAR VIDEO OPCIONAL'**
+  /// **'GRABAR VIDEO OPCIONAL'**
   String get selectOptionalVideo;
+
+  /// No description provided for @recordVideoTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Grabar video opcional'**
+  String get recordVideoTitle;
+
+  /// No description provided for @recordVideoPrivacy.
+  ///
+  /// In es, this message translates to:
+  /// **'La cámara y el micrófono se activan solo cuando lo permitas. Después deberás iniciar la grabación. Puedes revisarla o descartarla antes de usarla. No se subirá automáticamente; utiliza solo contenido ficticio en desarrollo.'**
+  String get recordVideoPrivacy;
+
+  /// No description provided for @recordVideoPreparing.
+  ///
+  /// In es, this message translates to:
+  /// **'Esperando permiso de cámara y micrófono…'**
+  String get recordVideoPreparing;
+
+  /// No description provided for @recordVideoFinishing.
+  ///
+  /// In es, this message translates to:
+  /// **'Preparando y comprobando la grabación…'**
+  String get recordVideoFinishing;
+
+  /// No description provided for @recordVideoUnsupported.
+  ///
+  /// In es, this message translates to:
+  /// **'La grabación MP4 no está disponible en este dispositivo o navegador. Usa un navegador compatible en HTTPS o continúa sin video. La captura en la app nativa todavía no está habilitada.'**
+  String get recordVideoUnsupported;
+
+  /// No description provided for @recordVideoPermission.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos acceder a la cámara y al micrófono. Revisa sus permisos y disponibilidad, o continúa sin video.'**
+  String get recordVideoPermission;
+
+  /// No description provided for @recordVideoInterrupted.
+  ///
+  /// In es, this message translates to:
+  /// **'La captura se interrumpió y los dispositivos se apagaron. Vuelve al formulario para iniciar una nueva grabación si lo deseas.'**
+  String get recordVideoInterrupted;
+
+  /// No description provided for @recordVideoFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos grabar el video. Inténtalo nuevamente o continúa sin él.'**
+  String get recordVideoFailed;
+
+  /// No description provided for @recordVideoEnable.
+  ///
+  /// In es, this message translates to:
+  /// **'ACTIVAR CÁMARA Y MICRÓFONO'**
+  String get recordVideoEnable;
+
+  /// No description provided for @recordVideoReady.
+  ///
+  /// In es, this message translates to:
+  /// **'Cámara lista. Aún no estás grabando.'**
+  String get recordVideoReady;
+
+  /// No description provided for @recordVideoStart.
+  ///
+  /// In es, this message translates to:
+  /// **'INICIAR GRABACIÓN'**
+  String get recordVideoStart;
+
+  /// No description provided for @recordVideoStop.
+  ///
+  /// In es, this message translates to:
+  /// **'DETENER GRABACIÓN'**
+  String get recordVideoStop;
+
+  /// No description provided for @recordVideoTimer.
+  ///
+  /// In es, this message translates to:
+  /// **'Grabando · {seconds} / 30 segundos'**
+  String recordVideoTimer(int seconds);
+
+  /// No description provided for @recordVideoReview.
+  ///
+  /// In es, this message translates to:
+  /// **'Reproduce el video para revisarlo. La cámara y el micrófono ya están apagados.'**
+  String get recordVideoReview;
+
+  /// No description provided for @recordVideoUse.
+  ///
+  /// In es, this message translates to:
+  /// **'USAR ESTE VIDEO'**
+  String get recordVideoUse;
+
+  /// No description provided for @recordVideoAgain.
+  ///
+  /// In es, this message translates to:
+  /// **'Descartar y volver a grabar'**
+  String get recordVideoAgain;
+
+  /// No description provided for @recordVideoCancel.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver sin agregar video'**
+  String get recordVideoCancel;
 
   /// No description provided for @noOptionalVideo.
   ///
