@@ -94,6 +94,78 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('es')];
 
+  /// No description provided for @consultationStep.
+  ///
+  /// In es, this message translates to:
+  /// **'Consulta'**
+  String get consultationStep;
+
+  /// No description provided for @contextStep.
+  ///
+  /// In es, this message translates to:
+  /// **'Antecedentes'**
+  String get contextStep;
+
+  /// No description provided for @goalsStep.
+  ///
+  /// In es, this message translates to:
+  /// **'Preferencias'**
+  String get goalsStep;
+
+  /// No description provided for @reviewStep.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisión'**
+  String get reviewStep;
+
+  /// No description provided for @reviewTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisa tu borrador'**
+  String get reviewTitle;
+
+  /// No description provided for @reviewNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Comprueba lo que escribiste. Puedes volver a editar cualquier sección o guardar un borrador incompleto. Esta revisión no valida la suficiencia clínica y no envía el caso al médico.'**
+  String get reviewNotice;
+
+  /// No description provided for @notProvided.
+  ///
+  /// In es, this message translates to:
+  /// **'No informado'**
+  String get notProvided;
+
+  /// No description provided for @nextStep.
+  ///
+  /// In es, this message translates to:
+  /// **'SIGUIENTE PASO'**
+  String get nextStep;
+
+  /// No description provided for @previousStep.
+  ///
+  /// In es, this message translates to:
+  /// **'PASO ANTERIOR'**
+  String get previousStep;
+
+  /// No description provided for @saveProgress.
+  ///
+  /// In es, this message translates to:
+  /// **'REVISAR PARA GUARDAR'**
+  String get saveProgress;
+
+  /// No description provided for @consultationProgress.
+  ///
+  /// In es, this message translates to:
+  /// **'Paso {step} de 4 · {label}'**
+  String consultationProgress(int step, String label);
+
+  /// No description provided for @editSection.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar {section}'**
+  String editSection(String section);
+
   /// No description provided for @googleCancelled.
   ///
   /// In es, this message translates to:

@@ -9,6 +9,47 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
+  String get consultationStep => 'Consulta';
+
+  @override
+  String get contextStep => 'Antecedentes';
+
+  @override
+  String get goalsStep => 'Preferencias';
+
+  @override
+  String get reviewStep => 'Revisión';
+
+  @override
+  String get reviewTitle => 'Revisa tu borrador';
+
+  @override
+  String get reviewNotice =>
+      'Comprueba lo que escribiste. Puedes volver a editar cualquier sección o guardar un borrador incompleto. Esta revisión no valida la suficiencia clínica y no envía el caso al médico.';
+
+  @override
+  String get notProvided => 'No informado';
+
+  @override
+  String get nextStep => 'SIGUIENTE PASO';
+
+  @override
+  String get previousStep => 'PASO ANTERIOR';
+
+  @override
+  String get saveProgress => 'REVISAR PARA GUARDAR';
+
+  @override
+  String consultationProgress(int step, String label) {
+    return 'Paso $step de 4 · $label';
+  }
+
+  @override
+  String editSection(String section) {
+    return 'Editar $section';
+  }
+
+  @override
   String get googleCancelled =>
       'Cerraste el acceso con Google. Puedes intentarlo de nuevo o usar tu correo.';
 

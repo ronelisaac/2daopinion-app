@@ -4,6 +4,8 @@ Base Flutter web responsive con identidad Firebase para desarrollo y vista previ
 
 ## Estado
 
+Actualización E2-04: solicitud organizada en cuatro pasos —consulta, antecedentes, preferencias y revisión— para visitantes y borradores privados. Permite volver a editar sin perder campos ni modalidad dentro del formulario abierto. Avanzar no guarda ni envía; el guardado parcial sigue siendo explícito desde la revisión. [Detalle y verificación](docs/E2-04-FORMULARIO-POR-PASOS.md).
+
 Actualización E1-04/E2-03: home y formulario públicos, continuación por correo/registro conservando lo escrito en memoria, onboarding de cuenta y formulario ampliado con antecedentes, evolución, alergias, preguntas, estudios, especialidad y modalidad. Google preparado pero desactivado por decisión de Ronel; Facebook retirado. [Detalle y límites](docs/E1-04-ACCESO-Y-FORMULARIO.md). Recargar la pestaña puede perder el formulario del visitante; no se guardan datos remotos hasta autenticarse y aceptar el almacenamiento de pruebas. Esta actualización prevalece sobre las referencias históricas siguientes.
 
 Actualización E2-01: solicitud de prueba guardada como borrador privado, recuperable al volver a entrar, con aceptación independiente y protección contra conflictos entre pestañas. Un borrador por cuenta y guardado manual. No envía atención clínica. Ver [entrega de borrador](docs/E2-01-BORRADOR-PERSISTENTE.md); prevalece sobre las referencias históricas de vista previa de solicitudes.

@@ -18,6 +18,7 @@ class FormPage extends StatelessWidget {
     required this.onAction,
     this.busy = false,
     this.showFooter = false,
+    this.scrollController,
   });
 
   final String title;
@@ -26,6 +27,7 @@ class FormPage extends StatelessWidget {
   final VoidCallback onAction;
   final bool busy;
   final bool showFooter;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) => ResponsiveLayout(
@@ -48,6 +50,7 @@ class FormPage extends StatelessWidget {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) => SingleChildScrollView(
+            controller: scrollController,
             padding: EdgeInsets.all(layout.isCompact ? 24 : 40),
             child: ResponsiveContent(
               maxWidth: layout.isExpanded ? 1120 : 720,

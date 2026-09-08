@@ -9,6 +9,7 @@ import 'package:segunda_opinion_app/core/app_theme.dart';
 import 'package:segunda_opinion_app/l10n/app_localizations.dart';
 import 'package:segunda_opinion_app/views/draft_request_screen.dart';
 import 'helpers/fake_draft_repository.dart';
+import 'helpers/consultation_steps.dart';
 
 const empty = ConsultationDraft(countryCode: 'CL', reason: '', details: '');
 const content = ConsultationDraft(
@@ -177,6 +178,7 @@ void main() {
           matching: find.byType(TextFormField),
         );
         await tester.enterText(reason, 'Prueba ficticia');
+        await goToStep(tester, 3);
         await tester.ensureVisible(find.text('GUARDAR BORRADOR'));
         await tester.tap(find.text('GUARDAR BORRADOR'));
         await tester.pumpAndSettle();
@@ -201,6 +203,7 @@ void main() {
         expect(find.byKey(const ValueKey('draftConsent')), findsNothing);
         await tester.enterText(reason, 'Edición local');
         repository.failure = DraftIssue.unavailable;
+        await goToStep(tester, 3);
         await tester.ensureVisible(find.text('GUARDAR BORRADOR'));
         await tester.tap(find.text('GUARDAR BORRADOR'));
         await tester.pumpAndSettle();

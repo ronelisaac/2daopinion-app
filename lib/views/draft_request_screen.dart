@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../controllers/consultation_draft_controller.dart';
+import '../controllers/consultation_steps_controller.dart';
+import '../widgets/consultation_wizard.dart';
 import '../core/localization.dart';
 import '../core/draft_messages.dart';
 import '../domain/consultation_draft.dart';
@@ -24,6 +26,8 @@ class DraftRequestScreen extends StatefulWidget {
 }
 
 class _DraftRequestScreenState extends State<DraftRequestScreen> {
+  final _steps = ConsultationStepsController();
+  final _scroll = ScrollController();
   final _reason = TextEditingController();
   final _details = TextEditingController();
   final _medicines = TextEditingController();
@@ -86,6 +90,24 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
       _dirty = useGuest;
       _savedNotice = false;
     });
+    _goTo(useGuest ? 3 : 0);
+  }
+
+  ConsultationDraft get _content => ConsultationDraft(
+    countryCode: widget.controller.country.code,
+    reason: _reason.text,
+    details: _details.text,
+    medicines: _medicines.text,
+    specialTreatments: _treatments.text,
+    previousProposals: _proposals.text,
+    clinicalContext: _clinical,
+  );
+
+  void _goTo(int step) {
+    if (widget.controller.busy) return;
+    FocusScope.of(context).unfocus();
+    _steps.select(step);
+    if (_scroll.hasClients) _scroll.jumpTo(0);
   }
 
   Future<bool> _confirmDiscard() async {
@@ -119,18 +141,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
   }
 
   Future<void> _save() async {
-    final success = await widget.controller.save(
-      ConsultationDraft(
-        countryCode: widget.controller.country.code,
-        reason: _reason.text,
-        details: _details.text,
-        medicines: _medicines.text,
-        specialTreatments: _treatments.text,
-        previousProposals: _proposals.text,
-        clinicalContext: _clinical,
-      ),
-      accepted: _accepted,
-    );
+    final success = await widget.controller.save(_content, accepted: _accepted);
     if (success && mounted) {
       setState(() {
         _dirty = false;
@@ -146,6 +157,8 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
 
   @override
   void dispose() {
+    _steps.dispose();
+    _scroll.dispose();
     for (final field in [
       _reason,
       _details,
@@ -161,7 +174,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(
-    listenable: widget.controller,
+    listenable: Listenable.merge([widget.controller, _steps]),
     builder: (context, child) {
       final controller = widget.controller;
       final text = strings(context);
@@ -200,9 +213,10 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
         },
         child: FormPage(
           title: text.draftTitle,
-          action: text.saveDraft,
+          scrollController: _scroll,
+          action: _steps.isReview ? text.saveDraft : text.nextStep,
           busy: controller.busy,
-          onAction: _save,
+          onAction: () => _steps.isReview ? _save() : _goTo(_steps.index + 1),
           children: [
             Text(text.draftNotice),
             const SizedBox(height: 12),
@@ -224,54 +238,67 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
               absorbing: controller.busy,
               child: Column(
                 children: [
-                  RequestField(
-                    key: const ValueKey('draftReason'),
-                    label: text.reason,
-                    hint: text.reasonHint,
-                    controller: _reason,
-                    onChanged: _changed,
+                  ConsultationWizard(
+                    step: _steps.index,
+                    onStep: _goTo,
+                    busy: controller.busy,
+                    content: _content,
+                    consultationFields: Column(
+                      children: [
+                        RequestField(
+                          key: const ValueKey('draftReason'),
+                          label: text.reason,
+                          hint: text.reasonHint,
+                          controller: _reason,
+                          onChanged: _changed,
+                        ),
+                        RequestField(
+                          key: const ValueKey('draftDetails'),
+                          label: text.details,
+                          hint: text.detailsHint,
+                          controller: _details,
+                          onChanged: _changed,
+                        ),
+                        RequestField(
+                          key: const ValueKey('draftMedicines'),
+                          label: text.medicines,
+                          hint: text.medicinesHint,
+                          controller: _medicines,
+                          onChanged: _changed,
+                        ),
+                        RequestField(
+                          key: const ValueKey('draftTreatments'),
+                          label: text.specialTreatments,
+                          hint: text.specialTreatmentsHint,
+                          controller: _treatments,
+                          onChanged: _changed,
+                        ),
+                        RequestField(
+                          key: const ValueKey('draftProposals'),
+                          label: text.previousProposals,
+                          hint: text.previousProposalsHint,
+                          controller: _proposals,
+                          onChanged: _changed,
+                        ),
+                      ],
+                    ),
+                    clinicalFields: ClinicalContextFields(
+                      key: ValueKey(_clinicalVersion),
+                      showContext: _steps.index != 2,
+                      showGoals: _steps.index == 2,
+                      value: _clinical,
+                      onChanged: (value) {
+                        _clinical = value;
+                        _changed('');
+                      },
+                    ),
                   ),
-                  RequestField(
-                    key: const ValueKey('draftDetails'),
-                    label: text.details,
-                    hint: text.detailsHint,
-                    controller: _details,
-                    onChanged: _changed,
-                  ),
-                  RequestField(
-                    key: const ValueKey('draftMedicines'),
-                    label: text.medicines,
-                    hint: text.medicinesHint,
-                    controller: _medicines,
-                    onChanged: _changed,
-                  ),
-                  RequestField(
-                    key: const ValueKey('draftTreatments'),
-                    label: text.specialTreatments,
-                    hint: text.specialTreatmentsHint,
-                    controller: _treatments,
-                    onChanged: _changed,
-                  ),
-                  RequestField(
-                    key: const ValueKey('draftProposals'),
-                    label: text.previousProposals,
-                    hint: text.previousProposalsHint,
-                    controller: _proposals,
-                    onChanged: _changed,
-                  ),
-                  ClinicalContextFields(
-                    key: ValueKey(_clinicalVersion),
-                    value: _clinical,
-                    onChanged: (value) {
-                      _clinical = value;
-                      _changed('');
-                    },
-                  ),
-                  DraftStorageConsent(
-                    recorded: controller.saved != null,
-                    value: _accepted,
-                    onChanged: (value) => setState(() => _accepted = value),
-                  ),
+                  if (_steps.isReview)
+                    DraftStorageConsent(
+                      recorded: controller.saved != null,
+                      value: _accepted,
+                      onChanged: (value) => setState(() => _accepted = value),
+                    ),
                 ],
               ),
             ),
@@ -286,6 +313,11 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
               child: Text(text.draftReload),
             ),
             Text(text.draftNoSubmission),
+            if (!_steps.isReview)
+              TextButton(
+                onPressed: controller.busy ? null : () => _goTo(3),
+                child: Text(text.saveProgress),
+              ),
           ],
         ),
       );

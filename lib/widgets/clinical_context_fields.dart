@@ -8,9 +8,13 @@ class ClinicalContextFields extends StatefulWidget {
     super.key,
     required this.value,
     required this.onChanged,
+    this.showContext = true,
+    this.showGoals = true,
   });
   final ClinicalContext value;
   final ValueChanged<ClinicalContext> onChanged;
+  final bool showContext;
+  final bool showGoals;
   @override
   State<ClinicalContextFields> createState() => _ClinicalContextFieldsState();
 }
@@ -69,91 +73,95 @@ class _ClinicalContextFieldsState extends State<ClinicalContextFields> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          text.clinicalContextTitle,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(height: 12),
-        Text(text.clinicalOptionalNotice),
-        const SizedBox(height: 20),
-        RequestField(
-          label: text.patientContext,
-          hint: text.patientContextHint,
-          controller: _patient,
-          onChanged: _changed,
-        ),
-        RequestField(
-          label: text.knownDiagnosis,
-          hint: text.knownDiagnosisHint,
-          controller: _diagnosis,
-          onChanged: _changed,
-        ),
-        RequestField(
-          label: text.symptomEvolution,
-          hint: text.symptomEvolutionHint,
-          controller: _evolution,
-          onChanged: _changed,
-        ),
-        RequestField(
-          label: text.medicalHistory,
-          hint: text.medicalHistoryHint,
-          controller: _history,
-          onChanged: _changed,
-        ),
-        RequestField(
-          label: text.allergies,
-          hint: text.allergiesHint,
-          controller: _allergies,
-          onChanged: _changed,
-        ),
-        Text(
-          text.clinicalGoalsTitle,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(height: 20),
-        RequestField(
-          label: text.questions,
-          hint: text.questionsHint,
-          controller: _questions,
-          onChanged: _changed,
-        ),
-        RequestField(
-          label: text.studySummary,
-          hint: text.studySummaryHint,
-          controller: _studies,
-          onChanged: _changed,
-        ),
-        Text(text.documentsNotEnabled),
-        const SizedBox(height: 20),
-        RequestField(
-          label: text.specialty,
-          hint: text.specialtyHint,
-          controller: _specialty,
-          onChanged: _changed,
-        ),
-        DropdownButtonFormField<String>(
-          initialValue: _modality,
-          isExpanded: true,
-          decoration: InputDecoration(labelText: text.preferredModality),
-          items: [
-            DropdownMenuItem(value: '', child: Text(text.modalityUnsure)),
-            DropdownMenuItem(
-              value: 'document_review',
-              child: Text(text.modalityDocument),
-            ),
-            DropdownMenuItem(
-              value: 'review_and_consultation',
-              child: Text(text.modalityConsultation),
-            ),
-          ],
-          onChanged: (value) {
-            _modality = value ?? '';
-            _changed('');
-          },
-        ),
-        const SizedBox(height: 12),
-        Text(text.modalityNotice),
-        const SizedBox(height: 20),
+        if (widget.showContext) ...[
+          Text(
+            text.clinicalContextTitle,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 12),
+          Text(text.clinicalOptionalNotice),
+          const SizedBox(height: 20),
+          RequestField(
+            label: text.patientContext,
+            hint: text.patientContextHint,
+            controller: _patient,
+            onChanged: _changed,
+          ),
+          RequestField(
+            label: text.knownDiagnosis,
+            hint: text.knownDiagnosisHint,
+            controller: _diagnosis,
+            onChanged: _changed,
+          ),
+          RequestField(
+            label: text.symptomEvolution,
+            hint: text.symptomEvolutionHint,
+            controller: _evolution,
+            onChanged: _changed,
+          ),
+          RequestField(
+            label: text.medicalHistory,
+            hint: text.medicalHistoryHint,
+            controller: _history,
+            onChanged: _changed,
+          ),
+          RequestField(
+            label: text.allergies,
+            hint: text.allergiesHint,
+            controller: _allergies,
+            onChanged: _changed,
+          ),
+        ],
+        if (widget.showGoals) ...[
+          Text(
+            text.clinicalGoalsTitle,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 20),
+          RequestField(
+            label: text.questions,
+            hint: text.questionsHint,
+            controller: _questions,
+            onChanged: _changed,
+          ),
+          RequestField(
+            label: text.studySummary,
+            hint: text.studySummaryHint,
+            controller: _studies,
+            onChanged: _changed,
+          ),
+          Text(text.documentsNotEnabled),
+          const SizedBox(height: 20),
+          RequestField(
+            label: text.specialty,
+            hint: text.specialtyHint,
+            controller: _specialty,
+            onChanged: _changed,
+          ),
+          DropdownButtonFormField<String>(
+            initialValue: _modality,
+            isExpanded: true,
+            decoration: InputDecoration(labelText: text.preferredModality),
+            items: [
+              DropdownMenuItem(value: '', child: Text(text.modalityUnsure)),
+              DropdownMenuItem(
+                value: 'document_review',
+                child: Text(text.modalityDocument),
+              ),
+              DropdownMenuItem(
+                value: 'review_and_consultation',
+                child: Text(text.modalityConsultation),
+              ),
+            ],
+            onChanged: (value) {
+              _modality = value ?? '';
+              _changed('');
+            },
+          ),
+          const SizedBox(height: 12),
+          Text(text.modalityNotice),
+          const SizedBox(height: 20),
+        ],
       ],
     );
   }

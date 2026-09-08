@@ -21,6 +21,7 @@ import 'package:segunda_opinion_app/views/loading_screen.dart';
 import 'package:segunda_opinion_app/core/app_theme.dart';
 import 'package:segunda_opinion_app/l10n/app_localizations.dart';
 import 'helpers/fake_draft_repository.dart';
+import 'helpers/consultation_steps.dart';
 import 'identity_test.dart' show FakeIdentity, storedProfile, verified;
 import 'controllers_test.dart' show RecordingAccountRepository;
 
@@ -69,8 +70,11 @@ Future<void> beginGuest(WidgetTester tester) async {
   await press(tester, 'Consulta médica');
   expect(find.byType(GuestRequestScreen), findsOneWidget);
   await fill(tester, 'Motivo de tu consulta', 'Motivo ficticio visitante');
+  await goToStep(tester, 1);
   await fill(tester, 'Síntomas y evolución', 'Evolución ficticia');
+  await goToStep(tester, 2);
   await fill(tester, 'Preguntas al especialista', 'Pregunta ficticia');
+  await goToStep(tester, 3);
   await press(tester, 'CONTINUAR CON MI CUENTA');
 }
 
@@ -121,6 +125,10 @@ void main() {
     addTearDown(identity.events.close);
     await mount(tester, identity, FakeDraftRepository());
     await press(tester, 'Consulta médica');
+    for (final step in [1, 2, 3]) {
+      await goToStep(tester, step);
+      expect(tester.takeException(), isNull);
+    }
     await tester.ensureVisible(find.text('CONTINUAR CON MI CUENTA'));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
