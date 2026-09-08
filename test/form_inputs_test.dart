@@ -26,6 +26,7 @@ class FakeSelection implements DocumentSelectionRepository {
   Future<List<PendingDocument>> select({
     required int maxFiles,
     required int maxTotalBytes,
+    bool video = false,
   }) async {
     calls++;
     return pending != null

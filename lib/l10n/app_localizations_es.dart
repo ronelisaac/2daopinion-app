@@ -9,11 +9,41 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
+  String get optionalVideoTitle => 'Cuéntanos en un video · Opcional';
+
+  @override
+  String get optionalVideoHint =>
+      'Si quieres, adjunta un video explicando tu consulta en hasta 30 segundos. No es obligatorio ni reemplaza el formulario o los estudios. Un video MP4 o MOV de hasta 20 MB; recomendamos MP4. No se graba desde la app. Usa solo contenido ficticio en desarrollo.';
+
+  @override
+  String get selectOptionalVideo => 'ADJUNTAR VIDEO OPCIONAL';
+
+  @override
+  String get noOptionalVideo =>
+      'No hay video pendiente de subir. Puedes continuar sin adjuntar uno.';
+
+  @override
+  String get removeVideo => 'Quitar video';
+
+  @override
+  String videoDurationLabel(int seconds) {
+    return '$seconds segundos · Video opcional';
+  }
+
+  @override
+  String get videoInvalid =>
+      'Elige un video MP4 o MOV reproducible, de hasta 30 segundos y 20 MB. Si no podemos comprobar su duración, prueba con un MP4 compatible con tu dispositivo.';
+
+  @override
+  String get videoLimit =>
+      'Solo puedes adjuntar un video opcional. Quita el anterior para elegir otro.';
+
+  @override
   String get privateDocumentsTitle => 'Archivos privados · Pruebas locales';
 
   @override
   String get localUploadNotice =>
-      'Este módulo usa emuladores locales, no el proyecto remoto. Los archivos y sus títulos de prueba se guardan por separado del formulario. La cuota acumulada de pruebas es 20 documentos y 50 MB; borrar el archivo no libera su reserva. No hay revisión médica ni validación de contenido.';
+      'Este módulo usa emuladores locales, no el proyecto remoto. Los archivos se guardan por separado del formulario. Cuota acumulada: 20 documentos y un video opcional, 50 MB entre todos. Borrar no libera reservas. No hay revisión médica ni validación confiable de contenido en el servidor.';
 
   @override
   String get saveBeforeUpload =>
@@ -95,7 +125,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get multipleDocumentsHint =>
-      'Puedes seleccionar VARIOS archivos a la vez y seguir agregando más. Incluye tus informes, análisis e imágenes. Puedes cambiar el título de cada archivo después de seleccionarlo.';
+      'Puedes seleccionar VARIOS archivos a la vez y seguir agregando más. Solo imágenes JPG/JPEG o PNG, documentos DOC, planillas XLS y PDF. Máximo 5 MB por documento. Puedes cambiar el título de cada archivo después de seleccionarlo.';
 
   @override
   String documentsSelected(int count) {
@@ -117,7 +147,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get pendingDocumentsNotice =>
-      'Solo archivos de prueba PDF, JPG o PNG: hasta 20 archivos, 5 MB por archivo y 50 MB en total. Quedan en memoria, pendientes de subir: guardar el borrador NO guarda archivos. Se pierden al recargar, cerrar la pestaña o cerrar sesión. La carga privada todavía no está habilitada.';
+      'Solo archivos ficticios: hasta 20 documentos de 5 MB y un video opcional de 30 segundos y 20 MB. Máximo 50 MB entre todos. Quedan en memoria: guardar el borrador NO guarda archivos. Se pierden al recargar, cerrar la pestaña o cerrar sesión. La carga privada todavía no está habilitada.';
 
   @override
   String get pendingEmulatorDocumentsNotice =>
@@ -142,7 +172,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get documentFileLimit =>
-      'Elige un PDF, JPG o PNG no vacío, de hasta 5 MB.';
+      'Elige un archivo JPG/JPEG, PNG, DOC, XLS o PDF no vacío, de hasta 5 MB y con nombre de hasta 255 caracteres. No se admiten otros formatos, incluidos DOCX y XLSX.';
 
   @override
   String get documentSelectionFailed =>

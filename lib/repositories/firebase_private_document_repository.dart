@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:crypto/crypto.dart';
 import '../domain/form_limits.dart';
+import '../domain/attachment_policy.dart';
 import '../domain/pending_document.dart';
 import '../domain/private_document.dart';
 
@@ -91,9 +92,9 @@ class FirebasePrivateDocumentRepository implements PrivateDocumentRepository {
   @override
   Future<List<PrivateDocument>> list(String draftId) => _guard(() async {
     final owner = _owner();
-    final records = await _files(
-      owner,
-    ).limit(FormLimits.documents).get(const GetOptions(source: Source.server));
+    final records = await _files(owner)
+        .limit(FormLimits.documents + 1)
+        .get(const GetOptions(source: Source.server));
     _owner(owner);
     final result = <PrivateDocument>[];
     for (final record in records.docs) {
@@ -114,17 +115,14 @@ class FirebasePrivateDocumentRepository implements PrivateDocumentRepository {
     if (!accepted ||
         document.title.trim().isEmpty ||
         document.title.length > 120 ||
-        document.fileName.length > 255 ||
-        document.bytes.isEmpty ||
-        document.bytes.length > FormLimits.documentBytes) {
+        !AttachmentPolicy.valid(
+          document.fileName,
+          document.bytes.length,
+          document.duration,
+        )) {
       throw const DocumentFailure(DocumentIssue.invalid);
     }
-    final mimeType = switch (document.fileName.split('.').last.toLowerCase()) {
-      'pdf' => 'application/pdf',
-      'png' => 'image/png',
-      'jpg' || 'jpeg' => 'image/jpeg',
-      _ => throw const DocumentFailure(DocumentIssue.invalid),
-    };
+    final mimeType = AttachmentPolicy.mimeType(document.fileName)!;
     final checksum = sha256.convert(document.bytes).toString();
     final id = sha256.convert(utf8.encode('$draftId:$checksum')).toString();
     final reference = _files(owner).doc(id);
@@ -134,15 +132,23 @@ class FirebasePrivateDocumentRepository implements PrivateDocumentRepository {
     ) async {
       final existing = await transaction.get(reference);
       final budget = await transaction.get(quota);
-      _owner(owner);
-      cancellation.check();
+      try {
+        _owner(owner);
+        cancellation.check();
+      } on DocumentFailure catch (error) {
+        return {'localFailure': error.issue.name};
+      }
       if (existing.exists) return existing.data()!;
       final count = (budget.data()?['count'] as int? ?? 0) + 1;
+      final videoCount =
+          (budget.data()?['videoCount'] as int? ?? 0) +
+          (document.isVideo ? 1 : 0);
       final size =
           (budget.data()?['bytes'] as int? ?? 0) + document.bytes.length;
-      if (count > FormLimits.documents ||
+      if (videoCount > 1 ||
+          count - videoCount > FormLimits.documents ||
           size > FormLimits.totalDocumentBytes) {
-        throw const DocumentFailure(DocumentIssue.quota);
+        return {'localFailure': DocumentIssue.quota.name};
       }
       final record = <String, dynamic>{
         'id': id,
@@ -153,6 +159,8 @@ class FirebasePrivateDocumentRepository implements PrivateDocumentRepository {
         'fileName': document.fileName,
         'size': document.bytes.length,
         'mimeType': mimeType,
+        if (document.isVideo)
+          'durationMilliseconds': document.duration!.inMilliseconds,
         'checksum': checksum,
         'storageBackendId': 'firebase-development-v1',
         'objectKey': 'private-drafts/$owner/$draftId/$id',
@@ -163,6 +171,7 @@ class FirebasePrivateDocumentRepository implements PrivateDocumentRepository {
       transaction.set(reference, record);
       transaction.set(quota, {
         'count': count,
+        'videoCount': videoCount,
         'bytes': size,
         'lastDocumentId': id,
         'updatedAt': FieldValue.serverTimestamp(),
@@ -171,6 +180,11 @@ class FirebasePrivateDocumentRepository implements PrivateDocumentRepository {
     });
     _owner(owner);
     cancellation.check();
+    if (data.containsKey('localFailure')) {
+      throw DocumentFailure(
+        DocumentIssue.values.byName(data['localFailure'] as String),
+      );
+    }
     final existing = await _inspect(owner, draftId, data);
     if (existing.state == PrivateDocumentState.stored) {
       onProgress(1);
@@ -226,11 +240,11 @@ class FirebasePrivateDocumentRepository implements PrivateDocumentRepository {
     ).doc(documentId).get(const GetOptions(source: Source.server));
     _owner(owner);
     if (!record.exists) throw const DocumentFailure(DocumentIssue.invalid);
-    final bytes = await _object(
-      owner,
-      draftId,
-      record.data()!,
-    ).getData(FormLimits.documentBytes);
+    final bytes = await _object(owner, draftId, record.data()!).getData(
+      AttachmentPolicy.isVideo(record.data()!['fileName'] as String)
+          ? FormLimits.videoBytes
+          : FormLimits.documentBytes,
+    );
     _owner(owner);
     if (bytes == null ||
         sha256.convert(bytes).toString() != record.data()!['checksum']) {

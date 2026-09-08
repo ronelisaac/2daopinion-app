@@ -4,6 +4,8 @@ Base Flutter web responsive con identidad Firebase para desarrollo y vista previ
 
 ## Estado
 
+Actualización E2-07: video explicativo **opcional**, separado de los estudios, hasta 30 segundos; documentos restringidos a JPG/JPEG, PNG, DOC, XLS y PDF. Validaciones de formato/tamaño/duración, cuota compartida y reglas locales actualizadas. Sin carga remota ni recursos nuevos. [Decisión, límites y pruebas](docs/E2-07-VIDEO-OPCIONAL-Y-FORMATOS.md).
+
 Actualización E2-06: carga privada con progreso, cancelación, reintento y borrado **solo en emuladores locales**, con aceptación independiente y permisos por propietario. La aplicación normal todavía no sube archivos remotos. No se crea bucket ni se activan gastos; nueva infraestructura pendiente de aprobación. [Detalle, límites y pruebas](docs/E2-06-ARCHIVOS-PRIVADOS-LOCALES.md). Este estado prevalece sobre las referencias históricas siguientes.
 
 Actualización E2-05: chips en medicamentos/síntomas/alergias/preguntas, fecha de nacimiento, campos amplios y límites visibles. Estudios permite seleccionar varios archivos, agregar más y editar títulos individualmente. **Los archivos quedan en memoria pendientes de subir; guardar borrador no los guarda.** [Detalle y límites](docs/E2-05-CAMPOS-Y-DOCUMENTOS.md).

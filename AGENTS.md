@@ -2,6 +2,7 @@
 
 - Flutter y Firebase directo. No crear una API propia en esta etapa.
 - E2-06: la carga privada solo se inyecta con USE_FIREBASE_EMULATORS=true en debug, proyecto demo-2daopinion. No activar el adaptador remoto ni crear buckets sin confirmar costos y validar permisos. Ver docs/E2-06-ARCHIVOS-PRIVADOS-LOCALES.md; cuota de reservas acumulativa, borrado de bytes no libera cuota.
+- E2-07: video explicativo opcional, nunca requisito. Documentos JPG/JPEG, PNG, DOC, XLS y PDF; video MP4/MOV hasta 30 s. Ver docs/E2-07-VIDEO-OPCIONAL-Y-FORMATOS.md. La duración se comprueba en cliente; las reglas solo validan metadatos declarados, no contenido ni malware.
 - Ronel autorizó commit y push de cada entrega terminada y verificada. No incluir secretos, logs, datos clínicos, builds ni cambios ajenos. El despliegue debe limitarse al servicio y ambiente autorizado.
 - Las reglas e índices Firestore compartidos viven en firebase/ del repositorio 2daopinion-panel; no duplicarlos aquí. Firestore dev: (default), southamerica-west1. Tener la base creada no equivale a tener permisos o persistencia funcional implementados.
 - Alcance vigente: docs/desarrollo/ALCANCE-001-EXPERIENCIA-Y-RECETAS.md en la raíz de 2daOpinion. Incluye términos separados de registro/solicitud, Acerca de, home con casos activos, footer, notificaciones, logout, persistencia y receta médica en MVP. No volver a excluir recetas; no habilitar emisión real sin resolver requisitos A18. Son compromisos, no funciones ya implementadas.

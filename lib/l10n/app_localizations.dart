@@ -94,6 +94,54 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('es')];
 
+  /// No description provided for @optionalVideoTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuéntanos en un video · Opcional'**
+  String get optionalVideoTitle;
+
+  /// No description provided for @optionalVideoHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Si quieres, adjunta un video explicando tu consulta en hasta 30 segundos. No es obligatorio ni reemplaza el formulario o los estudios. Un video MP4 o MOV de hasta 20 MB; recomendamos MP4. No se graba desde la app. Usa solo contenido ficticio en desarrollo.'**
+  String get optionalVideoHint;
+
+  /// No description provided for @selectOptionalVideo.
+  ///
+  /// In es, this message translates to:
+  /// **'ADJUNTAR VIDEO OPCIONAL'**
+  String get selectOptionalVideo;
+
+  /// No description provided for @noOptionalVideo.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay video pendiente de subir. Puedes continuar sin adjuntar uno.'**
+  String get noOptionalVideo;
+
+  /// No description provided for @removeVideo.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar video'**
+  String get removeVideo;
+
+  /// No description provided for @videoDurationLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'{seconds} segundos · Video opcional'**
+  String videoDurationLabel(int seconds);
+
+  /// No description provided for @videoInvalid.
+  ///
+  /// In es, this message translates to:
+  /// **'Elige un video MP4 o MOV reproducible, de hasta 30 segundos y 20 MB. Si no podemos comprobar su duración, prueba con un MP4 compatible con tu dispositivo.'**
+  String get videoInvalid;
+
+  /// No description provided for @videoLimit.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo puedes adjuntar un video opcional. Quita el anterior para elegir otro.'**
+  String get videoLimit;
+
   /// No description provided for @privateDocumentsTitle.
   ///
   /// In es, this message translates to:
@@ -103,7 +151,7 @@ abstract class AppLocalizations {
   /// No description provided for @localUploadNotice.
   ///
   /// In es, this message translates to:
-  /// **'Este módulo usa emuladores locales, no el proyecto remoto. Los archivos y sus títulos de prueba se guardan por separado del formulario. La cuota acumulada de pruebas es 20 documentos y 50 MB; borrar el archivo no libera su reserva. No hay revisión médica ni validación de contenido.'**
+  /// **'Este módulo usa emuladores locales, no el proyecto remoto. Los archivos se guardan por separado del formulario. Cuota acumulada: 20 documentos y un video opcional, 50 MB entre todos. Borrar no libera reservas. No hay revisión médica ni validación confiable de contenido en el servidor.'**
   String get localUploadNotice;
 
   /// No description provided for @saveBeforeUpload.
@@ -241,7 +289,7 @@ abstract class AppLocalizations {
   /// No description provided for @multipleDocumentsHint.
   ///
   /// In es, this message translates to:
-  /// **'Puedes seleccionar VARIOS archivos a la vez y seguir agregando más. Incluye tus informes, análisis e imágenes. Puedes cambiar el título de cada archivo después de seleccionarlo.'**
+  /// **'Puedes seleccionar VARIOS archivos a la vez y seguir agregando más. Solo imágenes JPG/JPEG o PNG, documentos DOC, planillas XLS y PDF. Máximo 5 MB por documento. Puedes cambiar el título de cada archivo después de seleccionarlo.'**
   String get multipleDocumentsHint;
 
   /// No description provided for @documentsSelected.
@@ -277,7 +325,7 @@ abstract class AppLocalizations {
   /// No description provided for @pendingDocumentsNotice.
   ///
   /// In es, this message translates to:
-  /// **'Solo archivos de prueba PDF, JPG o PNG: hasta 20 archivos, 5 MB por archivo y 50 MB en total. Quedan en memoria, pendientes de subir: guardar el borrador NO guarda archivos. Se pierden al recargar, cerrar la pestaña o cerrar sesión. La carga privada todavía no está habilitada.'**
+  /// **'Solo archivos ficticios: hasta 20 documentos de 5 MB y un video opcional de 30 segundos y 20 MB. Máximo 50 MB entre todos. Quedan en memoria: guardar el borrador NO guarda archivos. Se pierden al recargar, cerrar la pestaña o cerrar sesión. La carga privada todavía no está habilitada.'**
   String get pendingDocumentsNotice;
 
   /// No description provided for @pendingEmulatorDocumentsNotice.
@@ -319,7 +367,7 @@ abstract class AppLocalizations {
   /// No description provided for @documentFileLimit.
   ///
   /// In es, this message translates to:
-  /// **'Elige un PDF, JPG o PNG no vacío, de hasta 5 MB.'**
+  /// **'Elige un archivo JPG/JPEG, PNG, DOC, XLS o PDF no vacío, de hasta 5 MB y con nombre de hasta 255 caracteres. No se admiten otros formatos, incluidos DOCX y XLSX.'**
   String get documentFileLimit;
 
   /// No description provided for @documentSelectionFailed.

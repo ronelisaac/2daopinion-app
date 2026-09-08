@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../domain/form_limits.dart';
+import '../domain/attachment_policy.dart';
 import '../domain/pending_document.dart';
 import '../domain/repositories/document_selection_repository.dart';
 
@@ -8,17 +9,23 @@ class DocumentSelectionController extends ChangeNotifier {
   final DocumentSelectionRepository _repository;
   final List<PendingDocument> _documents = [];
   List<PendingDocument> get documents => List.unmodifiable(_documents);
+  List<PendingDocument> get studies =>
+      documents.where((item) => !item.isVideo).toList();
+  List<PendingDocument> get videos =>
+      documents.where((item) => item.isVideo).toList();
   bool busy = false;
   bool _disposed = false;
   int _generation = 0;
   DocumentSelectionIssue? issue;
   int get totalBytes =>
       _documents.fold(0, (total, document) => total + document.bytes.length);
-  Future<bool> select() async {
+  Future<bool> select({bool video = false}) async {
     if (busy || _disposed) return false;
-    issue = _documents.length >= FormLimits.documents
-        ? DocumentSelectionIssue.limit
-        : null;
+    issue = video
+        ? (videos.isNotEmpty ? DocumentSelectionIssue.videoLimit : null)
+        : (studies.length >= FormLimits.documents
+              ? DocumentSelectionIssue.limit
+              : null);
     if (issue != null) {
       notifyListeners();
       return false;
@@ -28,22 +35,33 @@ class DocumentSelectionController extends ChangeNotifier {
     notifyListeners();
     try {
       final selected = await _repository.select(
-        maxFiles: FormLimits.documents - _documents.length,
+        maxFiles: video ? 1 : FormLimits.documents - studies.length,
         maxTotalBytes: FormLimits.totalDocumentBytes - totalBytes,
+        video: video,
       );
       if (_disposed || generation != _generation || selected.isEmpty) {
         return false;
       }
       if (selected.any(
         (document) =>
-            document.bytes.isEmpty ||
-            document.bytes.length > FormLimits.documentBytes,
+            document.isVideo != video ||
+            !AttachmentPolicy.valid(
+              document.fileName,
+              document.bytes.length,
+              document.duration,
+            ),
       )) {
-        issue = DocumentSelectionIssue.invalidFile;
+        issue = video
+            ? DocumentSelectionIssue.videoInvalid
+            : DocumentSelectionIssue.invalidFile;
         return false;
       }
-      if (_documents.length + selected.length > FormLimits.documents) {
-        issue = DocumentSelectionIssue.limit;
+      if (video
+          ? videos.length + selected.length > 1
+          : studies.length + selected.length > FormLimits.documents) {
+        issue = video
+            ? DocumentSelectionIssue.videoLimit
+            : DocumentSelectionIssue.limit;
         return false;
       }
       if (totalBytes +
@@ -108,6 +126,7 @@ class DocumentSelectionController extends ChangeNotifier {
       title: title.trim(),
       fileName: document.fileName,
       bytes: document.bytes,
+      duration: document.duration,
     );
     issue = null;
     notifyListeners();

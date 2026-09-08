@@ -153,6 +153,47 @@ void main() {
         (await repository.list(draft.id)).single.state,
         PrivateDocumentState.stored,
       );
+      for (final extension in ['doc', 'xls', 'mp4']) {
+        final attachment = PendingDocument(
+          title: 'Reserva ficticia $extension',
+          fileName: 'ficticio.$extension',
+          bytes: Uint8List.fromList(
+            utf8.encode('Synthetic transport fixture $extension'),
+          ),
+          duration: extension == 'mp4' ? const Duration(seconds: 30) : null,
+        );
+        final stored = await repository.upload(
+          draft.id,
+          attachment,
+          accepted: true,
+          cancellation: TransferCancellation(),
+          onProgress: (_) {},
+        );
+        expect(stored.state, PrivateDocumentState.stored);
+        expect(await repository.read(draft.id, stored.id), attachment.bytes);
+      }
+      expect((await repository.list(draft.id)).length, 4);
+      await expectLater(
+        repository.upload(
+          draft.id,
+          PendingDocument(
+            title: 'Segundo video ficticio',
+            fileName: 'otro.mp4',
+            bytes: Uint8List.fromList([1, 2, 3, 4]),
+            duration: const Duration(seconds: 1),
+          ),
+          accepted: true,
+          cancellation: TransferCancellation(),
+          onProgress: (_) {},
+        ),
+        throwsA(
+          isA<DocumentFailure>().having(
+            (error) => error.issue,
+            'issue',
+            DocumentIssue.quota,
+          ),
+        ),
+      );
       await auth.signOut();
       await expectLater(
         repository.list(draft.id),

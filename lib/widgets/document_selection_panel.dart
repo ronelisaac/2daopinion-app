@@ -3,6 +3,7 @@ import '../controllers/document_selection_controller.dart';
 import '../core/localization.dart';
 import '../domain/pending_document.dart';
 import 'document_title_dialog.dart';
+import 'optional_video_panel.dart';
 
 class DocumentSelectionPanel extends StatelessWidget {
   const DocumentSelectionPanel({
@@ -30,7 +31,7 @@ class DocumentSelectionPanel extends StatelessWidget {
           Text(text.multipleDocumentsHint),
           const SizedBox(height: 12),
           Text(
-            text.documentsSelected(controller.documents.length),
+            text.documentsSelected(controller.studies.length),
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 12),
@@ -42,13 +43,13 @@ class DocumentSelectionPanel extends StatelessWidget {
               onPressed: controller.busy ? null : controller.select,
               icon: const Icon(Icons.library_add_outlined),
               label: Text(
-                controller.documents.isEmpty
+                controller.studies.isEmpty
                     ? text.selectDocument
                     : text.addMoreDocuments,
               ),
             ),
           const SizedBox(height: 12),
-          for (final document in controller.documents)
+          for (final document in controller.studies)
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -99,6 +100,7 @@ class DocumentSelectionPanel extends StatelessWidget {
                 ),
               ),
             ),
+          OptionalVideoPanel(controller: controller, readOnly: readOnly),
           if (controller.busy) const LinearProgressIndicator(),
           if (controller.issue != null)
             Text(switch (controller.issue!) {
@@ -106,6 +108,8 @@ class DocumentSelectionPanel extends StatelessWidget {
               DocumentSelectionIssue.limit => text.documentCountLimit,
               DocumentSelectionIssue.totalSize => text.documentTotalLimit,
               DocumentSelectionIssue.invalidFile => text.documentFileLimit,
+              DocumentSelectionIssue.videoInvalid => text.videoInvalid,
+              DocumentSelectionIssue.videoLimit => text.videoLimit,
               DocumentSelectionIssue.unavailable =>
                 text.documentSelectionFailed,
             }, style: TextStyle(color: Theme.of(context).colorScheme.error)),
