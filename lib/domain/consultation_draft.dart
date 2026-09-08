@@ -16,4 +16,12 @@ class ConsultationDraft {
   final String previousProposals;
 
   bool get isComplete => reason.trim().isNotEmpty && details.trim().isNotEmpty;
+
+  bool get withinStorageLimits => [
+    reason,
+    details,
+    medicines,
+    specialTreatments,
+    previousProposals,
+  ].every((value) => value.length <= 4000);
 }

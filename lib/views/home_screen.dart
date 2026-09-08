@@ -89,7 +89,10 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: layout.isExpanded ? 56 : 32),
-                        HomeServices(requestRoute: requestRoute),
+                        HomeServices(
+                          requestRoute: requestRoute,
+                          draftMode: onSignOut != null,
+                        ),
                         if (showFooter)
                           const Padding(
                             padding: EdgeInsets.only(top: 32),

@@ -7,8 +7,13 @@ import 'responsive_layout.dart';
 import 'service_action.dart';
 
 class HomeServices extends StatelessWidget {
-  const HomeServices({super.key, this.requestRoute = '/request'});
+  const HomeServices({
+    super.key,
+    this.requestRoute = '/request',
+    this.draftMode = false,
+  });
   final String requestRoute;
+  final bool draftMode;
 
   @override
   Widget build(BuildContext context) => ResponsiveLayout(
@@ -28,7 +33,9 @@ class HomeServices extends StatelessWidget {
             child: ServiceAction(
               expanded: columns,
               label: text.consultation,
-              subtitle: text.consultationSubtitle,
+              subtitle: draftMode
+                  ? text.draftServiceSubtitle
+                  : text.consultationSubtitle,
               icon: Image.asset(
                 'assets/images/logo-white.png',
                 width: 49,

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'connected_app.dart';
 import 'domain/country_config.dart';
 import 'repositories/firebase_identity_repository.dart';
+import 'repositories/firebase_consultation_draft_repository.dart';
 import 'firebase_options.dart';
 
 void main() {
@@ -22,6 +23,10 @@ void main() {
     ConnectedApp(
       identityRepository: repository,
       accountRepository: repository,
+      draftRepository: FirebaseConsultationDraftRepository(
+        auth: () => FirebaseAuth.instance,
+        database: () => FirebaseFirestore.instance,
+      ),
       initialize: () async {
         if (initialized) return;
         const emulators = bool.fromEnvironment('USE_FIREBASE_EMULATORS');

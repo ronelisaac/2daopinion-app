@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'helpers/fake_draft_repository.dart';
+import 'package:segunda_opinion_app/views/draft_request_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:segunda_opinion_app/connected_app.dart';
@@ -302,6 +304,7 @@ void main() {
           initialize: () async {},
           identityRepository: repository,
           accountRepository: repository,
+          draftRepository: FakeDraftRepository(),
         ),
       );
       await tester.pumpAndSettle();
@@ -325,6 +328,41 @@ void main() {
     });
   }
 
+  testWidgets('draft fields and route disappear when identity signs out', (
+    tester,
+  ) async {
+    final repository = FakeIdentity()
+      ..current = verified
+      ..profile = storedProfile;
+    final drafts = FakeDraftRepository();
+    addTearDown(repository.events.close);
+    await tester.pumpWidget(
+      ConnectedApp(
+        initialize: () async {},
+        identityRepository: repository,
+        accountRepository: repository,
+        draftRepository: drafts,
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(drafts.loads, 0);
+    Navigator.of(tester.element(find.byType(HomeScreen))).pushNamed('/request');
+    await tester.pumpAndSettle();
+    expect(drafts.loads, 1);
+    expect(find.byType(DraftRequestScreen), findsOneWidget);
+    await tester.enterText(
+      find.byType(TextFormField).first,
+      'Texto ficticio no guardado',
+    );
+    repository.emit(null);
+    await tester.pumpAndSettle();
+    expect(find.byType(WelcomeScreen), findsOneWidget);
+    expect(find.text('Texto ficticio no guardado'), findsNothing);
+    expect(find.byType(DraftRequestScreen), findsNothing);
+    expect(drafts.saves, 0);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('unverified identity cannot open private home', (tester) async {
     final repository = FakeIdentity()
       ..current = unverified
@@ -335,6 +373,7 @@ void main() {
         initialize: () async {},
         identityRepository: repository,
         accountRepository: repository,
+        draftRepository: FakeDraftRepository(),
       ),
     );
     await tester.pumpAndSettle();

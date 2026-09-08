@@ -4,6 +4,8 @@ Base Flutter web responsive con identidad Firebase para desarrollo y vista previ
 
 ## Estado
 
+Actualización E2-01: solicitud de prueba guardada como borrador privado, recuperable al volver a entrar, con aceptación independiente y protección contra conflictos entre pestañas. Un borrador por cuenta y guardado manual. No envía atención clínica. Ver [entrega de borrador](docs/E2-01-BORRADOR-PERSISTENTE.md); prevalece sobre las referencias históricas de vista previa de solicitudes.
+
 - Proyecto Firebase real: `segundaopinion-ea0c8`.
 - App web registrada: `1:638989286509:web:29bbf8428c2ba4c5ec5364`.
 - Firebase Core se inicializa al abrir la app; los fallos muestran una opción de reintento.
@@ -35,7 +37,7 @@ Después de agregar o cambiar plugins Firebase, ejecutar `flutter clean` y `flut
 - `lib/widgets`: widgets reutilizables en archivos separados.
 - `lib/controllers`: coordinación de casos de uso y estados.
 - `lib/domain/repositories`: contratos de repositorio en Dart puro.
-- `lib/repositories`: adaptador Firebase de identidad/perfil y adaptadores explícitos de vista previa para casos.
+- `lib/repositories`: adaptadores Firebase de identidad/perfil y borradores, más adaptadores explícitos de vista previa para casos.
 - `lib/l10n/app_es.arb`: todos los textos de la interfaz, traducibles.
 - `lib/core/app_theme.dart`: colores y tipografía.
 - `lib/domain`: objetos Dart sin tipos ni referencias de Firebase.
@@ -64,7 +66,7 @@ La marca gráfica «2nd opinion» se conserva como en Figma; su unificación con
 2. Acceso por correo implementado para pruebas; proveedores sociales no habilitados. Ver [entrega de identidad](docs/E1-03-IDENTIDAD-Y-PERFIL.md).
 3. Cerrar consentimientos y textos legales antes de admitir pacientes reales; la aceptación actual es exclusivamente de desarrollo.
 4. Firestore dev en Santiago con permisos privados de perfil; definir Storage y permisos clínicos por caso antes de almacenar documentación.
-5. Próximo bloque: borrador persistente de solicitud y consentimiento separado; posteriormente documentación privada por caso.
+5. Borrador persistente y aceptación de almacenamiento de prueba implementados. Próximo bloque: resumen en home, estados y consentimiento clínico definitivo; posteriormente documentación privada por caso.
 6. Integración del panel y permisos. Aún no hay backend de panel ni repositorio compartido.
 7. Registrar Android/iOS después de acordar identificadores definitivos.
 

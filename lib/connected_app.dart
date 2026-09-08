@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'controllers/account_controller.dart';
 import 'controllers/consultation_controller.dart';
+import 'controllers/consultation_draft_controller.dart';
+import 'domain/repositories/consultation_draft_repository.dart';
+import 'views/draft_request_screen.dart';
 import 'controllers/password_reset_controller.dart';
 import 'controllers/profile_controller.dart';
 import 'controllers/session_controller.dart';
@@ -29,10 +32,12 @@ class ConnectedApp extends StatefulWidget {
     required this.initialize,
     required this.identityRepository,
     required this.accountRepository,
+    required this.draftRepository,
   });
   final Future<void> Function() initialize;
   final IdentityRepository identityRepository;
   final AccountRepository accountRepository;
+  final ConsultationDraftRepository draftRepository;
   @override
   State<ConnectedApp> createState() => _ConnectedAppState();
 }
@@ -127,7 +132,16 @@ class _ConnectedAppState extends State<ConnectedApp> {
           '/account': _account,
           '/home': (context) => _guard(_home(context)),
           '/profile': (context) => _guard(_profile(context)),
-          '/request': (context) => _guard(_request()),
+          '/request': (context) => _guard(
+            Builder(
+              builder: (_) => DraftRequestScreen(
+                controller: ConsultationDraftController(
+                  widget.draftRepository,
+                  country: CountryConfig.chile,
+                ),
+              ),
+            ),
+          ),
           '/preview': (_) => const HomeScreen(
             requestRoute: '/preview/request',
             showFooter: true,
@@ -140,6 +154,10 @@ class _ConnectedAppState extends State<ConnectedApp> {
           '/terms': (context) => InformationScreen(
             title: strings(context).terms,
             body: strings(context).developmentTermsBody,
+          ),
+          '/draft-terms': (context) => InformationScreen(
+            title: strings(context).draftReadTerms,
+            body: strings(context).draftTermsBody,
           ),
           '/privacy': (context) => InformationScreen(
             title: strings(context).privacy,

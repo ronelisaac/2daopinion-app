@@ -254,7 +254,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get developmentPrivacyBody =>
-      'AVISO DE PRIVACIDAD DEL ENTORNO DE PRUEBAS\n\nEste aviso provisional no sustituye una política de privacidad aprobada para producción.\n\nEl entorno de desarrollo utiliza Firebase Authentication para la cuenta y Firestore en Santiago para el perfil básico y la aceptación de condiciones. No se solicita ni admite documentación clínica real. Los metadatos de aceptación incluyen usuario, versión y fecha del servidor. No se incluye Analytics.\n\nLa app no guarda contraseñas en Firestore ni habilita caché persistente de Firestore en el navegador. Cerrar sesión elimina el estado visible de la cuenta, pero no borra los registros remotos. No guardes datos sensibles en los formularios de demostración.\n\nResponsable legal, contacto formal de privacidad, conservación, ejercicio de derechos y condiciones de transferencias deben definirse antes de producción. Si no estás participando en las pruebas autorizadas del proyecto, no crees una cuenta aquí.';
+      'AVISO DE PRIVACIDAD DEL ENTORNO DE PRUEBAS\n\nEste aviso provisional no sustituye una política de privacidad aprobada para producción.\n\nEl entorno de desarrollo utiliza Firebase Authentication para la cuenta y Firestore en Santiago para el perfil básico y la aceptación de condiciones. Si aceptas las condiciones específicas de un borrador, también se guardan sus campos ficticios, identificadores, revisión, país y fechas, junto a una aceptación vinculada al borrador. Esa aceptación es independiente del registro y no autoriza atención médica. No se solicita ni admite documentación clínica real. Los metadatos de aceptación incluyen usuario, versión y fecha del servidor. No se incluye Analytics.\n\nLa app no guarda contraseñas en Firestore ni habilita caché persistente de Firestore en el navegador. Cerrar sesión elimina el estado visible de la cuenta, pero no borra los registros remotos. No guardes datos sensibles en los formularios de demostración.\n\nResponsable legal, contacto formal de privacidad, conservación, ejercicio de derechos y condiciones de transferencias deben definirse antes de producción. Si no estás participando en las pruebas autorizadas del proyecto, no crees una cuenta aquí.';
 
   @override
   String get about => 'Acerca de';
@@ -311,4 +311,84 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get verificationSent =>
       'Solicitamos el envío del correo de verificación. Revisa tu bandeja y spam.';
+
+  @override
+  String get draftTitle => 'Borrador de segunda opinión';
+
+  @override
+  String get draftServiceSubtitle => 'Crea o retoma tu borrador de prueba';
+
+  @override
+  String get saveDraft => 'GUARDAR BORRADOR';
+
+  @override
+  String get draftNotice =>
+      'Solo datos ficticios. Puedes completar este borrador por partes y retomarlo desde Consulta médica. Guarda antes de salir: no hay guardado automático, ni almacenamiento sin conexión. Un borrador por cuenta en esta etapa.';
+
+  @override
+  String get draftSaved =>
+      'Borrador guardado. No se ha enviado a un médico ni generado un cobro.';
+
+  @override
+  String draftSavedDate(String date) {
+    return 'Último guardado: $date';
+  }
+
+  @override
+  String get draftReadTerms => 'Condiciones para guardar este borrador';
+
+  @override
+  String get draftConsentLabel =>
+      'Acepto guardar únicamente contenido ficticio de este borrador conforme a las condiciones de prueba. Esta aceptación es independiente del registro.';
+
+  @override
+  String get draftConsentRecorded =>
+      'Aceptación para guardar este borrador registrada. No es consentimiento clínico ni autorización de envío.';
+
+  @override
+  String get draftTermsBody =>
+      'CONDICIONES DEL BORRADOR DE PRUEBA\nVersión: dev-draft-storage-2026-09-08\n\nEsta aceptación es independiente de la del registro y se vincula a tu borrador. Autoriza únicamente el almacenamiento de contenido ficticio durante las pruebas de desarrollo. NO constituye un consentimiento clínico ni términos definitivos del servicio médico.\n\nAl guardar, Firestore conserva los campos del formulario, tu identificador de cuenta y de paciente, país, versión del borrador y fechas del servidor. Una aceptación separada e inmutable conserva la versión de estas condiciones, el ID del borrador, el usuario y la fecha del servidor. Solo se mantiene un borrador editable por cuenta en esta etapa.\n\nTu cuenta con correo verificado puede leer y editar su borrador. No se comparte con médicos, no se envía como caso y no genera pagos. Los operadores autorizados del proyecto pueden administrarlo.\n\nEl borrador queda guardado remotamente al presionar Guardar; cerrar sesión no lo borra. No hay guardado automático ni caché persistente de Firestore. No ingreses diagnósticos, tratamientos, medicamentos ni documentos de personas reales.\n\nLa entidad responsable, contacto de privacidad, conservación y mecanismo de borrado para producción siguen pendientes de aprobación. El envío futuro de una solicitud requerirá condiciones y consentimiento clínico específicos aprobados; esta aceptación no los sustituye.';
+
+  @override
+  String get draftConsentRequired =>
+      'Acepta las condiciones específicas del borrador antes de guardarlo por primera vez.';
+
+  @override
+  String get draftPermissionError =>
+      'No tienes acceso al borrador. Verifica tu correo y vuelve a ingresar; no se confirmó el guardado.';
+
+  @override
+  String get draftConflict =>
+      'El borrador cambió en otra pestaña o se guardó antes de perder la conexión. Tu texto sigue aquí. Recarga la versión guardada para revisarla; no sobrescribimos cambios automáticamente.';
+
+  @override
+  String get draftUnavailable =>
+      'No pudimos comprobar el borrador en el servidor. Conserva esta página y reintenta. No se confirmó el guardado.';
+
+  @override
+  String get draftInvalid =>
+      'Revisa los campos: máximo 4.000 caracteres por campo y país configurado para este entorno.';
+
+  @override
+  String get draftReload => 'RECARGAR VERSIÓN GUARDADA';
+
+  @override
+  String get draftUnsavedStatus => 'Cambios sin guardar';
+
+  @override
+  String get draftUnsavedTitle => 'Tienes cambios sin guardar';
+
+  @override
+  String get draftUnsavedBody =>
+      'Al continuar se descarta lo que aún no guardaste en esta página. El borrador guardado en Firebase no se borra.';
+
+  @override
+  String get draftKeepEditing => 'SEGUIR EDITANDO';
+
+  @override
+  String get draftDiscardChanges => 'DESCARTAR CAMBIOS LOCALES';
+
+  @override
+  String get draftNoSubmission =>
+      'Envío clínico y documentos aún no habilitados. Este botón solo guarda el borrador de prueba; no solicita atención médica.';
 }
