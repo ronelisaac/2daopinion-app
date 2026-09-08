@@ -9,6 +9,84 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
+  String get birthDate => 'Fecha de nacimiento';
+
+  @override
+  String get selectBirthDate => 'Seleccionar fecha';
+
+  @override
+  String get clearBirthDate => 'Quitar fecha de nacimiento';
+
+  @override
+  String get chipInstruction =>
+      'Escribe un elemento y pulsa coma, Enter o + para agregarlo. Puedes quitarlo con la ×.';
+
+  @override
+  String get addItem => 'Agregar elemento';
+
+  @override
+  String get removeItem => 'Quitar elemento';
+
+  @override
+  String get textLimitReached =>
+      'Llegaste al límite de este campo (4000). Reduce el contenido para agregar más.';
+
+  @override
+  String get multipleDocumentsHint =>
+      'Puedes seleccionar VARIOS archivos a la vez y seguir agregando más. Incluye tus informes, análisis e imágenes. Puedes cambiar el título de cada archivo después de seleccionarlo.';
+
+  @override
+  String documentsSelected(int count) {
+    return '$count de 20 archivos seleccionados';
+  }
+
+  @override
+  String get addMoreDocuments => 'AGREGAR MÁS ARCHIVOS';
+
+  @override
+  String get editDocumentTitle => 'Editar título';
+
+  @override
+  String get applyDocumentTitle => 'APLICAR TÍTULO';
+
+  @override
+  String get documentTotalLimit =>
+      'Los archivos seleccionados superan el límite total de 50 MB. Selecciona un grupo más pequeño.';
+
+  @override
+  String get pendingDocumentsNotice =>
+      'Solo archivos de prueba PDF, JPG o PNG: hasta 20 archivos, 5 MB por archivo y 50 MB en total. Quedan en memoria, pendientes de subir: guardar el borrador NO guarda archivos. Se pierden al recargar, cerrar la pestaña o cerrar sesión. La carga privada todavía no está habilitada.';
+
+  @override
+  String get pendingUpload => 'Pendiente de subir';
+
+  @override
+  String get documentTitle => 'Título del estudio o documento';
+
+  @override
+  String get selectDocument => 'SELECCIONAR VARIOS ARCHIVOS';
+
+  @override
+  String get documentTitleRequired =>
+      'Escribe un título de entre 1 y 120 caracteres.';
+
+  @override
+  String get documentCountLimit =>
+      'Puedes seleccionar hasta 20 archivos. Elige menos o quita alguno del listado.';
+
+  @override
+  String get documentFileLimit =>
+      'Elige un PDF, JPG o PNG no vacío, de hasta 5 MB.';
+
+  @override
+  String get documentSelectionFailed =>
+      'No pudimos leer el archivo. Intenta seleccionarlo de nuevo.';
+
+  @override
+  String get legacyStudySummary =>
+      'Descripción de estudios del borrador anterior';
+
+  @override
   String get consultationStep => 'Consulta';
 
   @override
@@ -103,11 +181,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Estos datos son opcionales al preparar un borrador. Completa lo que conozcas; dejar un campo vacío significa «no informado», no ausencia de antecedentes. No incluyas documentos de identidad ni datos de contacto aquí.';
 
   @override
-  String get patientContext => 'Edad y contexto del paciente';
+  String get patientContext => 'Contexto adicional del paciente';
 
   @override
   String get patientContextHint =>
-      'Edad aproximada y cualquier contexto que consideres relevante. No incluyas nombre completo ni identificación.';
+      'Información adicional que quieras compartir. La fecha de nacimiento se indica por separado; no incluyas identificación ni contacto.';
 
   @override
   String get knownDiagnosis => 'Diagnóstico conocido o sospechado';
@@ -117,11 +195,11 @@ class AppLocalizationsEs extends AppLocalizations {
       '¿Qué te han explicado? Si tienes un diagnóstico, indica quién lo informó y cuándo. Puedes escribir «aún no tengo diagnóstico».';
 
   @override
-  String get symptomEvolution => 'Síntomas y evolución';
+  String get symptomEvolution => 'Síntomas';
 
   @override
   String get symptomEvolutionHint =>
-      '¿Cuándo comenzó? Describe cambios, frecuencia, factores que lo mejoran o empeoran y cómo afecta tu vida cotidiana.';
+      'Ej.: dolor de cabeza desde el lunes. Agrega cada síntoma por separado; puedes indicar cuándo empezó.';
 
   @override
   String get medicalHistory => 'Antecedentes relevantes';

@@ -94,6 +94,138 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('es')];
 
+  /// No description provided for @birthDate.
+  ///
+  /// In es, this message translates to:
+  /// **'Fecha de nacimiento'**
+  String get birthDate;
+
+  /// No description provided for @selectBirthDate.
+  ///
+  /// In es, this message translates to:
+  /// **'Seleccionar fecha'**
+  String get selectBirthDate;
+
+  /// No description provided for @clearBirthDate.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar fecha de nacimiento'**
+  String get clearBirthDate;
+
+  /// No description provided for @chipInstruction.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribe un elemento y pulsa coma, Enter o + para agregarlo. Puedes quitarlo con la ×.'**
+  String get chipInstruction;
+
+  /// No description provided for @addItem.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar elemento'**
+  String get addItem;
+
+  /// No description provided for @removeItem.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar elemento'**
+  String get removeItem;
+
+  /// No description provided for @textLimitReached.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegaste al límite de este campo (4000). Reduce el contenido para agregar más.'**
+  String get textLimitReached;
+
+  /// No description provided for @multipleDocumentsHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Puedes seleccionar VARIOS archivos a la vez y seguir agregando más. Incluye tus informes, análisis e imágenes. Puedes cambiar el título de cada archivo después de seleccionarlo.'**
+  String get multipleDocumentsHint;
+
+  /// No description provided for @documentsSelected.
+  ///
+  /// In es, this message translates to:
+  /// **'{count} de 20 archivos seleccionados'**
+  String documentsSelected(int count);
+
+  /// No description provided for @addMoreDocuments.
+  ///
+  /// In es, this message translates to:
+  /// **'AGREGAR MÁS ARCHIVOS'**
+  String get addMoreDocuments;
+
+  /// No description provided for @editDocumentTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar título'**
+  String get editDocumentTitle;
+
+  /// No description provided for @applyDocumentTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'APLICAR TÍTULO'**
+  String get applyDocumentTitle;
+
+  /// No description provided for @documentTotalLimit.
+  ///
+  /// In es, this message translates to:
+  /// **'Los archivos seleccionados superan el límite total de 50 MB. Selecciona un grupo más pequeño.'**
+  String get documentTotalLimit;
+
+  /// No description provided for @pendingDocumentsNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo archivos de prueba PDF, JPG o PNG: hasta 20 archivos, 5 MB por archivo y 50 MB en total. Quedan en memoria, pendientes de subir: guardar el borrador NO guarda archivos. Se pierden al recargar, cerrar la pestaña o cerrar sesión. La carga privada todavía no está habilitada.'**
+  String get pendingDocumentsNotice;
+
+  /// No description provided for @pendingUpload.
+  ///
+  /// In es, this message translates to:
+  /// **'Pendiente de subir'**
+  String get pendingUpload;
+
+  /// No description provided for @documentTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Título del estudio o documento'**
+  String get documentTitle;
+
+  /// No description provided for @selectDocument.
+  ///
+  /// In es, this message translates to:
+  /// **'SELECCIONAR VARIOS ARCHIVOS'**
+  String get selectDocument;
+
+  /// No description provided for @documentTitleRequired.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribe un título de entre 1 y 120 caracteres.'**
+  String get documentTitleRequired;
+
+  /// No description provided for @documentCountLimit.
+  ///
+  /// In es, this message translates to:
+  /// **'Puedes seleccionar hasta 20 archivos. Elige menos o quita alguno del listado.'**
+  String get documentCountLimit;
+
+  /// No description provided for @documentFileLimit.
+  ///
+  /// In es, this message translates to:
+  /// **'Elige un PDF, JPG o PNG no vacío, de hasta 5 MB.'**
+  String get documentFileLimit;
+
+  /// No description provided for @documentSelectionFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos leer el archivo. Intenta seleccionarlo de nuevo.'**
+  String get documentSelectionFailed;
+
+  /// No description provided for @legacyStudySummary.
+  ///
+  /// In es, this message translates to:
+  /// **'Descripción de estudios del borrador anterior'**
+  String get legacyStudySummary;
+
   /// No description provided for @consultationStep.
   ///
   /// In es, this message translates to:
@@ -259,13 +391,13 @@ abstract class AppLocalizations {
   /// No description provided for @patientContext.
   ///
   /// In es, this message translates to:
-  /// **'Edad y contexto del paciente'**
+  /// **'Contexto adicional del paciente'**
   String get patientContext;
 
   /// No description provided for @patientContextHint.
   ///
   /// In es, this message translates to:
-  /// **'Edad aproximada y cualquier contexto que consideres relevante. No incluyas nombre completo ni identificación.'**
+  /// **'Información adicional que quieras compartir. La fecha de nacimiento se indica por separado; no incluyas identificación ni contacto.'**
   String get patientContextHint;
 
   /// No description provided for @knownDiagnosis.
@@ -283,13 +415,13 @@ abstract class AppLocalizations {
   /// No description provided for @symptomEvolution.
   ///
   /// In es, this message translates to:
-  /// **'Síntomas y evolución'**
+  /// **'Síntomas'**
   String get symptomEvolution;
 
   /// No description provided for @symptomEvolutionHint.
   ///
   /// In es, this message translates to:
-  /// **'¿Cuándo comenzó? Describe cambios, frecuencia, factores que lo mejoran o empeoran y cómo afecta tu vida cotidiana.'**
+  /// **'Ej.: dolor de cabeza desde el lunes. Agrega cada síntoma por separado; puedes indicar cuándo empezó.'**
   String get symptomEvolutionHint;
 
   /// No description provided for @medicalHistory.

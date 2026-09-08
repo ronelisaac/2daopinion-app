@@ -33,6 +33,8 @@ import 'views/password_reset_screen.dart';
 import 'views/profile_screen.dart';
 import 'views/request_screen.dart';
 import 'views/session_gate.dart';
+import 'controllers/document_selection_controller.dart';
+import 'repositories/local_document_selection_repository.dart';
 
 class ConnectedApp extends StatefulWidget {
   const ConnectedApp({
@@ -52,6 +54,9 @@ class ConnectedApp extends StatefulWidget {
 
 class _ConnectedAppState extends State<ConnectedApp> {
   final _guest = GuestDraftController();
+  final _documents = DocumentSelectionController(
+    LocalDocumentSelectionRepository(),
+  );
   late final SessionController _session;
   var _navigator = GlobalKey<NavigatorState>();
   int _navigationEpoch = 0;
@@ -67,6 +72,7 @@ class _ConnectedAppState extends State<ConnectedApp> {
 
   @override
   void dispose() {
+    _documents.dispose();
     _guest.clear();
     _session.dispose();
     super.dispose();
@@ -133,6 +139,7 @@ class _ConnectedAppState extends State<ConnectedApp> {
   Widget _memberRequest() => _guard(
     Builder(
       builder: (_) => DraftRequestScreen(
+        documents: _documents,
         initialDraft: _guest.resumeAfterAccess ? _guest.content : null,
         onInitialDraftConsumed: _guest.clear,
         controller: ConsultationDraftController(
@@ -163,6 +170,7 @@ class _ConnectedAppState extends State<ConnectedApp> {
     listenable: _session,
     builder: (context, child) {
       if (_navigationEpoch != _session.navigationEpoch) {
+        _documents.clear(notify: false);
         _guest.clear();
         _navigationEpoch = _session.navigationEpoch;
         _navigator = GlobalKey<NavigatorState>();
@@ -201,6 +209,7 @@ class _ConnectedAppState extends State<ConnectedApp> {
                   ? null
                   : _session.user == null,
               guest: GuestRequestScreen(
+                documents: _documents,
                 controller: _guest,
                 onAccess: () {
                   if (_session.user == null) {

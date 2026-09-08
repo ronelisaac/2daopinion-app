@@ -141,7 +141,9 @@ void main() {
         find.byType(TextFormField).at(1),
         'Pregunta de prueba',
       );
+      await tester.pumpAndSettle();
       await tester.ensureVisible(find.text('ENVIAR SOLICITUD'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('ENVIAR SOLICITUD'));
       await tester.pumpAndSettle();
       expect(

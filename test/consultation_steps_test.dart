@@ -13,6 +13,7 @@ import 'package:segunda_opinion_app/l10n/app_localizations.dart';
 import 'package:segunda_opinion_app/views/draft_request_screen.dart';
 import 'package:segunda_opinion_app/views/guest_request_screen.dart';
 import 'package:segunda_opinion_app/widgets/informational_footer.dart';
+import 'package:segunda_opinion_app/widgets/chip_request_field.dart';
 import 'helpers/consultation_steps.dart';
 import 'helpers/fake_draft_repository.dart';
 
@@ -33,6 +34,22 @@ Future<void> press(WidgetTester tester, String text) async {
 
 Future<void> fill(WidgetTester tester, String label, String value) async {
   final field = find.widgetWithText(TextFormField, label);
+  final chips = find.ancestor(
+    of: field,
+    matching: find.byType(ChipRequestField),
+  );
+  if (chips.evaluate().isNotEmpty) {
+    final remove = find.descendant(
+      of: chips,
+      matching: find.byTooltip('Quitar elemento'),
+    );
+    while (remove.evaluate().isNotEmpty) {
+      await tester.ensureVisible(remove.first);
+      await tester.pumpAndSettle();
+      await tester.tap(remove.first);
+      await tester.pumpAndSettle();
+    }
+  }
   await tester.ensureVisible(field);
   await tester.enterText(field, value);
   await tester.pumpAndSettle();
@@ -85,15 +102,14 @@ void main() {
             'Propuestas terapéuticas previas': 'Propuesta ficticia',
           },
           {
-            'Edad y contexto del paciente': 'Contexto ficticio',
+            'Contexto adicional del paciente': 'Contexto ficticio',
             'Diagnóstico conocido o sospechado': 'Diagnóstico ficticio',
-            'Síntomas y evolución': 'Evolución ficticia',
+            'Síntomas': 'Evolución ficticia',
             'Antecedentes relevantes': 'Antecedentes ficticios',
             'Alergias y reacciones': 'Reacción ficticia',
           },
           {
             'Preguntas al especialista': 'Pregunta ficticia',
-            'Estudios y documentación disponible': 'Estudio ficticio',
             'Especialidad solicitada': 'Especialidad ficticia',
           },
         ];
@@ -126,7 +142,7 @@ void main() {
         expect(find.text('Pregunta revisada'), findsOneWidget);
         expect(find.text('Diagnóstico ficticio'), findsOneWidget);
         await press(tester, 'Editar Antecedentes');
-        await fill(tester, 'Síntomas y evolución', 'Evolución revisada');
+        await fill(tester, 'Síntomas', 'Evolución revisada');
         await goToStep(tester, 3);
         expect(find.text('Pregunta revisada'), findsOneWidget);
         await tester.ensureVisible(find.text('CONTINUAR CON MI CUENTA'));
@@ -256,10 +272,16 @@ void main() {
       await goToStep(tester, 2);
       expect(
         tester
-            .widget<TextFormField>(
-              find.widgetWithText(TextFormField, 'Preguntas al especialista'),
+            .widget<ChipRequestField>(
+              find.ancestor(
+                of: find.widgetWithText(
+                  TextFormField,
+                  'Preguntas al especialista',
+                ),
+                matching: find.byType(ChipRequestField),
+              ),
             )
-            .controller!
+            .controller
             .text,
         'Versión remota ficticia',
       );

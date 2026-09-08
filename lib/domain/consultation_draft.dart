@@ -1,4 +1,5 @@
 import 'clinical_context.dart';
+import 'form_limits.dart';
 
 class ConsultationDraft {
   const ConsultationDraft({
@@ -28,6 +29,6 @@ class ConsultationDraft {
         medicines,
         specialTreatments,
         previousProposals,
-      ].every((value) => value.length <= 4000) &&
+      ].every((value) => value.length <= FormLimits.text) &&
       clinicalContext.withinStorageLimits;
 }

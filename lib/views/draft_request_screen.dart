@@ -10,6 +10,9 @@ import '../widgets/clinical_context_fields.dart';
 import '../widgets/form_page.dart';
 import '../widgets/request_field.dart';
 import '../widgets/draft_storage_consent.dart';
+import '../widgets/chip_request_field.dart';
+import '../controllers/document_selection_controller.dart';
+import '../widgets/document_selection_panel.dart';
 
 class DraftRequestScreen extends StatefulWidget {
   const DraftRequestScreen({
@@ -17,10 +20,12 @@ class DraftRequestScreen extends StatefulWidget {
     required this.controller,
     this.initialDraft,
     this.onInitialDraftConsumed,
+    this.documents,
   });
   final ConsultationDraftController controller;
   final ConsultationDraft? initialDraft;
   final VoidCallback? onInitialDraftConsumed;
+  final DocumentSelectionController? documents;
   @override
   State<DraftRequestScreen> createState() => _DraftRequestScreenState();
 }
@@ -76,6 +81,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
               true;
       if (!mounted) return;
       if (useGuest) content = widget.initialDraft;
+      if (!useGuest) widget.documents?.clear();
       _initialConsumed = true;
       widget.onInitialDraftConsumed?.call();
     }
@@ -239,6 +245,12 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
               child: Column(
                 children: [
                   ConsultationWizard(
+                    documents: widget.documents == null
+                        ? null
+                        : DocumentSelectionPanel(
+                            controller: widget.documents!,
+                            readOnly: _steps.isReview,
+                          ),
                     step: _steps.index,
                     onStep: _goTo,
                     busy: controller.busy,
@@ -254,12 +266,14 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
                         ),
                         RequestField(
                           key: const ValueKey('draftDetails'),
+                          minLines: 4,
+                          maxLines: 10,
                           label: text.details,
                           hint: text.detailsHint,
                           controller: _details,
                           onChanged: _changed,
                         ),
-                        RequestField(
+                        ChipRequestField(
                           key: const ValueKey('draftMedicines'),
                           label: text.medicines,
                           hint: text.medicinesHint,

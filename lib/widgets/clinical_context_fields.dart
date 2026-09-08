@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../core/localization.dart';
 import '../domain/clinical_context.dart';
+import '../domain/birth_date.dart';
+import 'birth_date_field.dart';
+import 'chip_request_field.dart';
 import 'request_field.dart';
 
 class ClinicalContextFields extends StatefulWidget {
@@ -37,8 +40,10 @@ class _ClinicalContextFieldsState extends State<ClinicalContextFields> {
   late final _studies = TextEditingController(text: widget.value.studySummary);
   late final _specialty = TextEditingController(text: widget.value.specialty);
   late String _modality = widget.value.modality;
+  late BirthDate? _birthDate = widget.value.birthDate;
   void _changed(String _) => widget.onChanged(
     ClinicalContext(
+      birthDate: _birthDate,
       patientContext: _patient.text,
       knownDiagnosis: _diagnosis.text,
       symptomEvolution: _evolution.text,
@@ -81,6 +86,13 @@ class _ClinicalContextFieldsState extends State<ClinicalContextFields> {
           const SizedBox(height: 12),
           Text(text.clinicalOptionalNotice),
           const SizedBox(height: 20),
+          BirthDateField(
+            value: _birthDate,
+            onChanged: (value) {
+              setState(() => _birthDate = value);
+              _changed('');
+            },
+          ),
           RequestField(
             label: text.patientContext,
             hint: text.patientContextHint,
@@ -89,11 +101,13 @@ class _ClinicalContextFieldsState extends State<ClinicalContextFields> {
           ),
           RequestField(
             label: text.knownDiagnosis,
+            minLines: 3,
+            maxLines: 8,
             hint: text.knownDiagnosisHint,
             controller: _diagnosis,
             onChanged: _changed,
           ),
-          RequestField(
+          ChipRequestField(
             label: text.symptomEvolution,
             hint: text.symptomEvolutionHint,
             controller: _evolution,
@@ -105,7 +119,7 @@ class _ClinicalContextFieldsState extends State<ClinicalContextFields> {
             controller: _history,
             onChanged: _changed,
           ),
-          RequestField(
+          ChipRequestField(
             label: text.allergies,
             hint: text.allergiesHint,
             controller: _allergies,
@@ -118,19 +132,19 @@ class _ClinicalContextFieldsState extends State<ClinicalContextFields> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 20),
-          RequestField(
+          ChipRequestField(
             label: text.questions,
             hint: text.questionsHint,
             controller: _questions,
             onChanged: _changed,
           ),
-          RequestField(
-            label: text.studySummary,
-            hint: text.studySummaryHint,
-            controller: _studies,
-            onChanged: _changed,
-          ),
-          Text(text.documentsNotEnabled),
+          if (_studies.text.isNotEmpty)
+            RequestField(
+              label: text.legacyStudySummary,
+              hint: text.studySummaryHint,
+              controller: _studies,
+              onChanged: _changed,
+            ),
           const SizedBox(height: 20),
           RequestField(
             label: text.specialty,

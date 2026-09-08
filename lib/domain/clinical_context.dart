@@ -1,3 +1,6 @@
+import 'birth_date.dart';
+import 'form_limits.dart';
+
 class ClinicalContext {
   const ClinicalContext({
     this.patientContext = '',
@@ -9,6 +12,7 @@ class ClinicalContext {
     this.studySummary = '',
     this.specialty = '',
     this.modality = '',
+    this.birthDate,
   });
   final String patientContext;
   final String knownDiagnosis;
@@ -19,6 +23,7 @@ class ClinicalContext {
   final String studySummary;
   final String specialty;
   final String modality;
+  final BirthDate? birthDate;
 
   bool get withinStorageLimits =>
       [
@@ -30,6 +35,7 @@ class ClinicalContext {
         questions,
         studySummary,
         specialty,
-      ].every((value) => value.length <= 4000) &&
+      ].every((value) => value.length <= FormLimits.text) &&
+      (birthDate == null || birthDate!.validAt(DateTime.now().toUtc())) &&
       ['', 'document_review', 'review_and_consultation'].contains(modality);
 }

@@ -71,7 +71,7 @@ Future<void> beginGuest(WidgetTester tester) async {
   expect(find.byType(GuestRequestScreen), findsOneWidget);
   await fill(tester, 'Motivo de tu consulta', 'Motivo ficticio visitante');
   await goToStep(tester, 1);
-  await fill(tester, 'Síntomas y evolución', 'Evolución ficticia');
+  await fill(tester, 'Síntomas', 'Evolución ficticia');
   await goToStep(tester, 2);
   await fill(tester, 'Preguntas al especialista', 'Pregunta ficticia');
   await goToStep(tester, 3);

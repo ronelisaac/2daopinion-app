@@ -9,15 +9,20 @@ import '../widgets/clinical_context_fields.dart';
 import '../widgets/form_page.dart';
 import '../widgets/request_field.dart';
 import '../widgets/consultation_wizard.dart';
+import '../widgets/chip_request_field.dart';
+import '../controllers/document_selection_controller.dart';
+import '../widgets/document_selection_panel.dart';
 
 class GuestRequestScreen extends StatefulWidget {
   const GuestRequestScreen({
     super.key,
     required this.controller,
     required this.onAccess,
+    this.documents,
   });
   final GuestDraftController controller;
   final VoidCallback onAccess;
+  final DocumentSelectionController? documents;
   @override
   State<GuestRequestScreen> createState() => _GuestRequestScreenState();
 }
@@ -103,6 +108,12 @@ class _GuestRequestScreenState extends State<GuestRequestScreen> {
           ),
           const SizedBox(height: 24),
           ConsultationWizard(
+            documents: widget.documents == null
+                ? null
+                : DocumentSelectionPanel(
+                    controller: widget.documents!,
+                    readOnly: _steps.isReview,
+                  ),
             step: _steps.index,
             onStep: _goTo,
             content: _content,
@@ -116,11 +127,13 @@ class _GuestRequestScreenState extends State<GuestRequestScreen> {
                 ),
                 RequestField(
                   label: text.details,
+                  minLines: 4,
+                  maxLines: 10,
                   hint: text.detailsHint,
                   controller: _details,
                   onChanged: _capture,
                 ),
-                RequestField(
+                ChipRequestField(
                   label: text.medicines,
                   hint: text.medicinesHint,
                   controller: _medicines,

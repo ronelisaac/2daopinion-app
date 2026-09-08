@@ -12,6 +12,7 @@ class ConsultationWizard extends StatelessWidget {
     required this.clinicalFields,
     required this.content,
     this.busy = false,
+    this.documents,
   });
   final int step;
   final ValueChanged<int> onStep;
@@ -19,6 +20,7 @@ class ConsultationWizard extends StatelessWidget {
   final Widget clinicalFields;
   final ConsultationDraft content;
   final bool busy;
+  final Widget? documents;
   Widget _retained(bool visible, Widget child) => ExcludeFocus(
     excluding: !visible,
     child: Visibility(visible: visible, maintainState: true, child: child),
@@ -60,6 +62,7 @@ class ConsultationWizard extends StatelessWidget {
         _retained(step == 1 || step == 2, clinicalFields),
         if (step == 3)
           ConsultationReview(content: content, onEdit: busy ? null : onStep),
+        if (documents != null) _retained(step == 2 || step == 3, documents!),
         if (step > 0)
           Align(
             alignment: Alignment.centerLeft,

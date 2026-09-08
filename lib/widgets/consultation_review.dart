@@ -36,6 +36,15 @@ class ConsultationReview extends StatelessWidget {
           title: text.contextStep,
           onEdit: onEdit == null ? null : () => onEdit!(1),
           values: {
+            text.birthDate: clinical.birthDate == null
+                ? ''
+                : MaterialLocalizations.of(context).formatMediumDate(
+                    DateTime(
+                      clinical.birthDate!.year,
+                      clinical.birthDate!.month,
+                      clinical.birthDate!.day,
+                    ),
+                  ),
             text.patientContext: clinical.patientContext,
             text.knownDiagnosis: clinical.knownDiagnosis,
             text.symptomEvolution: clinical.symptomEvolution,
@@ -48,7 +57,8 @@ class ConsultationReview extends StatelessWidget {
           onEdit: onEdit == null ? null : () => onEdit!(2),
           values: {
             text.questions: clinical.questions,
-            text.studySummary: clinical.studySummary,
+            if (clinical.studySummary.isNotEmpty)
+              text.legacyStudySummary: clinical.studySummary,
             text.specialty: clinical.specialty,
             text.preferredModality: switch (clinical.modality) {
               'document_review' => text.modalityDocument,
