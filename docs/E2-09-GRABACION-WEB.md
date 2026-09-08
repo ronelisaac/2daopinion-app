@@ -2,6 +2,8 @@
 
 8 de septiembre de 2026 · DEV-044 parcial · Sin carga remota
 
+Confirmación posterior del usuario: Ronel informa «graba perfecto» y pide continuar. Se registra como prueba manual satisfactoria en su entorno, sin inferir modelo de dispositivo, navegador, versión ni cobertura de toda la matriz móvil. La captura nativa sigue pendiente; no cambia permisos ni habilita carga remota.
+
 ## Recorrido implementado
 
 En el formulario, «Grabar video opcional» reemplaza la acción de adjuntar un video existente. Abre una pantalla independiente sin activar dispositivos. El usuario debe pulsar «Activar cámara y micrófono», resolver los permisos del navegador y luego «Iniciar grabación».
