@@ -85,7 +85,9 @@ La prueba de integración no termina en `_test.dart`: se ejecuta explícitamente
 
 Evidencia de cierre: 104 pruebas Flutter, 87 pruebas de reglas y una prueba de integración completa en Chrome/emuladores. Análisis y compilación web incluidos en la validación de entrega.
 
-La compilación web se regeneró desde limpio y se comprobó el registro del plugin Storage. La revisión manual de la pestaña local quedó pendiente porque el Mac estaba bloqueado; no se presenta la prueba de adaptadores como una revisión visual completa. Los widgets nuevos sí se verificaron automáticamente a 320 y 1440 px.
+La compilación web se regeneró desde limpio y se comprobó el registro del plugin Storage. Tras desbloquear el Mac, se completó la revisión visual del formulario público en una pestaña nueva de `localhost:8765`, preservando el borrador abierto por Ronel. Se verificaron inicio de la compilación actual, navegación a Preferencias, selector múltiple real con dos archivos ficticios, contador «2 de 20», botón «Agregar más archivos», tarjetas individuales y footer inferior. Se revisaron escritorio y ancho móvil de 375 px; la selección se conservó al redimensionar. Se restauró el tamaño del navegador y se cerró la pestaña de prueba, sin subir archivos ni guardar datos remotos.
+
+Esta comprobación visual corresponde al formulario público y su selección en memoria, no al panel privado de emuladores. Este último conserva la evidencia automatizada a 320/1440 px y la prueba integrada de adaptadores; no se presenta esa prueba como un recorrido visual manual del panel privado.
 
 ## Antes de habilitar remoto o producción
 
