@@ -6,7 +6,6 @@ import '../domain/account_draft.dart';
 import '../domain/identity.dart';
 import '../core/identity_messages.dart';
 import '../widgets/terms_acceptance.dart';
-import '../widgets/informational_footer.dart';
 import '../domain/operation_result.dart';
 import '../widgets/form_page.dart';
 import '../widgets/preview_dialog.dart';
@@ -107,6 +106,7 @@ class _AccountScreenState extends State<AccountScreen> {
           action: text.continueAction,
           onAction: _submit,
           busy: controller.busy,
+          showFooter: widget.onAuthenticated != null,
           children: [
             Row(
               children: [
@@ -227,7 +227,6 @@ class _AccountScreenState extends State<AccountScreen> {
                 _error!,
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
-            if (widget.onAuthenticated != null) const InformationalFooter(),
           ],
         ),
       ),

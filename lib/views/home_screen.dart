@@ -43,7 +43,9 @@ class HomeScreen extends StatelessWidget {
       );
       return Scaffold(
         backgroundColor: AppColors.primary,
-        bottomNavigationBar: const PreviewNotice(),
+        bottomNavigationBar: showFooter
+            ? const InformationalFooter(showPreviewNotice: true)
+            : const PreviewNotice(),
         drawer: layout.isExpanded ? null : Drawer(child: navigation),
         appBar: layout.isExpanded
             ? null
@@ -93,17 +95,6 @@ class HomeScreen extends StatelessWidget {
                           requestRoute: requestRoute,
                           draftMode: onSignOut != null,
                         ),
-                        if (showFooter)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 32),
-                            child: Material(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12),
-                              ),
-                              child: InformationalFooter(),
-                            ),
-                          ),
                       ],
                     ),
                   ),

@@ -9,19 +9,13 @@ class InformationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: Text(title)),
+    bottomNavigationBar: const InformationalFooter(),
     body: SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: ResponsiveContent(
           maxWidth: 760,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SelectableText(body, style: const TextStyle(height: 1.6)),
-              const SizedBox(height: 24),
-              const InformationalFooter(),
-            ],
-          ),
+          child: SelectableText(body, style: const TextStyle(height: 1.6)),
         ),
       ),
     ),

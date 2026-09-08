@@ -50,6 +50,8 @@ Compatibilidad: `firebase_core 4.13.0` y `firebase_core_web 3.10.0` quedan fijad
 
 ## Diseño y ajustes
 
+Footer actualizado el 08/09/2026: Acerca de, Términos y condiciones y Privacidad se ubican en el pie inferior de inicio/vista previa, registro conectado y páginas informativas. Ocupa todo el ancho, sin tarjeta flotante entre los servicios; Scaffold reserva su espacio para no cubrir el contenido desplazable. Los enlaces se distribuyen en varias líneas en pantallas pequeñas. Pruebas de posición inferior, navegación y formularios con teclado incluidas.
+
 Referencia: [Figma 2daOpinion](https://www.figma.com/design/g5clOtGxXBf5VETTbi4WAU/2daOpinion?node-id=0-1).
 
 Se conserva el verde #03A68B, Montserrat, el logo y la fotografía originales. La app es web responsive: móvil, tablet y escritorio. Ya no se limita toda la aplicación a 480 px. Cambios explícitos respecto del boceto: textos corregidos a español neutro, contraste de campos mejorado, controles de ingreso/registro separados sin revelar si existe una cuenta, aviso permanente de vista previa y estados de validación. Los campos adicionales de la solicitud son una propuesta provisional sobre la pantalla incompleta.

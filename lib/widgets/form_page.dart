@@ -5,6 +5,7 @@ import '../core/localization.dart';
 import 'asset_icon.dart';
 import 'brand_panel.dart';
 import 'preview_notice.dart';
+import 'informational_footer.dart';
 import 'responsive_content.dart';
 import 'responsive_layout.dart';
 
@@ -16,6 +17,7 @@ class FormPage extends StatelessWidget {
     required this.action,
     required this.onAction,
     this.busy = false,
+    this.showFooter = false,
   });
 
   final String title;
@@ -23,6 +25,7 @@ class FormPage extends StatelessWidget {
   final String action;
   final VoidCallback onAction;
   final bool busy;
+  final bool showFooter;
 
   @override
   Widget build(BuildContext context) => ResponsiveLayout(
@@ -39,7 +42,9 @@ class FormPage extends StatelessWidget {
         ),
         title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
       ),
-      bottomNavigationBar: const PreviewNotice(),
+      bottomNavigationBar: showFooter
+          ? const InformationalFooter(showPreviewNotice: true)
+          : const PreviewNotice(),
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) => SingleChildScrollView(
