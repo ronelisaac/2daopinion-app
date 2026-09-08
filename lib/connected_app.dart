@@ -37,6 +37,11 @@ import 'controllers/document_selection_controller.dart';
 import 'repositories/local_document_selection_repository.dart';
 import 'domain/private_document.dart';
 import 'controllers/private_documents_controller.dart';
+import 'controllers/notices_controller.dart';
+import 'domain/repositories/notice_repository.dart';
+import 'repositories/preview_notice_repository.dart';
+import 'views/notices_screen.dart';
+import 'widgets/notice_bell.dart';
 
 class ConnectedApp extends StatefulWidget {
   const ConnectedApp({
@@ -46,12 +51,14 @@ class ConnectedApp extends StatefulWidget {
     required this.accountRepository,
     required this.draftRepository,
     this.privateDocumentRepository,
+    this.noticeRepository,
   });
   final Future<void> Function() initialize;
   final IdentityRepository identityRepository;
   final AccountRepository accountRepository;
   final ConsultationDraftRepository draftRepository;
   final PrivateDocumentRepository? privateDocumentRepository;
+  final NoticeRepository? noticeRepository;
   @override
   State<ConnectedApp> createState() => _ConnectedAppState();
 }
@@ -115,6 +122,10 @@ class _ConnectedAppState extends State<ConnectedApp> {
     onAuthenticated: _returnHome,
   );
   Widget _guestHome(BuildContext context) => HomeScreen(
+    noticeAction: NoticeBell(
+      preview: true,
+      onPressed: () => Navigator.pushNamed(context, '/preview/notifications'),
+    ),
     showFooter: true,
     onLogin: () => Navigator.pushNamed(context, '/login'),
     secondaryContent: GuestHomeIntro(
@@ -158,6 +169,9 @@ class _ConnectedAppState extends State<ConnectedApp> {
   );
 
   Widget _home(BuildContext context) => PatientHomeScreen(
+    notices: widget.noticeRepository == null
+        ? null
+        : NoticesController(widget.noticeRepository!),
     controller: DraftOverviewController(widget.draftRepository),
     onSignOut: () async {
       try {
@@ -206,6 +220,20 @@ class _ConnectedAppState extends State<ConnectedApp> {
           ),
           '/home': (context) => _guard(_home(context), welcome: true),
           '/profile': (context) => _guard(_profile(context)),
+          '/notifications': (_) => _guard(
+            Builder(
+              builder: (_) => NoticesScreen(
+                createController: widget.noticeRepository == null
+                    ? null
+                    : () => NoticesController(widget.noticeRepository!),
+              ),
+            ),
+          ),
+          '/preview/notifications': (_) => NoticesScreen(
+            preview: true,
+            createController: () =>
+                NoticesController(PreviewNoticeRepository()),
+          ),
           '/continue-request': (_) => _memberRequest(),
           '/request': (context) => ListenableBuilder(
             listenable: _session,
@@ -230,6 +258,11 @@ class _ConnectedAppState extends State<ConnectedApp> {
             ),
           ),
           '/preview': (context) => HomeScreen(
+            noticeAction: NoticeBell(
+              preview: true,
+              onPressed: () =>
+                  Navigator.pushNamed(context, '/preview/notifications'),
+            ),
             requestRoute: '/preview/request',
             showFooter: true,
             secondaryContent: DraftOverviewCard(

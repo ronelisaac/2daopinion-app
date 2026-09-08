@@ -11,6 +11,7 @@ import 'repositories/firebase_consultation_draft_repository.dart';
 import 'firebase_options.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'repositories/firebase_private_document_repository.dart';
+import 'repositories/firebase_notice_repository.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,12 @@ void main() {
   const emulators = bool.fromEnvironment('USE_FIREBASE_EMULATORS');
   runApp(
     ConnectedApp(
+      noticeRepository: emulators
+          ? FirebaseNoticeRepository(
+              auth: () => FirebaseAuth.instance,
+              database: () => FirebaseFirestore.instance,
+            )
+          : null,
       privateDocumentRepository: emulators
           ? FirebasePrivateDocumentRepository(
               auth: () => FirebaseAuth.instance,

@@ -4,6 +4,8 @@ Base Flutter web responsive con identidad Firebase para desarrollo y vista previ
 
 ## Estado
 
+Actualización E2-08: campana, centro de avisos, paginación y leído/no leído. Ejemplo público claramente rotulado; persistencia y permisos verificados únicamente en emuladores. No hay emisor automático, push/email ni activación remota. [Entrega, pruebas y pendientes](docs/E2-08-CENTRO-DE-AVISOS.md).
+
 Actualización E2-07: video explicativo **opcional**, separado de los estudios, hasta 30 segundos; documentos restringidos a JPG/JPEG, PNG, DOC, XLS y PDF. Validaciones de formato/tamaño/duración, cuota compartida y reglas locales actualizadas. Sin carga remota ni recursos nuevos. [Decisión, límites y pruebas](docs/E2-07-VIDEO-OPCIONAL-Y-FORMATOS.md).
 
 Actualización E2-06: carga privada con progreso, cancelación, reintento y borrado **solo en emuladores locales**, con aceptación independiente y permisos por propietario. La aplicación normal todavía no sube archivos remotos. No se crea bucket ni se activan gastos; nueva infraestructura pendiente de aprobación. [Detalle, límites y pruebas](docs/E2-06-ARCHIVOS-PRIVADOS-LOCALES.md). Este estado prevalece sobre las referencias históricas siguientes.

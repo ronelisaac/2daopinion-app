@@ -19,6 +19,7 @@ class HomeScreen extends StatelessWidget {
     this.secondaryContent,
     this.onRequest,
     this.onLogin,
+    this.noticeAction,
   });
   final VoidCallback? onSignOut;
   final String requestRoute;
@@ -26,6 +27,7 @@ class HomeScreen extends StatelessWidget {
   final Widget? secondaryContent;
   final VoidCallback? onRequest;
   final VoidCallback? onLogin;
+  final Widget? noticeAction;
 
   @override
   Widget build(BuildContext context) => ResponsiveLayout(
@@ -60,6 +62,7 @@ class HomeScreen extends StatelessWidget {
             : AppBar(
                 toolbarHeight: 64,
                 elevation: 0,
+                actions: [?noticeAction],
                 leading: Builder(
                   builder: (context) => IconButton(
                     tooltip: text.menu,
@@ -89,6 +92,11 @@ class HomeScreen extends StatelessWidget {
                     maxWidth: 960,
                     child: Column(
                       children: [
+                        if (layout.isExpanded && noticeAction != null)
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: noticeAction!,
+                          ),
                         Text(
                           text.homeTitle,
                           textAlign: TextAlign.center,

@@ -9,6 +9,71 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
+  String get noticesTitle => 'Mis avisos';
+
+  @override
+  String get noticesExplore => 'Explorar avisos de ejemplo';
+
+  @override
+  String get noticesPreviewNotice =>
+      'EJEMPLO · Estos avisos son ficticios, no provienen de tu cuenta. Los cambios quedan solo en esta pantalla y se reinician al volver a abrir el ejemplo.';
+
+  @override
+  String get noticesLocalNotice =>
+      'Centro privado en preparación. La persistencia se prueba únicamente con emuladores locales; no envía correos ni notificaciones push.';
+
+  @override
+  String get noticesUnavailable =>
+      'Los avisos de tu cuenta aún no están habilitados en este ambiente. Esto no significa que tengas cero avisos. Puedes explorar un ejemplo sin acceder a datos reales.';
+
+  @override
+  String get noticesCountUnknown => 'Pendientes: sin confirmar';
+
+  @override
+  String noticesUnreadCount(String count) {
+    return '$count sin leer';
+  }
+
+  @override
+  String get noticesRefresh => 'Actualizar avisos';
+
+  @override
+  String get noticesFailed =>
+      'No pudimos confirmar los avisos o su actualización. Revisa tu sesión y vuelve a intentar; no se muestra un cambio como guardado si falló.';
+
+  @override
+  String get noticesEmpty => 'No hay avisos para mostrar.';
+
+  @override
+  String get noticesMore => 'CARGAR MÁS AVISOS';
+
+  @override
+  String get noticeWelcomeTitle => 'Conoce tu espacio personal';
+
+  @override
+  String get noticeWelcomeBody =>
+      'Desde tu cuenta puedes revisar tu perfil y continuar un borrador de solicitud. En desarrollo utiliza únicamente información ficticia.';
+
+  @override
+  String get noticeDraftTitle => 'Revisa tu borrador antes de continuar';
+
+  @override
+  String get noticeDraftBody =>
+      'Guardar un borrador no envía una consulta al médico. Revisa los campos y los archivos pendientes antes de continuar.';
+
+  @override
+  String get noticeRead => 'Leído';
+
+  @override
+  String get noticeUnread => 'Sin leer';
+
+  @override
+  String get noticeMarkRead => 'MARCAR COMO LEÍDO';
+
+  @override
+  String get noticeMarkUnread => 'MARCAR COMO NO LEÍDO';
+
+  @override
   String get optionalVideoTitle => 'Cuéntanos en un video · Opcional';
 
   @override

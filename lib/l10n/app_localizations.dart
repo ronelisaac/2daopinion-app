@@ -94,6 +94,120 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('es')];
 
+  /// No description provided for @noticesTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Mis avisos'**
+  String get noticesTitle;
+
+  /// No description provided for @noticesExplore.
+  ///
+  /// In es, this message translates to:
+  /// **'Explorar avisos de ejemplo'**
+  String get noticesExplore;
+
+  /// No description provided for @noticesPreviewNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'EJEMPLO · Estos avisos son ficticios, no provienen de tu cuenta. Los cambios quedan solo en esta pantalla y se reinician al volver a abrir el ejemplo.'**
+  String get noticesPreviewNotice;
+
+  /// No description provided for @noticesLocalNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Centro privado en preparación. La persistencia se prueba únicamente con emuladores locales; no envía correos ni notificaciones push.'**
+  String get noticesLocalNotice;
+
+  /// No description provided for @noticesUnavailable.
+  ///
+  /// In es, this message translates to:
+  /// **'Los avisos de tu cuenta aún no están habilitados en este ambiente. Esto no significa que tengas cero avisos. Puedes explorar un ejemplo sin acceder a datos reales.'**
+  String get noticesUnavailable;
+
+  /// No description provided for @noticesCountUnknown.
+  ///
+  /// In es, this message translates to:
+  /// **'Pendientes: sin confirmar'**
+  String get noticesCountUnknown;
+
+  /// No description provided for @noticesUnreadCount.
+  ///
+  /// In es, this message translates to:
+  /// **'{count} sin leer'**
+  String noticesUnreadCount(String count);
+
+  /// No description provided for @noticesRefresh.
+  ///
+  /// In es, this message translates to:
+  /// **'Actualizar avisos'**
+  String get noticesRefresh;
+
+  /// No description provided for @noticesFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos confirmar los avisos o su actualización. Revisa tu sesión y vuelve a intentar; no se muestra un cambio como guardado si falló.'**
+  String get noticesFailed;
+
+  /// No description provided for @noticesEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay avisos para mostrar.'**
+  String get noticesEmpty;
+
+  /// No description provided for @noticesMore.
+  ///
+  /// In es, this message translates to:
+  /// **'CARGAR MÁS AVISOS'**
+  String get noticesMore;
+
+  /// No description provided for @noticeWelcomeTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Conoce tu espacio personal'**
+  String get noticeWelcomeTitle;
+
+  /// No description provided for @noticeWelcomeBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Desde tu cuenta puedes revisar tu perfil y continuar un borrador de solicitud. En desarrollo utiliza únicamente información ficticia.'**
+  String get noticeWelcomeBody;
+
+  /// No description provided for @noticeDraftTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisa tu borrador antes de continuar'**
+  String get noticeDraftTitle;
+
+  /// No description provided for @noticeDraftBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar un borrador no envía una consulta al médico. Revisa los campos y los archivos pendientes antes de continuar.'**
+  String get noticeDraftBody;
+
+  /// No description provided for @noticeRead.
+  ///
+  /// In es, this message translates to:
+  /// **'Leído'**
+  String get noticeRead;
+
+  /// No description provided for @noticeUnread.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin leer'**
+  String get noticeUnread;
+
+  /// No description provided for @noticeMarkRead.
+  ///
+  /// In es, this message translates to:
+  /// **'MARCAR COMO LEÍDO'**
+  String get noticeMarkRead;
+
+  /// No description provided for @noticeMarkUnread.
+  ///
+  /// In es, this message translates to:
+  /// **'MARCAR COMO NO LEÍDO'**
+  String get noticeMarkUnread;
+
   /// No description provided for @optionalVideoTitle.
   ///
   /// In es, this message translates to:
