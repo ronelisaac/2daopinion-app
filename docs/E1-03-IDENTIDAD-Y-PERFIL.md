@@ -32,6 +32,7 @@ No registrar contraseñas, tokens o información clínica. Mensajes de acceso/re
 - 41 pruebas Flutter aprobadas: arquitectura, controllers, validación, responsive y widgets; incluye cierre desde perfil a 375/1440 px y descarte de respuestas tardías tras logout.
 - 21 pruebas Firestore aprobadas en proyecto ficticio `demo-2daopinion`: anonimato, aislamiento, escritura atómica, campos permitidos, datos inmutables, consentimiento y bloqueo clínico/financiero.
 - Análisis Flutter sin incidencias; compilación web correcta.
+- La comprobación del build conectado detectó un registro generado de plugins obsoleto en la caché de Flutter. Se regeneró con limpieza, resolución de dependencias y compilación completa, sin modificar el SDK ni registrar plugins manualmente. Los artefactos generados no se versionan.
 - Prueba de navegador con Auth y Firestore emulados: rechazo sin aceptación, creación atómica, enlace de verificación, ingreso, edición persistida y sesión conservada al recargar en debug/localhost. Sin correos externos ni usuarios clínicos reales.
 - Restricción del SDK Auth web detectada al recargar una compilación release con emuladores: el emulador debe restaurarse antes de la identidad. Se utiliza debug/localhost, combinación soportada por el SDK; se bloquea iniciar una compilación release con `USE_FIREBASE_EMULATORS=true`.
 

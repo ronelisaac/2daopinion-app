@@ -27,6 +27,8 @@ flutter build web
 
 En este equipo, usar `FLUTTER_SUPPRESS_ANALYTICS=true DART_SUPPRESS_ANALYTICS=true` delante de cada comando evita escrituras de telemetría fuera del proyecto.
 
+Después de agregar o cambiar plugins Firebase, ejecutar `flutter clean` y `flutter pub get` antes de compilar web. Se detectó que una compilación incremental conservaba el registro antiguo de plugins (solo Core), aunque el análisis y los tests pasaban; por eso es obligatoria la comprobación del build final en navegador.
+
 ## Organización
 
 - `lib/views`: pantallas y navegación visual.
