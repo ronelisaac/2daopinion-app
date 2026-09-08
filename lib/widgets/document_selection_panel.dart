@@ -9,9 +9,11 @@ class DocumentSelectionPanel extends StatelessWidget {
     super.key,
     required this.controller,
     this.readOnly = false,
+    this.localUploadsEnabled = false,
   });
   final DocumentSelectionController controller;
   final bool readOnly;
+  final bool localUploadsEnabled;
   @override
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: controller,
@@ -108,7 +110,11 @@ class DocumentSelectionPanel extends StatelessWidget {
                 text.documentSelectionFailed,
             }, style: TextStyle(color: Theme.of(context).colorScheme.error)),
           const SizedBox(height: 12),
-          Text(text.pendingDocumentsNotice),
+          Text(
+            localUploadsEnabled
+                ? text.pendingEmulatorDocumentsNotice
+                : text.pendingDocumentsNotice,
+          ),
           const SizedBox(height: 24),
         ],
       );

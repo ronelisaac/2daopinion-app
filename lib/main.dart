@@ -9,6 +9,8 @@ import 'domain/country_config.dart';
 import 'repositories/firebase_identity_repository.dart';
 import 'repositories/firebase_consultation_draft_repository.dart';
 import 'firebase_options.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'repositories/firebase_private_document_repository.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +22,16 @@ void main() {
     googleEnabled: const bool.fromEnvironment('ENABLE_GOOGLE_SIGN_IN'),
   );
   var initialized = false;
+  const emulators = bool.fromEnvironment('USE_FIREBASE_EMULATORS');
   runApp(
     ConnectedApp(
+      privateDocumentRepository: emulators
+          ? FirebasePrivateDocumentRepository(
+              auth: () => FirebaseAuth.instance,
+              database: () => FirebaseFirestore.instance,
+              storage: () => FirebaseStorage.instance,
+            )
+          : null,
       identityRepository: repository,
       accountRepository: repository,
       draftRepository: FirebaseConsultationDraftRepository(
@@ -30,7 +40,6 @@ void main() {
       ),
       initialize: () async {
         if (initialized) return;
-        const emulators = bool.fromEnvironment('USE_FIREBASE_EMULATORS');
         if (emulators && !kDebugMode) {
           throw StateError('Emulators require a local debug build.');
         }
@@ -42,6 +51,7 @@ void main() {
                     appId: '1:123456789:web:demo',
                     messagingSenderId: '123456789',
                     projectId: 'demo-2daopinion',
+                    storageBucket: 'demo-2daopinion.appspot.com',
                   )
                 : DefaultFirebaseOptions.currentPlatform,
           );
@@ -52,6 +62,7 @@ void main() {
         if (emulators) {
           await FirebaseAuth.instance.useAuthEmulator('127.0.0.1', 9099);
           FirebaseFirestore.instance.useFirestoreEmulator('127.0.0.1', 8080);
+          await FirebaseStorage.instance.useStorageEmulator('127.0.0.1', 9199);
         }
         if (kIsWeb) {
           await FirebaseAuth.instance.setPersistence(Persistence.SESSION);

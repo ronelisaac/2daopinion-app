@@ -94,6 +94,108 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('es')];
 
+  /// No description provided for @privateDocumentsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Archivos privados · Pruebas locales'**
+  String get privateDocumentsTitle;
+
+  /// No description provided for @localUploadNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Este módulo usa emuladores locales, no el proyecto remoto. Los archivos y sus títulos de prueba se guardan por separado del formulario. La cuota acumulada de pruebas es 20 documentos y 50 MB; borrar el archivo no libera su reserva. No hay revisión médica ni validación de contenido.'**
+  String get localUploadNotice;
+
+  /// No description provided for @saveBeforeUpload.
+  ///
+  /// In es, this message translates to:
+  /// **'Guarda primero el borrador con tu cuenta verificada para habilitar la carga.'**
+  String get saveBeforeUpload;
+
+  /// No description provided for @fileConsent.
+  ///
+  /// In es, this message translates to:
+  /// **'Acepto almacenar únicamente archivos ficticios en las pruebas locales (dev-files-2026-09-08). Esta aceptación no es un consentimiento clínico.'**
+  String get fileConsent;
+
+  /// No description provided for @uploadPrivateFiles.
+  ///
+  /// In es, this message translates to:
+  /// **'SUBIR ARCHIVOS AL EMULADOR'**
+  String get uploadPrivateFiles;
+
+  /// No description provided for @cancelTransfer.
+  ///
+  /// In es, this message translates to:
+  /// **'CANCELAR SUBIDA'**
+  String get cancelTransfer;
+
+  /// No description provided for @reloadPrivateFiles.
+  ///
+  /// In es, this message translates to:
+  /// **'ACTUALIZAR ARCHIVOS GUARDADOS'**
+  String get reloadPrivateFiles;
+
+  /// No description provided for @privateFileStored.
+  ///
+  /// In es, this message translates to:
+  /// **'Archivo guardado · Sin revisión médica'**
+  String get privateFileStored;
+
+  /// No description provided for @privateFileMissing.
+  ///
+  /// In es, this message translates to:
+  /// **'Reserva sin archivo. Para reintentar, selecciona nuevamente el mismo archivo.'**
+  String get privateFileMissing;
+
+  /// No description provided for @deletePrivateFile.
+  ///
+  /// In es, this message translates to:
+  /// **'BORRAR ARCHIVO DE PRUEBA'**
+  String get deletePrivateFile;
+
+  /// No description provided for @deletePrivateFileNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Se borrarán los bytes del emulador. El título, la aceptación y la reserva permanecerán; la cuota no se libera automáticamente.'**
+  String get deletePrivateFileNotice;
+
+  /// No description provided for @transferCancelled.
+  ///
+  /// In es, this message translates to:
+  /// **'Subida cancelada. Los archivos ya confirmados se conservan; revisa el listado antes de reintentar.'**
+  String get transferCancelled;
+
+  /// No description provided for @privateQuotaReached.
+  ///
+  /// In es, this message translates to:
+  /// **'Se alcanzó la cuota acumulada de pruebas. Reutiliza la reserva del mismo archivo o solicita limpieza del entorno local.'**
+  String get privateQuotaReached;
+
+  /// No description provided for @fileSessionRequired.
+  ///
+  /// In es, this message translates to:
+  /// **'Necesitas una sesión vigente con correo verificado.'**
+  String get fileSessionRequired;
+
+  /// No description provided for @filePermissionDenied.
+  ///
+  /// In es, this message translates to:
+  /// **'No se autorizó la operación. Revisa tu sesión, aceptación y permisos.'**
+  String get filePermissionDenied;
+
+  /// No description provided for @fileInvalid.
+  ///
+  /// In es, this message translates to:
+  /// **'El archivo o su reserva no cumplen los requisitos. No se confirmó la carga.'**
+  String get fileInvalid;
+
+  /// No description provided for @fileServiceUnavailable.
+  ///
+  /// In es, this message translates to:
+  /// **'No se confirmó la operación. Actualiza el listado antes de reintentar; tus archivos locales no confirmados se conservan.'**
+  String get fileServiceUnavailable;
+
   /// No description provided for @birthDate.
   ///
   /// In es, this message translates to:
@@ -177,6 +279,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Solo archivos de prueba PDF, JPG o PNG: hasta 20 archivos, 5 MB por archivo y 50 MB en total. Quedan en memoria, pendientes de subir: guardar el borrador NO guarda archivos. Se pierden al recargar, cerrar la pestaña o cerrar sesión. La carga privada todavía no está habilitada.'**
   String get pendingDocumentsNotice;
+
+  /// No description provided for @pendingEmulatorDocumentsNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Los archivos seleccionados están en memoria y se pierden al recargar o cerrar sesión. Guardar el borrador no los sube. En Revisión podrás subirlos por separado al emulador local, después de guardar el borrador y aceptar las condiciones de archivos de prueba.'**
+  String get pendingEmulatorDocumentsNotice;
 
   /// No description provided for @pendingUpload.
   ///

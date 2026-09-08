@@ -9,6 +9,68 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
+  String get privateDocumentsTitle => 'Archivos privados · Pruebas locales';
+
+  @override
+  String get localUploadNotice =>
+      'Este módulo usa emuladores locales, no el proyecto remoto. Los archivos y sus títulos de prueba se guardan por separado del formulario. La cuota acumulada de pruebas es 20 documentos y 50 MB; borrar el archivo no libera su reserva. No hay revisión médica ni validación de contenido.';
+
+  @override
+  String get saveBeforeUpload =>
+      'Guarda primero el borrador con tu cuenta verificada para habilitar la carga.';
+
+  @override
+  String get fileConsent =>
+      'Acepto almacenar únicamente archivos ficticios en las pruebas locales (dev-files-2026-09-08). Esta aceptación no es un consentimiento clínico.';
+
+  @override
+  String get uploadPrivateFiles => 'SUBIR ARCHIVOS AL EMULADOR';
+
+  @override
+  String get cancelTransfer => 'CANCELAR SUBIDA';
+
+  @override
+  String get reloadPrivateFiles => 'ACTUALIZAR ARCHIVOS GUARDADOS';
+
+  @override
+  String get privateFileStored => 'Archivo guardado · Sin revisión médica';
+
+  @override
+  String get privateFileMissing =>
+      'Reserva sin archivo. Para reintentar, selecciona nuevamente el mismo archivo.';
+
+  @override
+  String get deletePrivateFile => 'BORRAR ARCHIVO DE PRUEBA';
+
+  @override
+  String get deletePrivateFileNotice =>
+      'Se borrarán los bytes del emulador. El título, la aceptación y la reserva permanecerán; la cuota no se libera automáticamente.';
+
+  @override
+  String get transferCancelled =>
+      'Subida cancelada. Los archivos ya confirmados se conservan; revisa el listado antes de reintentar.';
+
+  @override
+  String get privateQuotaReached =>
+      'Se alcanzó la cuota acumulada de pruebas. Reutiliza la reserva del mismo archivo o solicita limpieza del entorno local.';
+
+  @override
+  String get fileSessionRequired =>
+      'Necesitas una sesión vigente con correo verificado.';
+
+  @override
+  String get filePermissionDenied =>
+      'No se autorizó la operación. Revisa tu sesión, aceptación y permisos.';
+
+  @override
+  String get fileInvalid =>
+      'El archivo o su reserva no cumplen los requisitos. No se confirmó la carga.';
+
+  @override
+  String get fileServiceUnavailable =>
+      'No se confirmó la operación. Actualiza el listado antes de reintentar; tus archivos locales no confirmados se conservan.';
+
+  @override
   String get birthDate => 'Fecha de nacimiento';
 
   @override
@@ -56,6 +118,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get pendingDocumentsNotice =>
       'Solo archivos de prueba PDF, JPG o PNG: hasta 20 archivos, 5 MB por archivo y 50 MB en total. Quedan en memoria, pendientes de subir: guardar el borrador NO guarda archivos. Se pierden al recargar, cerrar la pestaña o cerrar sesión. La carga privada todavía no está habilitada.';
+
+  @override
+  String get pendingEmulatorDocumentsNotice =>
+      'Los archivos seleccionados están en memoria y se pierden al recargar o cerrar sesión. Guardar el borrador no los sube. En Revisión podrás subirlos por separado al emulador local, después de guardar el borrador y aceptar las condiciones de archivos de prueba.';
 
   @override
   String get pendingUpload => 'Pendiente de subir';

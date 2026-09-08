@@ -35,6 +35,8 @@ import 'views/request_screen.dart';
 import 'views/session_gate.dart';
 import 'controllers/document_selection_controller.dart';
 import 'repositories/local_document_selection_repository.dart';
+import 'domain/private_document.dart';
+import 'controllers/private_documents_controller.dart';
 
 class ConnectedApp extends StatefulWidget {
   const ConnectedApp({
@@ -43,11 +45,13 @@ class ConnectedApp extends StatefulWidget {
     required this.identityRepository,
     required this.accountRepository,
     required this.draftRepository,
+    this.privateDocumentRepository,
   });
   final Future<void> Function() initialize;
   final IdentityRepository identityRepository;
   final AccountRepository accountRepository;
   final ConsultationDraftRepository draftRepository;
+  final PrivateDocumentRepository? privateDocumentRepository;
   @override
   State<ConnectedApp> createState() => _ConnectedAppState();
 }
@@ -139,6 +143,9 @@ class _ConnectedAppState extends State<ConnectedApp> {
   Widget _memberRequest() => _guard(
     Builder(
       builder: (_) => DraftRequestScreen(
+        library: widget.privateDocumentRepository == null
+            ? null
+            : PrivateDocumentsController(widget.privateDocumentRepository!),
         documents: _documents,
         initialDraft: _guest.resumeAfterAccess ? _guest.content : null,
         onInitialDraftConsumed: _guest.clear,

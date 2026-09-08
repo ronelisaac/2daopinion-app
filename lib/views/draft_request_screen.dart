@@ -13,6 +13,8 @@ import '../widgets/draft_storage_consent.dart';
 import '../widgets/chip_request_field.dart';
 import '../controllers/document_selection_controller.dart';
 import '../widgets/document_selection_panel.dart';
+import '../controllers/private_documents_controller.dart';
+import '../widgets/private_documents_panel.dart';
 
 class DraftRequestScreen extends StatefulWidget {
   const DraftRequestScreen({
@@ -21,11 +23,13 @@ class DraftRequestScreen extends StatefulWidget {
     this.initialDraft,
     this.onInitialDraftConsumed,
     this.documents,
+    this.library,
   });
   final ConsultationDraftController controller;
   final ConsultationDraft? initialDraft;
   final VoidCallback? onInitialDraftConsumed;
   final DocumentSelectionController? documents;
+  final PrivateDocumentsController? library;
   @override
   State<DraftRequestScreen> createState() => _DraftRequestScreenState();
 }
@@ -97,6 +101,9 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
       _savedNotice = false;
     });
     _goTo(useGuest ? 3 : 0);
+    if (widget.controller.saved != null) {
+      widget.library?.load(widget.controller.saved!.id);
+    }
   }
 
   ConsultationDraft get _content => ConsultationDraft(
@@ -110,7 +117,9 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
   );
 
   void _goTo(int step) {
-    if (widget.controller.busy) return;
+    if (widget.controller.busy || (widget.library?.transferring ?? false)) {
+      return;
+    }
     FocusScope.of(context).unfocus();
     _steps.select(step);
     if (_scroll.hasClients) _scroll.jumpTo(0);
@@ -142,13 +151,16 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
   }
 
   Future<void> _reload() async {
+    if (widget.library?.transferring ?? false) return;
     if (widget.controller.busy || !await _confirmDiscard() || !mounted) return;
     await _load();
   }
 
   Future<void> _save() async {
+    if (widget.library?.transferring ?? false) return;
     final success = await widget.controller.save(_content, accepted: _accepted);
     if (success && mounted) {
+      widget.library?.load(widget.controller.saved!.id);
       setState(() {
         _dirty = false;
         _savedNotice = true;
@@ -163,6 +175,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
 
   @override
   void dispose() {
+    widget.library?.dispose();
     _steps.dispose();
     _scroll.dispose();
     for (final field in [
@@ -180,10 +193,11 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(
-    listenable: Listenable.merge([widget.controller, _steps]),
+    listenable: Listenable.merge([widget.controller, _steps, widget.library]),
     builder: (context, child) {
       final controller = widget.controller;
       final text = strings(context);
+      final transferring = widget.library?.transferring ?? false;
       if (!controller.loaded) {
         return Scaffold(
           appBar: AppBar(title: Text(text.draftTitle)),
@@ -204,9 +218,10 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
         );
       }
       return PopScope(
-        canPop: _allowPop || (!_dirty && !controller.busy),
+        canPop: _allowPop || (!_dirty && !controller.busy && !transferring),
         onPopInvokedWithResult: (didPop, result) async {
           if (didPop ||
+              transferring ||
               controller.busy ||
               !await _confirmDiscard() ||
               !context.mounted) {
@@ -221,7 +236,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
           title: text.draftTitle,
           scrollController: _scroll,
           action: _steps.isReview ? text.saveDraft : text.nextStep,
-          busy: controller.busy,
+          busy: controller.busy || transferring,
           onAction: () => _steps.isReview ? _save() : _goTo(_steps.index + 1),
           children: [
             Text(text.draftNotice),
@@ -241,7 +256,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
               ),
             const SizedBox(height: 16),
             AbsorbPointer(
-              absorbing: controller.busy,
+              absorbing: controller.busy || transferring,
               child: Column(
                 children: [
                   ConsultationWizard(
@@ -250,6 +265,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
                         : DocumentSelectionPanel(
                             controller: widget.documents!,
                             readOnly: _steps.isReview,
+                            localUploadsEnabled: widget.library != null,
                           ),
                     step: _steps.index,
                     onStep: _goTo,
@@ -323,9 +339,16 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             TextButton(
-              onPressed: controller.busy ? null : _reload,
+              onPressed: controller.busy || transferring ? null : _reload,
               child: Text(text.draftReload),
             ),
+            if (_steps.isReview &&
+                widget.library != null &&
+                widget.documents != null)
+              PrivateDocumentsPanel(
+                controller: widget.library!,
+                selection: widget.documents!,
+              ),
             Text(text.draftNoSubmission),
             if (!_steps.isReview)
               TextButton(
