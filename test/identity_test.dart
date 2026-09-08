@@ -16,7 +16,6 @@ import 'package:segunda_opinion_app/domain/repositories/identity_repository.dart
 import 'package:segunda_opinion_app/views/home_screen.dart';
 import 'package:segunda_opinion_app/views/profile_screen.dart';
 import 'package:segunda_opinion_app/views/verification_screen.dart';
-import 'package:segunda_opinion_app/views/welcome_screen.dart';
 
 const verified = IdentityUser(
   authUserId: 'patient',
@@ -39,6 +38,13 @@ const storedProfile = PatientProfile(
 );
 
 class FakeIdentity implements IdentityRepository, AccountRepository {
+  int googleSignIns = 0;
+  @override
+  Future<OperationResult> signInWithGoogle() async {
+    googleSignIns++;
+    return OperationResult.completed;
+  }
+
   final events = StreamController<IdentityUser?>.broadcast();
   IdentityUser? current;
   PatientProfile? profile;
@@ -317,10 +323,10 @@ void main() {
       expect(find.text('Prueba'), findsOneWidget);
       await tester.tap(find.text('Cerrar sesión'));
       await tester.pumpAndSettle();
-      expect(find.byType(WelcomeScreen), findsOneWidget);
+      expect(find.byType(HomeScreen), findsOneWidget);
       expect(find.byType(ProfileScreen), findsNothing);
       expect(
-        Navigator.of(tester.element(find.byType(WelcomeScreen))).canPop(),
+        Navigator.of(tester.element(find.byType(HomeScreen))).canPop(),
         false,
       );
       expect(repository.profile, storedProfile);
@@ -356,7 +362,7 @@ void main() {
     );
     repository.emit(null);
     await tester.pumpAndSettle();
-    expect(find.byType(WelcomeScreen), findsOneWidget);
+    expect(find.byType(HomeScreen), findsOneWidget);
     expect(find.text('Texto ficticio no guardado'), findsNothing);
     expect(find.byType(DraftRequestScreen), findsNothing);
     expect(find.byKey(const ValueKey('draftOverview')), findsNothing);
@@ -380,7 +386,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       Navigator.of(
-        tester.element(find.byType(WelcomeScreen)),
+        tester.element(find.byType(HomeScreen)),
       ).pushNamed('/preview');
       await tester.pumpAndSettle();
       expect(find.text('Ejemplo de solicitud en preparación'), findsOneWidget);

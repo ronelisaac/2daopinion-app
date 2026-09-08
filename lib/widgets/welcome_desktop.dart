@@ -7,7 +7,15 @@ import 'brand_panel.dart';
 import 'responsive_content.dart';
 
 class WelcomeDesktop extends StatelessWidget {
-  const WelcomeDesktop({super.key});
+  const WelcomeDesktop({
+    super.key,
+    this.onGoogle,
+    this.busy = false,
+    this.error,
+  });
+  final VoidCallback? onGoogle;
+  final bool busy;
+  final String? error;
 
   @override
   Widget build(BuildContext context) => Row(
@@ -47,7 +55,12 @@ class WelcomeDesktop extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 32),
-                    const AccessOptions(onDark: false),
+                    AccessOptions(
+                      onDark: false,
+                      onGoogle: onGoogle,
+                      busy: busy,
+                      error: error,
+                    ),
                   ],
                 ),
               ),

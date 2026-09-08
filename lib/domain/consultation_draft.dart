@@ -1,3 +1,5 @@
+import 'clinical_context.dart';
+
 class ConsultationDraft {
   const ConsultationDraft({
     required this.countryCode,
@@ -6,6 +8,7 @@ class ConsultationDraft {
     this.medicines = '',
     this.specialTreatments = '',
     this.previousProposals = '',
+    this.clinicalContext = const ClinicalContext(),
   });
 
   final String countryCode;
@@ -14,14 +17,17 @@ class ConsultationDraft {
   final String medicines;
   final String specialTreatments;
   final String previousProposals;
+  final ClinicalContext clinicalContext;
 
   bool get isComplete => reason.trim().isNotEmpty && details.trim().isNotEmpty;
 
-  bool get withinStorageLimits => [
-    reason,
-    details,
-    medicines,
-    specialTreatments,
-    previousProposals,
-  ].every((value) => value.length <= 4000);
+  bool get withinStorageLimits =>
+      [
+        reason,
+        details,
+        medicines,
+        specialTreatments,
+        previousProposals,
+      ].every((value) => value.length <= 4000) &&
+      clinicalContext.withinStorageLimits;
 }

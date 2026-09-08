@@ -3,6 +3,7 @@ import '../controllers/session_controller.dart';
 import '../core/localization.dart';
 import '../core/identity_messages.dart';
 import '../widgets/form_page.dart';
+import '../widgets/onboarding_progress.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key, required this.controller});
@@ -34,6 +35,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         strings(context).verificationPending,
       ),
       children: [
+        const OnboardingProgress(step: 3),
         Text(strings(context).verificationInstructions),
         const SizedBox(height: 16),
         Text(widget.controller.user?.email ?? ''),

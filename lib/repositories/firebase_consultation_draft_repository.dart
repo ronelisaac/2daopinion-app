@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../domain/consultation_draft.dart';
+import 'clinical_context_mapper.dart';
 import '../domain/saved_consultation_draft.dart';
 import '../domain/repositories/consultation_draft_repository.dart';
 
@@ -46,6 +47,9 @@ class FirebaseConsultationDraftRepository
           medicines: data['medicines'] as String,
           specialTreatments: data['specialTreatments'] as String,
           previousProposals: data['previousProposals'] as String,
+          clinicalContext: ClinicalContextMapper.decode(
+            data['clinicalContext'] as Map<String, dynamic>?,
+          ),
         ),
       );
 
@@ -95,6 +99,9 @@ class FirebaseConsultationDraftRepository
         'medicines': content.medicines,
         'specialTreatments': content.specialTreatments,
         'previousProposals': content.previousProposals,
+        'clinicalContext': ClinicalContextMapper.encode(
+          content.clinicalContext,
+        ),
         'revision': expectedRevision + 1,
         'updatedAt': FieldValue.serverTimestamp(),
       };

@@ -9,6 +9,8 @@ import '../widgets/terms_acceptance.dart';
 import '../domain/operation_result.dart';
 import '../widgets/form_page.dart';
 import '../widgets/preview_dialog.dart';
+import '../widgets/onboarding_progress.dart';
+import '../widgets/access_button.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({
@@ -24,13 +26,14 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  final _formKey = GlobalKey<FormState>();
+  var _formKey = GlobalKey<FormState>();
   final _email = TextEditingController();
   final _firstName = TextEditingController();
   final _lastName = TextEditingController();
   final _password = TextEditingController();
   final _confirmation = TextEditingController();
   bool _accepted = false;
+  bool _showPassword = false;
   String? _error;
 
   @override
@@ -93,6 +96,36 @@ class _AccountScreenState extends State<AccountScreen> {
     }
   }
 
+  Future<void> _google() async {
+    setState(() => _error = null);
+    try {
+      final result = await widget.controller.signInWithGoogle();
+      if (!mounted) return;
+      if (result == OperationResult.completed &&
+          widget.onAuthenticated != null) {
+        _password.clear();
+        _confirmation.clear();
+        await widget.onAuthenticated!();
+      } else {
+        await explainPreview(context, strings(context).accountPreview);
+      }
+    } catch (error) {
+      if (mounted) setState(() => _error = identityMessage(context, error));
+    }
+  }
+
+  void _setRegistering(bool value) {
+    _formKey = GlobalKey<FormState>();
+    setState(() {
+      _error = null;
+      _accepted = false;
+      _showPassword = false;
+    });
+    _password.clear();
+    _confirmation.clear();
+    widget.controller.setRegistering(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     final text = strings(context);
@@ -108,13 +141,14 @@ class _AccountScreenState extends State<AccountScreen> {
           busy: controller.busy,
           showFooter: widget.onAuthenticated != null,
           children: [
+            if (controller.registering) const OnboardingProgress(step: 1),
             Row(
               children: [
                 Expanded(
                   child: TextButton(
                     onPressed: controller.busy
                         ? null
-                        : () => controller.setRegistering(false),
+                        : () => _setRegistering(false),
                     child: Text(
                       text.signIn,
                       style: TextStyle(
@@ -129,7 +163,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   child: TextButton(
                     onPressed: controller.busy
                         ? null
-                        : () => controller.setRegistering(true),
+                        : () => _setRegistering(true),
                     child: Text(
                       text.createAccount,
                       style: TextStyle(
@@ -182,10 +216,20 @@ class _AccountScreenState extends State<AccountScreen> {
             TextFormField(
               key: const ValueKey('password'),
               controller: _password,
-              obscureText: true,
+              obscureText: !_showPassword,
               enableSuggestions: false,
               autocorrect: false,
               decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: () =>
+                      setState(() => _showPassword = !_showPassword),
+                  tooltip: _showPassword
+                      ? text.hidePassword
+                      : text.showPassword,
+                  icon: Icon(
+                    _showPassword ? Icons.visibility_off : Icons.visibility,
+                  ),
+                ),
                 labelText: controller.registering
                     ? text.choosePassword
                     : text.password,
@@ -198,7 +242,7 @@ class _AccountScreenState extends State<AccountScreen> {
               TextFormField(
                 key: const ValueKey('repeatPassword'),
                 controller: _confirmation,
-                obscureText: true,
+                obscureText: !_showPassword,
                 enableSuggestions: false,
                 autocorrect: false,
                 decoration: InputDecoration(labelText: text.repeatPassword),
@@ -227,6 +271,16 @@ class _AccountScreenState extends State<AccountScreen> {
                 _error!,
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
+            if (widget.onAuthenticated != null) ...[
+              const SizedBox(height: 20),
+              AccessButton(
+                label: text.google,
+                asset: 'google',
+                onPressed: controller.busy ? null : _google,
+              ),
+              const SizedBox(height: 8),
+              Text(text.googleSetupPending),
+            ],
           ],
         ),
       ),

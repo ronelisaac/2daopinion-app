@@ -70,7 +70,7 @@ void main() {
     await tester.tap(find.text('REINTENTAR'));
     await tester.pumpAndSettle();
     expect(attempts, 2);
-    expect(find.text('Explorar el diseño'), findsOneWidget);
+    expect(find.text('Continuar sin iniciar sesión'), findsOneWidget);
   });
 
   testWidgets('Login validates missing data without starting a session', (
@@ -128,7 +128,7 @@ void main() {
     'Request validates required fields and never claims it was sent',
     (tester) async {
       await openApp(tester);
-      await tester.tap(find.text('Explorar el diseño'));
+      await tester.tap(find.text('Continuar sin iniciar sesión'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Consulta médica'));
       await tester.pumpAndSettle();
@@ -166,8 +166,8 @@ void main() {
       expect(tester.takeException(), isNull);
       await tester.tap(find.byTooltip('Volver'));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('Explorar el diseño'));
-      await tester.tap(find.text('Explorar el diseño'));
+      await tester.ensureVisible(find.text('Continuar sin iniciar sesión'));
+      await tester.tap(find.text('Continuar sin iniciar sesión'));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
       await tester.tap(find.text('Consulta médica'));

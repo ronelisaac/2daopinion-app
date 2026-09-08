@@ -78,10 +78,22 @@ class SessionController extends ChangeNotifier {
   }
 
   Future<void> refresh() async {
+    if (_disposed) return;
     final generation = _generation;
-    final identity = await _repository.refreshIdentity();
-    if (_disposed || generation != _generation) return;
-    await _load(identity);
+    status = SessionStatus.loading;
+    _notify();
+    try {
+      final identity = await _repository.refreshIdentity();
+      if (_disposed || generation != _generation) return;
+      await _load(identity);
+    } catch (_) {
+      if (!_disposed && generation == _generation) {
+        profile = null;
+        status = SessionStatus.failed;
+        _notify();
+      }
+      rethrow;
+    }
   }
 
   Future<void> _run(Future<void> Function() operation) async {

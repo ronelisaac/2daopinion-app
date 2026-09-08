@@ -67,7 +67,7 @@ void main() {
       expect(formRect.width, lessThanOrEqualTo(828));
       await tester.tap(find.byTooltip('Volver'));
       await tester.pumpAndSettle();
-      await press(tester, 'Explorar el diseño');
+      await press(tester, 'Continuar sin iniciar sesión');
       expect(
         find.byKey(const ValueKey('desktopNavigation')),
         desktop ? findsOneWidget : findsNothing,
@@ -135,7 +135,7 @@ void main() {
     'Resizing a request preserves its text and supports the keyboard',
     (tester) async {
       await mountApp(tester, const Size(1440, 900));
-      await press(tester, 'Explorar el diseño');
+      await press(tester, 'Continuar sin iniciar sesión');
       await press(tester, 'Consulta médica');
       await tester.enterText(
         find.byType(TextFormField).first,
@@ -166,7 +166,7 @@ void main() {
       expect(tester.takeException(), isNull);
       await tester.tap(find.byTooltip('Volver'));
       await tester.pumpAndSettle();
-      await press(tester, 'Explorar el diseño');
+      await press(tester, 'Continuar sin iniciar sesión');
       await press(tester, 'Consulta médica');
       await tester.ensureVisible(find.text('ENVIAR SOLICITUD'));
       expect(tester.takeException(), isNull);

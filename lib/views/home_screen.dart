@@ -18,12 +18,14 @@ class HomeScreen extends StatelessWidget {
     this.showFooter = false,
     this.secondaryContent,
     this.onRequest,
+    this.onLogin,
   });
   final VoidCallback? onSignOut;
   final String requestRoute;
   final bool showFooter;
   final Widget? secondaryContent;
   final VoidCallback? onRequest;
+  final VoidCallback? onLogin;
 
   @override
   Widget build(BuildContext context) => ResponsiveLayout(
@@ -38,11 +40,13 @@ class HomeScreen extends StatelessWidget {
           Navigator.pushNamed(context, '/loading');
         },
         connected: onSignOut != null,
+        guest: onLogin != null,
         onProfile: onSignOut == null
             ? null
             : () => Navigator.pushNamed(context, '/profile'),
         onExit:
             onSignOut ??
+            onLogin ??
             () => Navigator.popUntil(context, (route) => route.isFirst),
       );
       return Scaffold(

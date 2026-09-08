@@ -3,13 +3,22 @@ import '../controllers/consultation_draft_controller.dart';
 import '../core/localization.dart';
 import '../core/draft_messages.dart';
 import '../domain/consultation_draft.dart';
+import '../domain/clinical_context.dart';
+import '../widgets/clinical_context_fields.dart';
 import '../widgets/form_page.dart';
 import '../widgets/request_field.dart';
 import '../widgets/draft_storage_consent.dart';
 
 class DraftRequestScreen extends StatefulWidget {
-  const DraftRequestScreen({super.key, required this.controller});
+  const DraftRequestScreen({
+    super.key,
+    required this.controller,
+    this.initialDraft,
+    this.onInitialDraftConsumed,
+  });
   final ConsultationDraftController controller;
+  final ConsultationDraft? initialDraft;
+  final VoidCallback? onInitialDraftConsumed;
   @override
   State<DraftRequestScreen> createState() => _DraftRequestScreenState();
 }
@@ -25,6 +34,9 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
   bool _allowPop = false;
   bool _confirming = false;
   bool _savedNotice = false;
+  bool _initialConsumed = false;
+  ClinicalContext _clinical = const ClinicalContext();
+  int _clinicalVersion = 0;
 
   @override
   void initState() {
@@ -34,14 +46,44 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
 
   Future<void> _load() async {
     if (!await widget.controller.load() || !mounted) return;
-    final content = widget.controller.saved?.content;
+    var content = widget.controller.saved?.content;
+    var useGuest = false;
+    if (!_initialConsumed && widget.initialDraft != null) {
+      useGuest =
+          content == null ||
+          await showDialog<bool>(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => AlertDialog(
+                  title: Text(strings(context).guestExistingTitle),
+                  content: Text(strings(context).guestExistingBody),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: Text(strings(context).guestKeepSaved),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: Text(strings(context).guestUseNew),
+                    ),
+                  ],
+                ),
+              ) ==
+              true;
+      if (!mounted) return;
+      if (useGuest) content = widget.initialDraft;
+      _initialConsumed = true;
+      widget.onInitialDraftConsumed?.call();
+    }
     setState(() {
       _reason.text = content?.reason ?? '';
       _details.text = content?.details ?? '';
       _medicines.text = content?.medicines ?? '';
       _treatments.text = content?.specialTreatments ?? '';
       _proposals.text = content?.previousProposals ?? '';
-      _dirty = false;
+      _clinical = content?.clinicalContext ?? const ClinicalContext();
+      _clinicalVersion++;
+      _dirty = useGuest;
       _savedNotice = false;
     });
   }
@@ -85,6 +127,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
         medicines: _medicines.text,
         specialTreatments: _treatments.text,
         previousProposals: _proposals.text,
+        clinicalContext: _clinical,
       ),
       accepted: _accepted,
     );
@@ -162,6 +205,8 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
           onAction: _save,
           children: [
             Text(text.draftNotice),
+            const SizedBox(height: 12),
+            Text(text.noEmergencyNotice),
             const SizedBox(height: 16),
             if (_dirty) Text(text.draftUnsavedStatus),
             if (_savedNotice)
@@ -213,6 +258,14 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
                     hint: text.previousProposalsHint,
                     controller: _proposals,
                     onChanged: _changed,
+                  ),
+                  ClinicalContextFields(
+                    key: ValueKey(_clinicalVersion),
+                    value: _clinical,
+                    onChanged: (value) {
+                      _clinical = value;
+                      _changed('');
+                    },
                   ),
                   DraftStorageConsent(
                     recorded: controller.saved != null,

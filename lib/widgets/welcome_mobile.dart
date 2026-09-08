@@ -5,7 +5,15 @@ import 'access_options.dart';
 import 'responsive_content.dart';
 
 class WelcomeMobile extends StatelessWidget {
-  const WelcomeMobile({super.key});
+  const WelcomeMobile({
+    super.key,
+    this.onGoogle,
+    this.busy = false,
+    this.error,
+  });
+  final VoidCallback? onGoogle;
+  final bool busy;
+  final String? error;
 
   @override
   Widget build(BuildContext context) => Stack(
@@ -42,7 +50,11 @@ class WelcomeMobile extends StatelessWidget {
                         ),
                       ),
                       const Spacer(flex: 2),
-                      const AccessOptions(),
+                      AccessOptions(
+                        onGoogle: onGoogle,
+                        busy: busy,
+                        error: error,
+                      ),
                       const SizedBox(height: 8),
                     ],
                   ),

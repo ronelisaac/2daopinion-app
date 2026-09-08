@@ -5,6 +5,7 @@ import '../core/localization.dart';
 import '../core/identity_messages.dart';
 import '../widgets/form_page.dart';
 import '../widgets/terms_acceptance.dart';
+import '../widgets/onboarding_progress.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
@@ -78,6 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         onAction: _save,
         busy: widget.controller.busy,
         children: [
+          if (widget.profile == null) const OnboardingProgress(step: 2),
           if (widget.profile == null)
             Padding(
               padding: const EdgeInsets.only(bottom: 20),

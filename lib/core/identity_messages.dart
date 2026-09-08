@@ -15,6 +15,10 @@ String identityMessage(BuildContext context, Object error) {
     IdentityIssue.termsRequired => text.termsRequired,
     IdentityIssue.profilePending => text.profilePending,
     IdentityIssue.sessionExpired => text.sessionExpired,
+    IdentityIssue.cancelled => text.googleCancelled,
+    IdentityIssue.popupBlocked => text.googlePopupBlocked,
+    IdentityIssue.accountConflict => text.googleAccountConflict,
+    IdentityIssue.googleUnavailable => text.googleSetupPending,
     IdentityIssue.unknown => text.actionFailed,
   };
 }

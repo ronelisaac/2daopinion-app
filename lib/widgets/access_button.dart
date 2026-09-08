@@ -14,7 +14,7 @@ class AccessButton extends StatelessWidget {
 
   final String label;
   final String asset;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color background;
   final Color foreground;
 

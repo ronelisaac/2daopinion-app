@@ -45,6 +45,9 @@ class SegundaOpinionApp extends StatelessWidget {
     routes: {
       '/account': (context) =>
           AccountScreen(controller: AccountController(accountRepository)),
+      '/register': (context) => AccountScreen(
+        controller: AccountController(accountRepository, registering: true),
+      ),
       '/home': (context) => const HomeScreen(),
       '/preview': (context) => const HomeScreen(),
       '/terms': (context) => InformationScreen(

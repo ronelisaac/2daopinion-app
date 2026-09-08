@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'controllers/account_controller.dart';
+import 'controllers/guest_draft_controller.dart';
+import 'views/guest_request_screen.dart';
+import 'views/request_entry_screen.dart';
+import 'views/login_screen.dart';
+import 'widgets/guest_home_intro.dart';
 import 'controllers/draft_overview_controller.dart';
 import 'domain/draft_overview.dart';
 import 'widgets/draft_overview_card.dart';
@@ -28,7 +33,6 @@ import 'views/password_reset_screen.dart';
 import 'views/profile_screen.dart';
 import 'views/request_screen.dart';
 import 'views/session_gate.dart';
-import 'views/welcome_screen.dart';
 
 class ConnectedApp extends StatefulWidget {
   const ConnectedApp({
@@ -47,9 +51,11 @@ class ConnectedApp extends StatefulWidget {
 }
 
 class _ConnectedAppState extends State<ConnectedApp> {
+  final _guest = GuestDraftController();
   late final SessionController _session;
   var _navigator = GlobalKey<NavigatorState>();
   int _navigationEpoch = 0;
+  int _accessNavigation = 0;
   @override
   void initState() {
     super.initState();
@@ -61,14 +67,29 @@ class _ConnectedAppState extends State<ConnectedApp> {
 
   @override
   void dispose() {
+    _guest.clear();
     _session.dispose();
     super.dispose();
   }
 
   Future<void> _returnHome() async {
-    await _session.refresh();
     if (mounted) {
-      _navigator.currentState?.pushNamedAndRemoveUntil('/', (_) => false);
+      final navigation = ++_accessNavigation;
+      final refreshing = _session.refresh();
+      final navigator = _navigator.currentState;
+      navigator?.pushNamedAndRemoveUntil('/home', (_) => false);
+      if (_guest.resumeAfterAccess && navigator != null) {
+        navigator.pushNamed('/continue-request').then((_) {
+          if (mounted &&
+              navigation == _accessNavigation &&
+              identical(navigator, _navigator.currentState) &&
+              _session.status == SessionStatus.ready &&
+              !navigator.canPop()) {
+            navigator.pushNamedAndRemoveUntil('/home', (_) => false);
+          }
+        });
+      }
+      await refreshing;
     }
   }
 
@@ -79,6 +100,17 @@ class _ConnectedAppState extends State<ConnectedApp> {
     ),
     onAuthenticated: _returnHome,
   );
+  Widget _login(BuildContext context) => LoginScreen(
+    controller: AccountController(widget.accountRepository),
+    onAuthenticated: _returnHome,
+  );
+  Widget _guestHome(BuildContext context) => HomeScreen(
+    showFooter: true,
+    onLogin: () => Navigator.pushNamed(context, '/login'),
+    secondaryContent: GuestHomeIntro(
+      onAccess: () => Navigator.pushNamed(context, '/login'),
+    ),
+  );
   Widget _profile(BuildContext context) => ProfileScreen(
     controller: ProfileController(widget.identityRepository),
     profile: _session.profile,
@@ -87,7 +119,7 @@ class _ConnectedAppState extends State<ConnectedApp> {
   );
   Widget _guard(Widget child, {bool welcome = false}) => SessionGate(
     controller: _session,
-    signedOut: welcome ? (_) => const WelcomeScreen() : _account,
+    signedOut: welcome ? _guestHome : _account,
     incomplete: _profile,
     child: child,
   );
@@ -95,6 +127,19 @@ class _ConnectedAppState extends State<ConnectedApp> {
     controller: ConsultationController(
       const PreviewConsultationRepository(),
       country: CountryConfig.chile,
+    ),
+  );
+
+  Widget _memberRequest() => _guard(
+    Builder(
+      builder: (_) => DraftRequestScreen(
+        initialDraft: _guest.resumeAfterAccess ? _guest.content : null,
+        onInitialDraftConsumed: _guest.clear,
+        controller: ConsultationDraftController(
+          widget.draftRepository,
+          country: CountryConfig.chile,
+        ),
+      ),
     ),
   );
 
@@ -118,6 +163,7 @@ class _ConnectedAppState extends State<ConnectedApp> {
     listenable: _session,
     builder: (context, child) {
       if (_navigationEpoch != _session.navigationEpoch) {
+        _guest.clear();
         _navigationEpoch = _session.navigationEpoch;
         _navigator = GlobalKey<NavigatorState>();
       }
@@ -134,16 +180,37 @@ class _ConnectedAppState extends State<ConnectedApp> {
         routes: {
           '/': (context) => _guard(_home(context), welcome: true),
           '/account': _account,
-          '/home': (context) => _guard(_home(context)),
+          '/login': _login,
+          '/register': (context) => AccountScreen(
+            controller: AccountController(
+              widget.accountRepository,
+              requiredPolicyVersion: developmentPolicyVersion,
+              registering: true,
+            ),
+            onAuthenticated: _returnHome,
+          ),
+          '/home': (context) => _guard(_home(context), welcome: true),
           '/profile': (context) => _guard(_profile(context)),
-          '/request': (context) => _guard(
-            Builder(
-              builder: (_) => DraftRequestScreen(
-                controller: ConsultationDraftController(
-                  widget.draftRepository,
-                  country: CountryConfig.chile,
-                ),
+          '/continue-request': (_) => _memberRequest(),
+          '/request': (context) => ListenableBuilder(
+            listenable: _session,
+            builder: (context, _) => RequestEntryScreen(
+              guestAtEntry:
+                  _session.status == SessionStatus.loading &&
+                      _session.user == null
+                  ? null
+                  : _session.user == null,
+              guest: GuestRequestScreen(
+                controller: _guest,
+                onAccess: () {
+                  if (_session.user == null) {
+                    Navigator.pushNamed(context, '/login');
+                  } else {
+                    _returnHome();
+                  }
+                },
               ),
+              member: _memberRequest(),
             ),
           ),
           '/preview': (context) => HomeScreen(

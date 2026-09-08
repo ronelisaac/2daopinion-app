@@ -3,6 +3,9 @@ import '../domain/operation_result.dart';
 import '../domain/repositories/account_repository.dart';
 
 class PreviewAccountRepository implements AccountRepository {
+  @override
+  Future<OperationResult> signInWithGoogle() async =>
+      OperationResult.previewOnly;
   const PreviewAccountRepository();
 
   @override

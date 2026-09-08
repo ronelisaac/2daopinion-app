@@ -11,6 +11,7 @@ class HomeNavigation extends StatelessWidget {
     required this.onExit,
     this.onProfile,
     this.connected = false,
+    this.guest = false,
   });
 
   final VoidCallback onHome;
@@ -18,6 +19,7 @@ class HomeNavigation extends StatelessWidget {
   final VoidCallback onExit;
   final VoidCallback? onProfile;
   final bool connected;
+  final bool guest;
 
   @override
   Widget build(BuildContext context) => Material(
@@ -65,6 +67,8 @@ class HomeNavigation extends StatelessWidget {
             title: Text(
               connected
                   ? strings(context).signOut
+                  : guest
+                  ? strings(context).signIn
                   : strings(context).backToWelcome,
             ),
             onTap: onExit,

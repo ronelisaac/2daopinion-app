@@ -9,6 +9,156 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
+  String get googleCancelled =>
+      'Cerraste el acceso con Google. Puedes intentarlo de nuevo o usar tu correo.';
+
+  @override
+  String get googlePopupBlocked =>
+      'El navegador bloqueó la ventana de Google. Permite la ventana emergente para este sitio o ingresa con tu correo.';
+
+  @override
+  String get googleAccountConflict =>
+      'No pudimos completar el acceso con Google. Ingresa con el método que utilizaste al crear tu cuenta; no vincularemos cuentas sin tu confirmación.';
+
+  @override
+  String get googleSetupPending =>
+      'Google estará disponible cuando activemos el proveedor. Por ahora, continúa con tu correo.';
+
+  @override
+  String get showPassword => 'Mostrar contraseña';
+
+  @override
+  String get hidePassword => 'Ocultar contraseña';
+
+  @override
+  String get continueAsGuest => 'Continuar sin iniciar sesión';
+
+  @override
+  String get guestContinue => 'CONTINUAR CON MI CUENTA';
+
+  @override
+  String get guestRequestNotice =>
+      'Puedes empezar sin registrarte. Lo escrito se conserva solo mientras esta app siga abierta; recargar o cerrar la pestaña puede perderlo. Al ingresar o crear tu cuenta podrás revisarlo y guardarlo. En desarrollo usa únicamente datos ficticios.';
+
+  @override
+  String get noEmergencyNotice =>
+      'Este servicio no atiende urgencias ni reemplaza la atención de tu equipo médico. Si necesitas atención inmediata, acude a un servicio de urgencias de tu localidad.';
+
+  @override
+  String get guestHomeTitle => 'Empieza a preparar tu segunda opinión';
+
+  @override
+  String get guestHomeSteps =>
+      '1. Cuéntanos tu caso sin crear una cuenta.\n\n2. Ingresa con tu correo o regístrate para continuar con lo que escribiste.\n\n3. Revisa y guarda tu borrador privado. El envío al médico aún no está habilitado en esta versión de desarrollo.';
+
+  @override
+  String get accessOrRegister => 'INGRESAR O CREAR CUENTA';
+
+  @override
+  String get clinicalContextTitle => 'Contexto para el especialista';
+
+  @override
+  String get clinicalOptionalNotice =>
+      'Estos datos son opcionales al preparar un borrador. Completa lo que conozcas; dejar un campo vacío significa «no informado», no ausencia de antecedentes. No incluyas documentos de identidad ni datos de contacto aquí.';
+
+  @override
+  String get patientContext => 'Edad y contexto del paciente';
+
+  @override
+  String get patientContextHint =>
+      'Edad aproximada y cualquier contexto que consideres relevante. No incluyas nombre completo ni identificación.';
+
+  @override
+  String get knownDiagnosis => 'Diagnóstico conocido o sospechado';
+
+  @override
+  String get knownDiagnosisHint =>
+      '¿Qué te han explicado? Si tienes un diagnóstico, indica quién lo informó y cuándo. Puedes escribir «aún no tengo diagnóstico».';
+
+  @override
+  String get symptomEvolution => 'Síntomas y evolución';
+
+  @override
+  String get symptomEvolutionHint =>
+      '¿Cuándo comenzó? Describe cambios, frecuencia, factores que lo mejoran o empeoran y cómo afecta tu vida cotidiana.';
+
+  @override
+  String get medicalHistory => 'Antecedentes relevantes';
+
+  @override
+  String get medicalHistoryHint =>
+      'Enfermedades previas, cirugías, hospitalizaciones o antecedentes familiares relacionados. Si no lo sabes, indícalo.';
+
+  @override
+  String get allergies => 'Alergias y reacciones';
+
+  @override
+  String get allergiesHint =>
+      'Medicamentos u otras sustancias y qué reacción te produjeron. Indica «no conozco» o «ninguna conocida» solo si corresponde.';
+
+  @override
+  String get clinicalGoalsTitle => 'Qué necesitas resolver';
+
+  @override
+  String get questions => 'Preguntas al especialista';
+
+  @override
+  String get questionsHint =>
+      'Escribe tus dudas principales sobre el diagnóstico, tratamiento propuesto u otras decisiones. Puedes enumerarlas.';
+
+  @override
+  String get studySummary => 'Estudios y documentación disponible';
+
+  @override
+  String get studySummaryHint =>
+      'Tipo de estudio, fecha aproximada y si tienes su informe. No hace falta transcribir todo el resultado.';
+
+  @override
+  String get documentsNotEnabled =>
+      'La carga de archivos privados se habilitará en una próxima entrega. Por ahora solo puedes describir qué estudios tienes.';
+
+  @override
+  String get specialty => 'Especialidad solicitada';
+
+  @override
+  String get specialtyHint =>
+      'Si la conoces, escríbela; si no, indica «No sé qué especialidad necesito». La clasificación será revisada por el equipo.';
+
+  @override
+  String get preferredModality => 'Modalidad de tu preferencia';
+
+  @override
+  String get modalityUnsure => 'Necesito orientación';
+
+  @override
+  String get modalityDocument => 'Revisión documental';
+
+  @override
+  String get modalityConsultation => 'Revisión + consulta';
+
+  @override
+  String get modalityNotice =>
+      'Es una preferencia, no una contratación. Canales de consulta, disponibilidad y precio se confirmarán antes de cualquier pago.';
+
+  @override
+  String get guestExistingTitle => 'Ya tienes un borrador guardado';
+
+  @override
+  String get guestExistingBody =>
+      'También traes un formulario iniciado sin sesión. ¿Quieres revisar el nuevo contenido o conservar el que ya está guardado? Nada se sobrescribirá hasta que guardes explícitamente. Elegir el guardado descarta lo escrito como visitante.';
+
+  @override
+  String get guestKeepSaved => 'CONSERVAR GUARDADO';
+
+  @override
+  String get guestUseNew => 'REVISAR NUEVO';
+
+  @override
+  String onboardingProgress(int step) {
+    return 'Paso $step de 3 · Acceso, datos y verificación';
+  }
+
+  @override
   String get appTitle => '2daOpinion';
 
   @override
@@ -134,7 +284,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reasonHint => 'Escribe el motivo de tu consulta';
 
   @override
-  String get details => 'Diagnóstico o detalles de la consulta';
+  String get details => 'Detalles de la consulta';
 
   @override
   String get detailsHint => 'Describe tu consulta y tus preguntas';
@@ -143,7 +293,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get medicines => 'Tratamiento con medicamentos';
 
   @override
-  String get medicinesHint => 'Agrega medicamentos y horarios';
+  String get medicinesHint =>
+      'Nombre, dosis, frecuencia y desde cuándo los usas. Incluye suplementos si corresponde; no cambies tu tratamiento por completar este formulario.';
 
   @override
   String get specialTreatments => 'Tratamientos especiales';

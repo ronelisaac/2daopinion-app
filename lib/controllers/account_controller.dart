@@ -7,12 +7,16 @@ import '../domain/operation_result.dart';
 import '../domain/repositories/account_repository.dart';
 
 class AccountController extends ChangeNotifier {
-  AccountController(this._repository, {this.requiredPolicyVersion});
+  AccountController(
+    this._repository, {
+    this.requiredPolicyVersion,
+    bool registering = false,
+  }) : _registering = registering;
 
   final String? requiredPolicyVersion;
 
   final AccountRepository _repository;
-  bool _registering = false;
+  bool _registering;
   bool _busy = false;
   bool _disposed = false;
 
@@ -26,6 +30,21 @@ class AccountController extends ChangeNotifier {
   }
 
   InputIssue? validateEmail(String? value) => InputValidation.email(value);
+
+  Future<OperationResult> signInWithGoogle() async {
+    if (_busy || _disposed) {
+      throw StateError('An account operation is unavailable.');
+    }
+    _busy = true;
+    notifyListeners();
+    try {
+      return await _repository.signInWithGoogle();
+    } finally {
+      _busy = false;
+      if (!_disposed) notifyListeners();
+    }
+  }
+
   InputIssue? validateName(String? value) => InputValidation.required(value);
   InputIssue? validatePassword(String? value) =>
       InputValidation.password(value, registering: _registering);

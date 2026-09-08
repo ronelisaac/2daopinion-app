@@ -12,6 +12,9 @@ import 'package:segunda_opinion_app/domain/repositories/consultation_repository.
 import 'package:segunda_opinion_app/repositories/preview_account_repository.dart';
 
 class RecordingAccountRepository implements AccountRepository {
+  @override
+  Future<OperationResult> signInWithGoogle() async =>
+      OperationResult.previewOnly;
   int signIns = 0;
   int registrations = 0;
   Completer<OperationResult>? pending;

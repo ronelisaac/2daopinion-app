@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 import '../domain/account_draft.dart';
 import '../domain/country_config.dart';
@@ -15,6 +16,7 @@ class FirebaseIdentityRepository
     required FirebaseFirestore Function() database,
     required CountryConfig country,
     required String locale,
+    this.googleEnabled = false,
   }) : _authProvider = auth,
        _databaseProvider = database,
        _country = country,
@@ -24,6 +26,7 @@ class FirebaseIdentityRepository
   final FirebaseFirestore Function() _databaseProvider;
   final CountryConfig _country;
   final String _locale;
+  final bool googleEnabled;
   FirebaseAuth get _auth => _authProvider();
   FirebaseFirestore get _database => _databaseProvider();
 
@@ -48,7 +51,14 @@ class FirebaseIdentityRepository
         'deadline-exceeded' => IdentityIssue.network,
         'too-many-requests' || 'resource-exhausted' => IdentityIssue.throttled,
         'operation-not-allowed' ||
+        'unauthorized-domain' ||
+        'operation-not-supported-in-this-environment' ||
         'configuration-not-found' => IdentityIssue.unavailable,
+        'popup-closed-by-user' ||
+        'cancelled-popup-request' => IdentityIssue.cancelled,
+        'popup-blocked' => IdentityIssue.popupBlocked,
+        'account-exists-with-different-credential' ||
+        'credential-already-in-use' => IdentityIssue.accountConflict,
         'permission-denied' => IdentityIssue.permission,
         'user-disabled' ||
         'user-token-expired' ||
@@ -67,7 +77,15 @@ class FirebaseIdentityRepository
   }
 
   @override
-  Stream<IdentityUser?> watchIdentity() => _auth.userChanges().map(_identity);
+  Stream<IdentityUser?> watchIdentity() => _auth
+      .userChanges()
+      .map(_identity)
+      .distinct(
+        (previous, next) =>
+            previous?.authUserId == next?.authUserId &&
+            previous?.email == next?.email &&
+            previous?.emailVerified == next?.emailVerified,
+      );
 
   @override
   Future<IdentityUser?> refreshIdentity() => _guard(() async {
@@ -94,6 +112,17 @@ class FirebaseIdentityRepository
       email: account.email.trim(),
       password: account.password,
     );
+    return OperationResult.completed;
+  });
+
+  @override
+  Future<OperationResult> signInWithGoogle() => _guard(() async {
+    if (!googleEnabled || !kIsWeb) {
+      throw const IdentityFailure(IdentityIssue.googleUnavailable);
+    }
+    final provider = GoogleAuthProvider()
+      ..setCustomParameters({'prompt': 'select_account'});
+    await _auth.signInWithPopup(provider);
     return OperationResult.completed;
   });
 

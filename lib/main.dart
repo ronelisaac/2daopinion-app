@@ -17,6 +17,7 @@ void main() {
     database: () => FirebaseFirestore.instance,
     country: CountryConfig.chile,
     locale: 'es',
+    googleEnabled: const bool.fromEnvironment('ENABLE_GOOGLE_SIGN_IN'),
   );
   var initialized = false;
   runApp(

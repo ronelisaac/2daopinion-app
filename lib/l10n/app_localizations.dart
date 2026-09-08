@@ -94,6 +94,264 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('es')];
 
+  /// No description provided for @googleCancelled.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerraste el acceso con Google. Puedes intentarlo de nuevo o usar tu correo.'**
+  String get googleCancelled;
+
+  /// No description provided for @googlePopupBlocked.
+  ///
+  /// In es, this message translates to:
+  /// **'El navegador bloqueó la ventana de Google. Permite la ventana emergente para este sitio o ingresa con tu correo.'**
+  String get googlePopupBlocked;
+
+  /// No description provided for @googleAccountConflict.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos completar el acceso con Google. Ingresa con el método que utilizaste al crear tu cuenta; no vincularemos cuentas sin tu confirmación.'**
+  String get googleAccountConflict;
+
+  /// No description provided for @googleSetupPending.
+  ///
+  /// In es, this message translates to:
+  /// **'Google estará disponible cuando activemos el proveedor. Por ahora, continúa con tu correo.'**
+  String get googleSetupPending;
+
+  /// No description provided for @showPassword.
+  ///
+  /// In es, this message translates to:
+  /// **'Mostrar contraseña'**
+  String get showPassword;
+
+  /// No description provided for @hidePassword.
+  ///
+  /// In es, this message translates to:
+  /// **'Ocultar contraseña'**
+  String get hidePassword;
+
+  /// No description provided for @continueAsGuest.
+  ///
+  /// In es, this message translates to:
+  /// **'Continuar sin iniciar sesión'**
+  String get continueAsGuest;
+
+  /// No description provided for @guestContinue.
+  ///
+  /// In es, this message translates to:
+  /// **'CONTINUAR CON MI CUENTA'**
+  String get guestContinue;
+
+  /// No description provided for @guestRequestNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Puedes empezar sin registrarte. Lo escrito se conserva solo mientras esta app siga abierta; recargar o cerrar la pestaña puede perderlo. Al ingresar o crear tu cuenta podrás revisarlo y guardarlo. En desarrollo usa únicamente datos ficticios.'**
+  String get guestRequestNotice;
+
+  /// No description provided for @noEmergencyNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Este servicio no atiende urgencias ni reemplaza la atención de tu equipo médico. Si necesitas atención inmediata, acude a un servicio de urgencias de tu localidad.'**
+  String get noEmergencyNotice;
+
+  /// No description provided for @guestHomeTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Empieza a preparar tu segunda opinión'**
+  String get guestHomeTitle;
+
+  /// No description provided for @guestHomeSteps.
+  ///
+  /// In es, this message translates to:
+  /// **'1. Cuéntanos tu caso sin crear una cuenta.\n\n2. Ingresa con tu correo o regístrate para continuar con lo que escribiste.\n\n3. Revisa y guarda tu borrador privado. El envío al médico aún no está habilitado en esta versión de desarrollo.'**
+  String get guestHomeSteps;
+
+  /// No description provided for @accessOrRegister.
+  ///
+  /// In es, this message translates to:
+  /// **'INGRESAR O CREAR CUENTA'**
+  String get accessOrRegister;
+
+  /// No description provided for @clinicalContextTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Contexto para el especialista'**
+  String get clinicalContextTitle;
+
+  /// No description provided for @clinicalOptionalNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Estos datos son opcionales al preparar un borrador. Completa lo que conozcas; dejar un campo vacío significa «no informado», no ausencia de antecedentes. No incluyas documentos de identidad ni datos de contacto aquí.'**
+  String get clinicalOptionalNotice;
+
+  /// No description provided for @patientContext.
+  ///
+  /// In es, this message translates to:
+  /// **'Edad y contexto del paciente'**
+  String get patientContext;
+
+  /// No description provided for @patientContextHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Edad aproximada y cualquier contexto que consideres relevante. No incluyas nombre completo ni identificación.'**
+  String get patientContextHint;
+
+  /// No description provided for @knownDiagnosis.
+  ///
+  /// In es, this message translates to:
+  /// **'Diagnóstico conocido o sospechado'**
+  String get knownDiagnosis;
+
+  /// No description provided for @knownDiagnosisHint.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Qué te han explicado? Si tienes un diagnóstico, indica quién lo informó y cuándo. Puedes escribir «aún no tengo diagnóstico».'**
+  String get knownDiagnosisHint;
+
+  /// No description provided for @symptomEvolution.
+  ///
+  /// In es, this message translates to:
+  /// **'Síntomas y evolución'**
+  String get symptomEvolution;
+
+  /// No description provided for @symptomEvolutionHint.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Cuándo comenzó? Describe cambios, frecuencia, factores que lo mejoran o empeoran y cómo afecta tu vida cotidiana.'**
+  String get symptomEvolutionHint;
+
+  /// No description provided for @medicalHistory.
+  ///
+  /// In es, this message translates to:
+  /// **'Antecedentes relevantes'**
+  String get medicalHistory;
+
+  /// No description provided for @medicalHistoryHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Enfermedades previas, cirugías, hospitalizaciones o antecedentes familiares relacionados. Si no lo sabes, indícalo.'**
+  String get medicalHistoryHint;
+
+  /// No description provided for @allergies.
+  ///
+  /// In es, this message translates to:
+  /// **'Alergias y reacciones'**
+  String get allergies;
+
+  /// No description provided for @allergiesHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Medicamentos u otras sustancias y qué reacción te produjeron. Indica «no conozco» o «ninguna conocida» solo si corresponde.'**
+  String get allergiesHint;
+
+  /// No description provided for @clinicalGoalsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Qué necesitas resolver'**
+  String get clinicalGoalsTitle;
+
+  /// No description provided for @questions.
+  ///
+  /// In es, this message translates to:
+  /// **'Preguntas al especialista'**
+  String get questions;
+
+  /// No description provided for @questionsHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribe tus dudas principales sobre el diagnóstico, tratamiento propuesto u otras decisiones. Puedes enumerarlas.'**
+  String get questionsHint;
+
+  /// No description provided for @studySummary.
+  ///
+  /// In es, this message translates to:
+  /// **'Estudios y documentación disponible'**
+  String get studySummary;
+
+  /// No description provided for @studySummaryHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Tipo de estudio, fecha aproximada y si tienes su informe. No hace falta transcribir todo el resultado.'**
+  String get studySummaryHint;
+
+  /// No description provided for @documentsNotEnabled.
+  ///
+  /// In es, this message translates to:
+  /// **'La carga de archivos privados se habilitará en una próxima entrega. Por ahora solo puedes describir qué estudios tienes.'**
+  String get documentsNotEnabled;
+
+  /// No description provided for @specialty.
+  ///
+  /// In es, this message translates to:
+  /// **'Especialidad solicitada'**
+  String get specialty;
+
+  /// No description provided for @specialtyHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Si la conoces, escríbela; si no, indica «No sé qué especialidad necesito». La clasificación será revisada por el equipo.'**
+  String get specialtyHint;
+
+  /// No description provided for @preferredModality.
+  ///
+  /// In es, this message translates to:
+  /// **'Modalidad de tu preferencia'**
+  String get preferredModality;
+
+  /// No description provided for @modalityUnsure.
+  ///
+  /// In es, this message translates to:
+  /// **'Necesito orientación'**
+  String get modalityUnsure;
+
+  /// No description provided for @modalityDocument.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisión documental'**
+  String get modalityDocument;
+
+  /// No description provided for @modalityConsultation.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisión + consulta'**
+  String get modalityConsultation;
+
+  /// No description provided for @modalityNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Es una preferencia, no una contratación. Canales de consulta, disponibilidad y precio se confirmarán antes de cualquier pago.'**
+  String get modalityNotice;
+
+  /// No description provided for @guestExistingTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya tienes un borrador guardado'**
+  String get guestExistingTitle;
+
+  /// No description provided for @guestExistingBody.
+  ///
+  /// In es, this message translates to:
+  /// **'También traes un formulario iniciado sin sesión. ¿Quieres revisar el nuevo contenido o conservar el que ya está guardado? Nada se sobrescribirá hasta que guardes explícitamente. Elegir el guardado descarta lo escrito como visitante.'**
+  String get guestExistingBody;
+
+  /// No description provided for @guestKeepSaved.
+  ///
+  /// In es, this message translates to:
+  /// **'CONSERVAR GUARDADO'**
+  String get guestKeepSaved;
+
+  /// No description provided for @guestUseNew.
+  ///
+  /// In es, this message translates to:
+  /// **'REVISAR NUEVO'**
+  String get guestUseNew;
+
+  /// No description provided for @onboardingProgress.
+  ///
+  /// In es, this message translates to:
+  /// **'Paso {step} de 3 · Acceso, datos y verificación'**
+  String onboardingProgress(int step);
+
   /// No description provided for @appTitle.
   ///
   /// In es, this message translates to:
@@ -337,7 +595,7 @@ abstract class AppLocalizations {
   /// No description provided for @details.
   ///
   /// In es, this message translates to:
-  /// **'Diagnóstico o detalles de la consulta'**
+  /// **'Detalles de la consulta'**
   String get details;
 
   /// No description provided for @detailsHint.
@@ -355,7 +613,7 @@ abstract class AppLocalizations {
   /// No description provided for @medicinesHint.
   ///
   /// In es, this message translates to:
-  /// **'Agrega medicamentos y horarios'**
+  /// **'Nombre, dosis, frecuencia y desde cuándo los usas. Incluye suplementos si corresponde; no cambies tu tratamiento por completar este formulario.'**
   String get medicinesHint;
 
   /// No description provided for @specialTreatments.

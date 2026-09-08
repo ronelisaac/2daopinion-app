@@ -6,9 +6,18 @@ import 'access_button.dart';
 import 'preview_dialog.dart';
 
 class AccessOptions extends StatelessWidget {
-  const AccessOptions({super.key, this.onDark = true});
+  const AccessOptions({
+    super.key,
+    this.onDark = true,
+    this.onGoogle,
+    this.busy = false,
+    this.error,
+  });
 
   final bool onDark;
+  final VoidCallback? onGoogle;
+  final bool busy;
+  final String? error;
 
   @override
   Widget build(BuildContext context) {
@@ -17,25 +26,39 @@ class AccessOptions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         AccessButton(
-          label: text.facebook,
-          asset: 'facebook',
-          background: AppColors.facebook,
-          foreground: Colors.white,
-          onPressed: () => explainPreview(context, text.pendingFeature),
-        ),
-        const SizedBox(height: 16),
-        AccessButton(
           label: text.google,
           asset: 'google',
-          onPressed: () => explainPreview(context, text.pendingFeature),
+          onPressed: busy
+              ? null
+              : onGoogle ?? () => explainPreview(context, text.pendingFeature),
         ),
         const SizedBox(height: 16),
         AccessButton(
           label: text.emailAccess,
           asset: 'email',
-          onPressed: () => Navigator.pushNamed(context, '/account'),
+          onPressed: busy
+              ? null
+              : () => Navigator.pushNamed(context, '/account'),
         ),
+        if (busy) const LinearProgressIndicator(),
+        if (error != null)
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Text(
+              error!,
+              style: TextStyle(color: onDark ? Colors.white : AppColors.ink),
+            ),
+          ),
         const SizedBox(height: 8),
+        TextButton(
+          onPressed: busy
+              ? null
+              : () => Navigator.pushNamed(context, '/register'),
+          style: TextButton.styleFrom(
+            foregroundColor: onDark ? Colors.white : AppColors.primary,
+          ),
+          child: Text(text.createAccount),
+        ),
         TextButton(
           onPressed: () => Navigator.pushNamed(context, '/terms'),
           style: TextButton.styleFrom(
@@ -50,11 +73,14 @@ class AccessOptions extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () => Navigator.pushNamed(context, '/preview'),
+          onPressed: busy ? null : () => Navigator.pushNamed(context, '/home'),
           style: TextButton.styleFrom(
             foregroundColor: onDark ? Colors.white : AppColors.primary,
           ),
-          child: Text(text.explore, style: const TextStyle(fontSize: 12)),
+          child: Text(
+            text.continueAsGuest,
+            style: const TextStyle(fontSize: 12),
+          ),
         ),
       ],
     );

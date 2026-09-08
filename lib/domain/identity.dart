@@ -39,6 +39,10 @@ enum IdentityIssue {
   termsRequired,
   profilePending,
   sessionExpired,
+  cancelled,
+  popupBlocked,
+  accountConflict,
+  googleUnavailable,
   unknown,
 }
 
