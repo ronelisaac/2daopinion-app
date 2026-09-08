@@ -1,0 +1,17 @@
+{
+  "name": "2daOpinion",
+  "short_name": "2daOpinion",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#03A68B",
+  "description": "Vista previa de la app de pacientes de 2daOpinion.",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "icons/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

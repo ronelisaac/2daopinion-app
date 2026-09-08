@@ -1,0 +1,22 @@
+# Convenciones de 2daOpinion Pacientes
+
+- Flutter y Firebase directo. No crear una API propia en esta etapa.
+- Ronel autorizó commit y push de cada entrega terminada y verificada. No incluir secretos, logs, datos clínicos, builds ni cambios ajenos. El despliegue debe limitarse al servicio y ambiente autorizado.
+- Las reglas e índices Firestore compartidos viven en firebase/ del repositorio 2daopinion-panel; no duplicarlos aquí. Firestore dev: (default), southamerica-west1. Tener la base creada no equivale a tener permisos o persistencia funcional implementados.
+- Alcance vigente: docs/desarrollo/ALCANCE-001-EXPERIENCIA-Y-RECETAS.md en la raíz de 2daOpinion. Incluye términos separados de registro/solicitud, Acerca de, home con casos activos, footer, notificaciones, logout, persistencia y receta médica en MVP. No volver a excluir recetas; no habilitar emisión real sin resolver requisitos A18. Son compromisos, no funciones ya implementadas.
+- Archivos y hosting deben ser reemplazables por separado: Firebase en MVP/dev; proveedor de producción pendiente. Al implementar archivos, usar contrato de dominio y adaptador inyectado, documentId estable y ubicación física separada; nunca URLs públicas permanentes como identidad ni secretos en Flutter. Ver docs/arquitectura/ADR-004-ARCHIVOS-Y-HOSTING-PORTABLES.md en la raíz de 2daOpinion. No anticipar otra API ni migrar Firestore por este motivo.
+- Mantener capas: vistas → controllers → contratos de repositorio → implementaciones. Dominio independiente.
+- `lib/views`: composición de pantallas, navegación visual y ciclo de vida de formularios. Sin SDK de Firebase, consultas ni reglas de negocio.
+- `lib/widgets`: widgets pequeños y reutilizables en archivos separados. Sin infraestructura ni casos de uso.
+- `lib/controllers`: validación/orquestación, estados de carga y coordinación. No importar implementaciones de repositorio ni recibir BuildContext.
+- `lib/domain`: entidades, valores, validaciones y contratos de repositorio en Dart puro; no Flutter, Firestore Timestamp ni DocumentReference.
+- `lib/repositories`: implementaciones de los contratos. Mantener futuros adaptadores Firebase separados de los de vista previa.
+- `lib/app.dart` y `lib/main.dart`: composición e inyección de dependencias; no lógica de casos.
+- Ninguna vista debe afirmar que hubo autenticación, envío o persistencia cuando el repositorio devuelve previewOnly.
+- Todo texto visible va en ARB. Idioma/locale separados del país comercial.
+- Preservar logo, tipografía e iconos propios del Figma. Documentar cambios respecto al diseño.
+- El sistema visual también se usará en el panel administrativo; mantener tema y widgets reutilizables coherentes entre ambas experiencias. Decisión central: docs/arquitectura/ADR-003-DISENO-COMPARTIDO.md en la raíz de 2daOpinion.
+- Usar ResponsiveLayout/ResponsiveContent para adaptación por ancho disponible; no volver a encerrar toda la app en un ancho de teléfono. Probar móvil, tablet, escritorio y conservación del formulario al redimensionar.
+- Nunca registrar contraseñas o información clínica en logs, Analytics, repositorios o almacenamiento local.
+- Antes de cerrar una entrega: formato, análisis, pruebas de dominio/controller/widget y compilación web.
+- No desplegar, cambiar facturación, crear regiones/bases, publicar credenciales de servicio ni usar datos reales sin resolver los requisitos del proyecto.

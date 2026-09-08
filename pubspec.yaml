@@ -1,0 +1,35 @@
+name: segunda_opinion_app
+description: App de pacientes de 2daOpinion.
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.11.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  firebase_core: 4.13.0
+  firebase_core_web: 3.10.0
+  flutter_svg: ^2.3.0
+  cupertino_icons: ^1.0.8
+  intl: any
+  firebase_auth: ^6.5.7
+  cloud_firestore: ^6.8.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  generate: true
+  uses-material-design: true
+  assets:
+    - assets/images/
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat.ttf

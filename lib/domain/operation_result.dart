@@ -1,0 +1,1 @@
+enum OperationResult { previewOnly, completed }
