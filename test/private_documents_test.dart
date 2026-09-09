@@ -65,6 +65,46 @@ PendingDocument sample() => PendingDocument(
   bytes: Uint8List(4),
 );
 void main() {
+  testWidgets('linked files expose neither upload nor deletion controls', (
+    tester,
+  ) async {
+    final repository = FakePrivateDocuments()
+      ..records = [
+        const PrivateDocument(
+          id: 'file',
+          draftId: 'draft',
+          title: 'Ficticio',
+          fileName: 'prueba.pdf',
+          size: 4,
+          state: PrivateDocumentState.stored,
+        ),
+      ];
+    final controller = PrivateDocumentsController(repository);
+    final selection = DocumentSelectionController(FakeSelection());
+    addTearDown(controller.dispose);
+    addTearDown(selection.dispose);
+    await controller.load('draft');
+    await tester.pumpWidget(
+      app(
+        Scaffold(
+          body: SingleChildScrollView(
+            child: PrivateDocumentsPanel(
+              controller: controller,
+              selection: selection,
+              readOnly: true,
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(CheckboxListTile), findsNothing);
+    expect(find.byType(FilledButton), findsNothing);
+    expect(find.textContaining('Adjuntos vinculados'), findsOneWidget);
+    expect(find.text('Ficticio'), findsOneWidget);
+    expect(repository.deletes, 0);
+    expect(tester.takeException(), isNull);
+  });
   test('no upload without saved draft or explicit separate consent', () async {
     final repository = FakePrivateDocuments();
     final controller = PrivateDocumentsController(repository);

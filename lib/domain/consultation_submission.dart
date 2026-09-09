@@ -1,14 +1,18 @@
-const submissionPolicyVersion = 'dev-submission-2026-09-08';
+const submissionPolicyVersion = 'dev-submission-2026-09-09';
 
 class ConsultationSubmission {
   const ConsultationSubmission({
     required this.id,
     required this.revision,
     required this.submittedAt,
+    this.documentCount = 0,
+    this.hasVideo = false,
   });
   final String id;
   final int revision;
   final DateTime submittedAt;
+  final int documentCount;
+  final bool hasVideo;
   String get reference => 'SO-$id';
 }
 

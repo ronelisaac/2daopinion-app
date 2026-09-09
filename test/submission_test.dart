@@ -51,6 +51,49 @@ class ControlledSubmissions implements ConsultationSubmissionRepository {
 }
 
 void main() {
+  testWidgets(
+    'changing the linked batch resets explicit submission acceptance',
+    (tester) async {
+      final controller = ConsultationSubmissionController(
+        ControlledSubmissions(),
+      );
+      addTearDown(controller.dispose);
+      await controller.load();
+      Widget screen(int count) => MaterialApp(
+        locale: const Locale('es'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: SingleChildScrollView(
+            child: SubmissionPanel(
+              controller: controller,
+              draft: saved,
+              dirty: false,
+              hasAttachments: false,
+              blocked: false,
+              linkedFiles: count,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpWidget(screen(1));
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.byType(CheckboxListTile));
+      await tester.tap(find.byType(CheckboxListTile));
+      await tester.pumpAndSettle();
+      expect(
+        tester.widget<CheckboxListTile>(find.byType(CheckboxListTile)).value,
+        true,
+      );
+      await tester.pumpWidget(screen(2));
+      await tester.pumpAndSettle();
+      expect(
+        tester.widget<CheckboxListTile>(find.byType(CheckboxListTile)).value,
+        false,
+      );
+      expect(tester.takeException(), isNull);
+    },
+  );
   test(
     'failed refresh clears old receipt and blocks blind submission',
     () async {

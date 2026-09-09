@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../controllers/consultation_submission_controller.dart';
 import '../widgets/submission_panel.dart';
+import '../domain/private_document.dart';
 import '../controllers/consultation_draft_controller.dart';
 import '../controllers/consultation_steps_controller.dart';
 import '../widgets/consultation_wizard.dart';
@@ -278,7 +279,9 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
                         ? null
                         : DocumentSelectionPanel(
                             controller: widget.documents!,
-                            readOnly: _steps.isReview,
+                            readOnly:
+                                _steps.isReview ||
+                                widget.submission?.receipt != null,
                             localUploadsEnabled: widget.library != null,
                           ),
                     step: _steps.index,
@@ -362,6 +365,10 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
               PrivateDocumentsPanel(
                 controller: widget.library!,
                 selection: widget.documents!,
+                readOnly: widget.submission?.receipt != null,
+                blocked:
+                    (widget.submission?.busy ?? false) ||
+                    (widget.submission != null && !widget.submission!.loaded),
               ),
             if (widget.submission == null)
               Text(text.draftNoSubmission)
@@ -369,10 +376,14 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
               SubmissionPanel(
                 controller: widget.submission!,
                 draft: controller.saved,
+                linkedFiles: widget.library?.documents.length ?? 0,
                 dirty: _dirty,
                 hasAttachments:
                     (widget.documents?.documents.isNotEmpty ?? false) ||
-                    (widget.library?.documents.isNotEmpty ?? false),
+                    (widget.library?.documents.any(
+                          (file) => file.state != PrivateDocumentState.stored,
+                        ) ??
+                        false),
                 blocked:
                     controller.busy ||
                     (widget.library?.busy ?? false) ||

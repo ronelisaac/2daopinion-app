@@ -502,11 +502,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get submissionNotice =>
-      'Primera etapa de pruebas: envía una copia del texto guardado y registra la recepción. El equipo de operación solo verá código, país, modalidad y fecha, no tu contenido clínico. Todavía no incluye archivos, video, pagos ni atención médica. Usa únicamente información ficticia. Una solicitud por cuenta en esta etapa.';
+      'Envía la copia guardada junto con todos los documentos y el video que ya cargaste. Completa las cargas antes de confirmar; no se omitirán archivos pendientes. Operación verá código, país, modalidad, fecha y cantidades, no nombres de archivos ni contenido clínico. Usa únicamente información ficticia: todavía no hay pagos ni atención médica. Una solicitud por cuenta en esta etapa.';
 
   @override
   String get submissionTerms =>
-      'Acepto enviar esta copia de prueba y registrar su recepción con la política dev-submission-2026-09-08. Entiendo que no contrata una consulta ni habilita atención médica. Esta aceptación es independiente del registro y del guardado del borrador.';
+      'Acepto enviar esta copia y vincular todos sus adjuntos con la política de pruebas dev-submission-2026-09-09. Los archivos vinculados quedarán bloqueados para edición y borrado desde la app. Entiendo que recibir la solicitud no valida los archivos ni contrata una consulta. Esta aceptación es independiente del registro y del guardado del borrador.';
 
   @override
   String get submissionSend => 'Confirmar envío de prueba';
@@ -534,7 +534,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get submissionAttachmentsError =>
-      'Esta etapa no envía archivos ni video. No se omitirán en silencio: retira la selección para probar solo texto. Si ya reservaste archivos en este borrador, conserva el borrador y espera la integración de documentos.';
+      'Hay archivos pendientes, faltantes o que no pudimos comprobar. Termina las cargas y actualiza la lista antes de enviar. Si borraste un archivo reservado, vuelve a cargar el mismo archivo; la reserva no se elimina. Nada se omitirá automáticamente.';
+
+  @override
+  String get submissionFilesLocked =>
+      'Adjuntos vinculados a la solicitud. Puedes consultar su estado, pero no añadir, reemplazar ni borrar archivos desde la app. Las correcciones requerirán el flujo autorizado de una próxima entrega.';
+
+  @override
+  String submissionDocuments(int count) {
+    return 'Documentos vinculados: $count';
+  }
+
+  @override
+  String get submissionVideoLinked => 'Video explicativo vinculado · Opcional';
+
+  @override
+  String get submissionValidationPending =>
+      'Adjuntos pendientes de verificación. El registro no certifica su contenido, ausencia de malware, duración real del video ni validez clínica.';
 
   @override
   String get submissionSessionError =>

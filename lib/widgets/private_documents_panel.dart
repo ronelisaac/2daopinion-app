@@ -9,9 +9,13 @@ class PrivateDocumentsPanel extends StatefulWidget {
     super.key,
     required this.controller,
     required this.selection,
+    this.readOnly = false,
+    this.blocked = false,
   });
   final PrivateDocumentsController controller;
   final DocumentSelectionController selection;
+  final bool readOnly;
+  final bool blocked;
   @override
   State<PrivateDocumentsPanel> createState() => _PrivateDocumentsPanelState();
 }
@@ -33,34 +37,38 @@ class _PrivateDocumentsPanelState extends State<PrivateDocumentsPanel> {
           ),
           const SizedBox(height: 12),
           Text(text.localUploadNotice),
+          if (widget.readOnly) Text(text.submissionFilesLocked),
           if (controller.draftId == null)
             Text(text.saveBeforeUpload)
           else ...[
-            CheckboxListTile(
-              value: _accepted,
-              onChanged: controller.busy
-                  ? null
-                  : (value) => setState(() => _accepted = value ?? false),
-              title: Text(text.fileConsent),
-              controlAffinity: ListTileControlAffinity.leading,
-            ),
-            FilledButton.icon(
-              onPressed:
-                  controller.busy ||
-                      widget.selection.busy ||
-                      widget.selection.documents.isEmpty ||
-                      !_accepted
-                  ? null
-                  : () => controller.upload(
-                      widget.selection.documents,
-                      accepted: _accepted,
-                      onUploaded: (document) => widget.selection.remove(
-                        widget.selection.documents.indexOf(document),
+            if (!widget.readOnly)
+              CheckboxListTile(
+                value: _accepted,
+                onChanged: controller.busy || widget.blocked
+                    ? null
+                    : (value) => setState(() => _accepted = value ?? false),
+                title: Text(text.fileConsent),
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
+            if (!widget.readOnly)
+              FilledButton.icon(
+                onPressed:
+                    controller.busy ||
+                        widget.blocked ||
+                        widget.selection.busy ||
+                        widget.selection.documents.isEmpty ||
+                        !_accepted
+                    ? null
+                    : () => controller.upload(
+                        widget.selection.documents,
+                        accepted: _accepted,
+                        onUploaded: (document) => widget.selection.remove(
+                          widget.selection.documents.indexOf(document),
+                        ),
                       ),
-                    ),
-              icon: const Icon(Icons.cloud_upload_outlined),
-              label: Text(text.uploadPrivateFiles),
-            ),
+                icon: const Icon(Icons.cloud_upload_outlined),
+                label: Text(text.uploadPrivateFiles),
+              ),
             if (controller.busy)
               LinearProgressIndicator(
                 value: controller.transferring ? controller.progress : null,
@@ -71,7 +79,7 @@ class _PrivateDocumentsPanelState extends State<PrivateDocumentsPanel> {
                 child: Text(text.cancelTransfer),
               ),
             TextButton(
-              onPressed: controller.busy
+              onPressed: controller.busy || widget.blocked
                   ? null
                   : () => controller.load(controller.draftId!),
               child: Text(text.reloadPrivateFiles),
@@ -89,9 +97,10 @@ class _PrivateDocumentsPanelState extends State<PrivateDocumentsPanel> {
                             ? text.privateFileStored
                             : text.privateFileMissing,
                       ),
-                      if (document.state == PrivateDocumentState.stored)
+                      if (!widget.readOnly &&
+                          document.state == PrivateDocumentState.stored)
                         TextButton(
-                          onPressed: controller.busy
+                          onPressed: controller.busy || widget.blocked
                               ? null
                               : () async {
                                   final confirmed = await showDialog<bool>(

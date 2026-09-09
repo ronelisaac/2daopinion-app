@@ -1,5 +1,7 @@
 # E2-10 · Envío a recepción
 
+Histórico: [E2-11](E2-11-ADJUNTOS-EN-SOLICITUD.md) sustituye el bloqueo de todos los adjuntos por vinculación del lote cargado, todavía solo en emuladores. La integración actual requiere también Storage emulado.
+
 Implementación local con Firebase emulado: copia privada del borrador guardado, aceptación independiente, envío atómico con resumen administrativo y comprobante recuperable. Widgets, controller, contrato y adaptador separados.
 
 Solo USE_FIREBASE_EMULATORS=true en debug; el build normal no activa nuevos envíos. Una recepción por cuenta en esta etapa, solo texto. Archivos seleccionados o reservas de adjuntos impiden enviar para evitar omisiones silenciosas. No hay médico asignado, pagos, atención ni consentimiento clínico definitivo. Editar el borrador no cambia lo enviado.

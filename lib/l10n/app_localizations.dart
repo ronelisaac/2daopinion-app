@@ -937,13 +937,13 @@ abstract class AppLocalizations {
   /// No description provided for @submissionNotice.
   ///
   /// In es, this message translates to:
-  /// **'Primera etapa de pruebas: envía una copia del texto guardado y registra la recepción. El equipo de operación solo verá código, país, modalidad y fecha, no tu contenido clínico. Todavía no incluye archivos, video, pagos ni atención médica. Usa únicamente información ficticia. Una solicitud por cuenta en esta etapa.'**
+  /// **'Envía la copia guardada junto con todos los documentos y el video que ya cargaste. Completa las cargas antes de confirmar; no se omitirán archivos pendientes. Operación verá código, país, modalidad, fecha y cantidades, no nombres de archivos ni contenido clínico. Usa únicamente información ficticia: todavía no hay pagos ni atención médica. Una solicitud por cuenta en esta etapa.'**
   String get submissionNotice;
 
   /// No description provided for @submissionTerms.
   ///
   /// In es, this message translates to:
-  /// **'Acepto enviar esta copia de prueba y registrar su recepción con la política dev-submission-2026-09-08. Entiendo que no contrata una consulta ni habilita atención médica. Esta aceptación es independiente del registro y del guardado del borrador.'**
+  /// **'Acepto enviar esta copia y vincular todos sus adjuntos con la política de pruebas dev-submission-2026-09-09. Los archivos vinculados quedarán bloqueados para edición y borrado desde la app. Entiendo que recibir la solicitud no valida los archivos ni contrata una consulta. Esta aceptación es independiente del registro y del guardado del borrador.'**
   String get submissionTerms;
 
   /// No description provided for @submissionSend.
@@ -985,8 +985,32 @@ abstract class AppLocalizations {
   /// No description provided for @submissionAttachmentsError.
   ///
   /// In es, this message translates to:
-  /// **'Esta etapa no envía archivos ni video. No se omitirán en silencio: retira la selección para probar solo texto. Si ya reservaste archivos en este borrador, conserva el borrador y espera la integración de documentos.'**
+  /// **'Hay archivos pendientes, faltantes o que no pudimos comprobar. Termina las cargas y actualiza la lista antes de enviar. Si borraste un archivo reservado, vuelve a cargar el mismo archivo; la reserva no se elimina. Nada se omitirá automáticamente.'**
   String get submissionAttachmentsError;
+
+  /// No description provided for @submissionFilesLocked.
+  ///
+  /// In es, this message translates to:
+  /// **'Adjuntos vinculados a la solicitud. Puedes consultar su estado, pero no añadir, reemplazar ni borrar archivos desde la app. Las correcciones requerirán el flujo autorizado de una próxima entrega.'**
+  String get submissionFilesLocked;
+
+  /// No description provided for @submissionDocuments.
+  ///
+  /// In es, this message translates to:
+  /// **'Documentos vinculados: {count}'**
+  String submissionDocuments(int count);
+
+  /// No description provided for @submissionVideoLinked.
+  ///
+  /// In es, this message translates to:
+  /// **'Video explicativo vinculado · Opcional'**
+  String get submissionVideoLinked;
+
+  /// No description provided for @submissionValidationPending.
+  ///
+  /// In es, this message translates to:
+  /// **'Adjuntos pendientes de verificación. El registro no certifica su contenido, ausencia de malware, duración real del video ni validez clínica.'**
+  String get submissionValidationPending;
 
   /// No description provided for @submissionSessionError.
   ///

@@ -31,6 +31,11 @@ void main() {
           ? FirebaseConsultationSubmissionRepository(
               auth: () => FirebaseAuth.instance,
               database: () => FirebaseFirestore.instance,
+              documents: FirebasePrivateDocumentRepository(
+                auth: () => FirebaseAuth.instance,
+                database: () => FirebaseFirestore.instance,
+                storage: () => FirebaseStorage.instance,
+              ),
             )
           : null,
       noticeRepository: emulators

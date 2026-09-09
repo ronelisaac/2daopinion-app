@@ -1,4 +1,10 @@
 import 'dart:convert';
+import 'dart:typed_data';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage_web/firebase_storage_web.dart';
+import 'package:segunda_opinion_app/repositories/firebase_private_document_repository.dart';
+import 'package:segunda_opinion_app/domain/pending_document.dart';
+import 'package:segunda_opinion_app/domain/private_document.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:firebase_core_web/firebase_core_web.dart';
@@ -14,11 +20,29 @@ import 'package:segunda_opinion_app/domain/consultation_draft.dart';
 import 'package:segunda_opinion_app/domain/clinical_context.dart';
 import 'package:segunda_opinion_app/domain/consultation_submission.dart';
 
+class ChangingDocuments extends FirebasePrivateDocumentRepository {
+  ChangingDocuments({
+    required super.auth,
+    required super.database,
+    required super.storage,
+  });
+  Future<void> Function()? onListed;
+  @override
+  Future<List<PrivateDocument>> list(String draftId) async {
+    final result = await super.list(draftId);
+    final action = onListed;
+    onListed = null;
+    await action?.call();
+    return result;
+  }
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   FirebaseCoreWeb.registerWith(webPluginRegistrar);
   FirebaseAuthWeb.registerWith(webPluginRegistrar);
   FirebaseFirestoreWeb.registerWith(webPluginRegistrar);
+  FirebaseStorageWeb.registerWith(webPluginRegistrar);
   webPluginRegistrar.registerMessageHandler();
   test(
     'actual patient adapters save, reject stale version, submit once, restore receipt and deny signed-out',
@@ -29,10 +53,13 @@ void main() {
           appId: '1:123456789:web:demo',
           messagingSenderId: '123456789',
           projectId: 'demo-2daopinion',
+          storageBucket: 'demo-2daopinion.appspot.com',
         ),
       );
       final auth = FirebaseAuth.instance;
       final database = FirebaseFirestore.instance;
+      final storage = FirebaseStorage.instance;
+      await storage.useStorageEmulator('127.0.0.1', 9199);
       await auth.useAuthEmulator('127.0.0.1', 9099);
       database.settings = const Settings(persistenceEnabled: false);
       database.useFirestoreEmulator('127.0.0.1', 8080);
@@ -96,9 +123,15 @@ void main() {
         expectedRevision: 1,
         acceptStorageTerms: false,
       );
+      final documents = ChangingDocuments(
+        auth: () => auth,
+        database: () => database,
+        storage: () => storage,
+      );
       final repository = FirebaseConsultationSubmissionRepository(
         auth: () => auth,
         database: () => database,
+        documents: documents,
       );
       expect(await repository.load(), null);
       await expectLater(
@@ -115,6 +148,69 @@ void main() {
           ),
         ),
       );
+      final firstFile = PendingDocument(
+        title: 'Informe ficticio',
+        fileName: 'informe.pdf',
+        bytes: Uint8List.fromList(utf8.encode('%PDF-ficticio-uno')),
+      );
+      final secondFile = PendingDocument(
+        title: 'Estudio ficticio',
+        fileName: 'estudio.pdf',
+        bytes: Uint8List.fromList(utf8.encode('%PDF-ficticio-dos')),
+      );
+      final video = PendingDocument(
+        title: 'Video ficticio',
+        fileName: 'video.mp4',
+        bytes: Uint8List.fromList([
+          0,
+          0,
+          0,
+          16,
+          102,
+          116,
+          121,
+          112,
+          109,
+          112,
+          52,
+          50,
+        ]),
+        duration: const Duration(seconds: 1),
+      );
+      Future<PrivateDocument> upload(PendingDocument file) => documents.upload(
+        current.id,
+        file,
+        accepted: true,
+        cancellation: TransferCancellation(),
+        onProgress: (_) {},
+      );
+      final uploaded = await upload(firstFile);
+      await documents.delete(current.id, uploaded.id);
+      await expectLater(
+        repository.submit(current, accepted: true),
+        throwsA(
+          isA<SubmissionFailure>().having(
+            (error) => error.issue,
+            'missing file',
+            SubmissionIssue.attachments,
+          ),
+        ),
+      );
+      await upload(firstFile);
+      documents.onListed = () async {
+        await upload(secondFile);
+      };
+      await expectLater(
+        repository.submit(current, accepted: true),
+        throwsA(
+          isA<SubmissionFailure>().having(
+            (error) => error.issue,
+            'concurrent reservation',
+            SubmissionIssue.attachments,
+          ),
+        ),
+      );
+      await upload(video);
       final receipts = await Future.wait([
         repository.submit(current, accepted: true),
         repository.submit(current, accepted: true),
@@ -126,6 +222,15 @@ void main() {
       ).load();
       expect(restored!.id, current.id);
       expect(restored.revision, 2);
+      expect(restored.documentCount, 2);
+      expect(restored.hasVideo, true);
+      expect(await documents.read(current.id, uploaded.id), firstFile.bytes);
+      await expectLater(
+        documents.delete(current.id, uploaded.id),
+        throwsA(isA<DocumentFailure>()),
+      );
+      final retry = await repository.submit(current, accepted: true);
+      expect(retry.id, restored.id);
       final copy = await database
           .collection('consultationSubmissions')
           .doc(uid)
@@ -142,6 +247,8 @@ void main() {
         'createdAt',
         'status',
         'environment',
+        'documentCount',
+        'hasVideo',
       });
       expect(summary.data()!['status'], 'received');
       await auth.signOut();

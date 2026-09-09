@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../domain/consultation_submission.dart';
 import '../domain/saved_consultation_draft.dart';
+import '../domain/private_document.dart';
 import '../domain/repositories/consultation_submission_repository.dart';
 
 class FirebaseConsultationSubmissionRepository
@@ -9,10 +10,12 @@ class FirebaseConsultationSubmissionRepository
   FirebaseConsultationSubmissionRepository({
     required FirebaseAuth Function() auth,
     required FirebaseFirestore Function() database,
+    this.documents,
   }) : _auth = auth,
        _database = database;
   final FirebaseAuth Function() _auth;
   final FirebaseFirestore Function() _database;
+  final PrivateDocumentRepository? documents;
 
   String _owner() {
     final user = _auth().currentUser;
@@ -27,6 +30,10 @@ class FirebaseConsultationSubmissionRepository
         id: data['id'] as String,
         revision: data['revision'] as int,
         submittedAt: (data['submittedAt'] as Timestamp).toDate().toUtc(),
+        documentCount:
+            (data['attachmentBatch']?['count'] as int? ?? 0) -
+            (data['attachmentBatch']?['videoCount'] as int? ?? 0),
+        hasVideo: data['attachmentBatch']?['videoCount'] == 1,
       );
 
   Future<Result> _guard<Result>(Future<Result> Function() action) async {
@@ -66,6 +73,31 @@ class FirebaseConsultationSubmissionRepository
     final owner = _owner();
     final database = _database();
     final reference = database.collection('consultationSubmissions').doc(owner);
+    final previous = await load();
+    if (_owner() != owner) {
+      throw const SubmissionFailure(SubmissionIssue.session);
+    }
+    if (previous != null) {
+      if (previous.id != draft.id) {
+        throw const SubmissionFailure(SubmissionIssue.conflict);
+      }
+      return previous;
+    }
+    List<PrivateDocument> inspected = const [];
+    if (documents != null) {
+      try {
+        inspected = await documents!.list(draft.id);
+      } on DocumentFailure catch (error) {
+        throw SubmissionFailure(
+          error.issue == DocumentIssue.session
+              ? SubmissionIssue.session
+              : SubmissionIssue.attachments,
+        );
+      }
+      if (inspected.any((file) => file.state != PrivateDocumentState.stored)) {
+        throw const SubmissionFailure(SubmissionIssue.attachments);
+      }
+    }
     try {
       final issue = await database.runTransaction<SubmissionIssue?>((
         transaction,
@@ -87,7 +119,11 @@ class FirebaseConsultationSubmissionRepository
             _auth().currentUser?.emailVerified != true) {
           return SubmissionIssue.session;
         }
-        if (attachments.exists) {
+        if ((attachments.data()?['count'] ?? 0) != inspected.length ||
+            (attachments.exists &&
+                !inspected.any(
+                  (file) => file.id == attachments.data()!['lastDocumentId'],
+                ))) {
           return SubmissionIssue.attachments;
         }
         final data = source.data();
@@ -112,6 +148,7 @@ class FirebaseConsultationSubmissionRepository
           'accepted': true,
           'submittedAt': FieldValue.serverTimestamp(),
           'draft': data,
+          if (attachments.exists) 'attachmentBatch': attachments.data(),
         });
         transaction.set(database.collection('intakeRequests').doc(draft.id), {
           'id': draft.id,
@@ -120,6 +157,10 @@ class FirebaseConsultationSubmissionRepository
           'createdAt': FieldValue.serverTimestamp(),
           'status': 'received',
           'environment': 'development',
+          'documentCount':
+              (attachments.data()?['count'] as int? ?? 0) -
+              (attachments.data()?['videoCount'] as int? ?? 0),
+          'hasVideo': attachments.data()?['videoCount'] == 1,
         });
         return null;
       });

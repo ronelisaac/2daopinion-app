@@ -12,12 +12,14 @@ class SubmissionPanel extends StatefulWidget {
     required this.dirty,
     required this.hasAttachments,
     required this.blocked,
+    this.linkedFiles = 0,
   });
   final ConsultationSubmissionController controller;
   final SavedConsultationDraft? draft;
   final bool dirty;
   final bool hasAttachments;
   final bool blocked;
+  final int linkedFiles;
   @override
   State<SubmissionPanel> createState() => _SubmissionPanelState();
 }
@@ -27,7 +29,9 @@ class _SubmissionPanelState extends State<SubmissionPanel> {
   @override
   void didUpdateWidget(SubmissionPanel oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.draft?.revision != widget.draft?.revision ||
+    if (oldWidget.linkedFiles != widget.linkedFiles ||
+        oldWidget.hasAttachments != widget.hasAttachments ||
+        oldWidget.draft?.revision != widget.draft?.revision ||
         (!oldWidget.dirty && widget.dirty)) {
       accepted = false;
     }
@@ -55,6 +59,9 @@ class _SubmissionPanelState extends State<SubmissionPanel> {
               if (receipt != null) ...[
                 SelectableText(text.submissionReceipt(receipt.reference)),
                 Text(text.submissionImmutable),
+                Text(text.submissionDocuments(receipt.documentCount)),
+                if (receipt.hasVideo) Text(text.submissionVideoLinked),
+                Text(text.submissionValidationPending),
               ] else ...[
                 Text(text.submissionNotice),
                 const SizedBox(height: 12),
