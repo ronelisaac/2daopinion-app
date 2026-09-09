@@ -244,9 +244,9 @@ void main() {
       );
       await tester.tap(find.byType(CheckboxListTile));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('SUBIR ARCHIVOS AL EMULADOR'));
+      await tester.ensureVisible(find.text('SUBIR ARCHIVOS PRIVADOS'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('SUBIR ARCHIVOS AL EMULADOR'));
+      await tester.tap(find.text('SUBIR ARCHIVOS PRIVADOS'));
       await tester.pumpAndSettle();
       expect(selection.documents, isEmpty);
       expect(

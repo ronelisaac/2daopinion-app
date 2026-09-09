@@ -27,30 +27,26 @@ void main() {
   const emulators = bool.fromEnvironment('USE_FIREBASE_EMULATORS');
   runApp(
     ConnectedApp(
-      submissionRepository: emulators
-          ? FirebaseConsultationSubmissionRepository(
-              auth: () => FirebaseAuth.instance,
-              database: () => FirebaseFirestore.instance,
-              documents: FirebasePrivateDocumentRepository(
-                auth: () => FirebaseAuth.instance,
-                database: () => FirebaseFirestore.instance,
-                storage: () => FirebaseStorage.instance,
-              ),
-            )
-          : null,
+      submissionRepository: FirebaseConsultationSubmissionRepository(
+        auth: () => FirebaseAuth.instance,
+        database: () => FirebaseFirestore.instance,
+        documents: FirebasePrivateDocumentRepository(
+          auth: () => FirebaseAuth.instance,
+          database: () => FirebaseFirestore.instance,
+          storage: () => FirebaseStorage.instance,
+        ),
+      ),
       noticeRepository: emulators
           ? FirebaseNoticeRepository(
               auth: () => FirebaseAuth.instance,
               database: () => FirebaseFirestore.instance,
             )
           : null,
-      privateDocumentRepository: emulators
-          ? FirebasePrivateDocumentRepository(
-              auth: () => FirebaseAuth.instance,
-              database: () => FirebaseFirestore.instance,
-              storage: () => FirebaseStorage.instance,
-            )
-          : null,
+      privateDocumentRepository: FirebasePrivateDocumentRepository(
+        auth: () => FirebaseAuth.instance,
+        database: () => FirebaseFirestore.instance,
+        storage: () => FirebaseStorage.instance,
+      ),
       identityRepository: repository,
       accountRepository: repository,
       draftRepository: FirebaseConsultationDraftRepository(

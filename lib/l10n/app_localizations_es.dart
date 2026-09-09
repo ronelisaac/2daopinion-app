@@ -163,11 +163,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Solo puedes adjuntar un video opcional. Quita el anterior para elegir otro.';
 
   @override
-  String get privateDocumentsTitle => 'Archivos privados · Pruebas locales';
+  String get privateDocumentsTitle => 'Archivos privados · Desarrollo';
 
   @override
   String get localUploadNotice =>
-      'Este módulo usa emuladores locales, no el proyecto remoto. Los archivos se guardan por separado del formulario. Cuota acumulada: 20 documentos y un video opcional, 50 MB entre todos. Borrar no libera reservas. No hay revisión médica ni validación confiable de contenido en el servidor.';
+      'Los archivos se guardan en el entorno de desarrollo, por separado del formulario. Usa únicamente datos ficticios. Cuota acumulada: 20 documentos y un video opcional, 50 MB entre todos. Borrar no libera reservas. No hay revisión médica ni validación confiable de contenido en el servidor.';
 
   @override
   String get saveBeforeUpload =>
@@ -175,10 +175,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fileConsent =>
-      'Acepto almacenar únicamente archivos ficticios en las pruebas locales (dev-files-2026-09-08). Esta aceptación no es un consentimiento clínico.';
+      'Acepto almacenar únicamente archivos ficticios en el entorno de desarrollo (dev-files-2026-09-08). Esta aceptación no es un consentimiento clínico.';
 
   @override
-  String get uploadPrivateFiles => 'SUBIR ARCHIVOS AL EMULADOR';
+  String get uploadPrivateFiles => 'SUBIR ARCHIVOS PRIVADOS';
 
   @override
   String get cancelTransfer => 'CANCELAR SUBIDA';
@@ -198,7 +198,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get deletePrivateFileNotice =>
-      'Se borrarán los bytes del emulador. El título, la aceptación y la reserva permanecerán; la cuota no se libera automáticamente.';
+      'Se borrará el archivo del almacenamiento de desarrollo. El título, la aceptación y la reserva permanecerán; la cuota no se libera automáticamente.';
 
   @override
   String get transferCancelled =>
@@ -206,7 +206,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get privateQuotaReached =>
-      'Se alcanzó la cuota acumulada de pruebas. Reutiliza la reserva del mismo archivo o solicita limpieza del entorno local.';
+      'Se alcanzó la cuota acumulada de pruebas. Reutiliza la reserva del mismo archivo o solicita una revisión del almacenamiento de desarrollo.';
 
   @override
   String get fileSessionRequired =>
@@ -275,7 +275,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get pendingEmulatorDocumentsNotice =>
-      'Los archivos seleccionados están en memoria y se pierden al recargar o cerrar sesión. Guardar el borrador no los sube. En Revisión podrás subirlos por separado al emulador local, después de guardar el borrador y aceptar las condiciones de archivos de prueba.';
+      'Los archivos seleccionados están en memoria y se pierden al recargar o cerrar sesión. Guardar el borrador no los sube. En Revisión podrás subirlos por separado al almacenamiento privado de desarrollo, después de guardar el borrador y aceptar las condiciones de archivos de prueba.';
 
   @override
   String get pendingUpload => 'Pendiente de subir';
@@ -531,7 +531,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get submissionTitle => 'Enviar a recepción · Desarrollo local';
+  String get submissionTitle => 'Enviar a recepción · Desarrollo';
 
   @override
   String get submissionNotice =>
