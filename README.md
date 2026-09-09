@@ -4,6 +4,8 @@ Base Flutter web responsive con identidad Firebase para desarrollo y vista previ
 
 ## Estado
 
+Actualización E2-12: revisión con checklist de campos requeridos, enlaces para corregir y errores específicos. Conserva guardado de borradores incompletos con el adaptador Firebase existente. Diseño inspeccionado en Chrome a 320/768/1440 px; guardado, recuperación y envío comprobados con Firebase emulado. **La sección de solicitudes sigue parcial: envío/archivos remotos pendientes, no se desplegaron servicios.** [Validaciones, evidencia y límites](docs/E2-12-REVISION-Y-VALIDACIONES.md).
+
 Actualización E2-11: la solicitud ahora vincula los documentos y el video ya cargados en emuladores. Archivos pendientes/faltantes bloquean el envío; el comprobante muestra cantidades y la app bloquea cargas/borrados posteriores. El panel solo ve cantidades, no contenidos. **No es validación técnica o clínica confiable ni está activado remotamente.** [Entrega, pruebas y límites](docs/E2-11-ADJUNTOS-EN-SOLICITUD.md). Sustituye la exclusión de adjuntos de E2-10; los apartados siguientes conservan el historial.
 
 Actualización E2-10: primer circuito de envío y recepción con Firebase emulado, aceptación independiente, copia privada inmutable y comprobante persistente. Solo texto y una recepción por cuenta en esta etapa; archivos/video bloquean el envío, no se omiten. Sin activación remota ni acceso clínico para operadores. [Entrega y límites](docs/E2-10-ENVIO-A-RECEPCION.md).

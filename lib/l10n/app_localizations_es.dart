@@ -322,6 +322,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reviewTitle => 'Revisa tu borrador';
 
   @override
+  String get requiredForSubmission =>
+      'Requerido para enviar; puedes guardar el borrador sin completarlo.';
+
+  @override
+  String get reasonRequiredError =>
+      'Escribe el motivo de tu consulta; no puede contener solo espacios.';
+
+  @override
+  String get detailsRequiredError =>
+      'Describe tu consulta; no puede contener solo espacios.';
+
+  @override
+  String get modalityRequiredError =>
+      'Elige revisión documental o revisión + consulta antes de enviar.';
+
+  @override
+  String get requiredChecklistTitle => 'Antes de enviar';
+
+  @override
+  String get requiredChecklistNotice =>
+      'Completa estos tres campos. Los demás datos del formulario son opcionales en esta etapa. También tendrás que guardar los cambios, resolver los archivos pendientes y aceptar las condiciones de envío. Esto no confirma una revisión médica.';
+
+  @override
+  String get requiredPending => 'Pendiente · completar';
+
+  @override
+  String get requiredProvided => 'Informado · editar';
+
+  @override
+  String get requestLimitsError =>
+      'Revisa los límites de texto, la fecha de nacimiento y los valores seleccionados antes de guardar o enviar.';
+
+  @override
   String get reviewNotice =>
       'Comprueba lo que escribiste. Puedes volver a editar cualquier sección o guardar un borrador incompleto. Esta revisión no valida la suficiencia clínica y no envía el caso al médico.';
 

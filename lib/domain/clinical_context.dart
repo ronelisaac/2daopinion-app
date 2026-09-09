@@ -25,6 +25,9 @@ class ClinicalContext {
   final String modality;
   final BirthDate? birthDate;
 
+  bool get hasChosenModality =>
+      ['document_review', 'review_and_consultation'].contains(modality);
+
   bool get withinStorageLimits =>
       [
         patientContext,

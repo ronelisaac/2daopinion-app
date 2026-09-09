@@ -50,12 +50,7 @@ class ConsultationSubmissionController extends ChangeNotifier {
         ? SubmissionIssue.unsaved
         : hasAttachments
         ? SubmissionIssue.attachments
-        : !draft.content.isComplete ||
-              !draft.content.withinStorageLimits ||
-              ![
-                'document_review',
-                'review_and_consultation',
-              ].contains(draft.content.clinicalContext.modality)
+        : !draft.content.readyForSubmission
         ? SubmissionIssue.invalid
         : null;
     if (issue != null) {

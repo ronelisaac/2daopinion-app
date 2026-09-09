@@ -67,7 +67,7 @@ class FirebaseConsultationSubmissionRepository
     required bool accepted,
   }) => _guard(() async {
     if (!accepted) throw const SubmissionFailure(SubmissionIssue.consent);
-    if (!draft.content.isComplete || !draft.content.withinStorageLimits) {
+    if (!draft.content.readyForSubmission) {
       throw const SubmissionFailure(SubmissionIssue.invalid);
     }
     final owner = _owner();

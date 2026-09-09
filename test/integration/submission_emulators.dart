@@ -18,6 +18,7 @@ import 'package:segunda_opinion_app/repositories/firebase_consultation_draft_rep
 import 'package:segunda_opinion_app/repositories/firebase_consultation_submission_repository.dart';
 import 'package:segunda_opinion_app/domain/consultation_draft.dart';
 import 'package:segunda_opinion_app/domain/clinical_context.dart';
+import 'package:segunda_opinion_app/domain/birth_date.dart';
 import 'package:segunda_opinion_app/domain/consultation_submission.dart';
 
 class ChangingDocuments extends FirebasePrivateDocumentRepository {
@@ -107,22 +108,56 @@ void main() {
         auth: () => auth,
         database: () => database,
       );
+      final incomplete = await drafts.save(
+        const ConsultationDraft(countryCode: 'CL', reason: ' ', details: ''),
+        expectedRevision: 0,
+        acceptStorageTerms: true,
+      );
+      expect((await drafts.load())!.content.readyForSubmission, false);
+      await expectLater(
+        FirebaseConsultationSubmissionRepository(
+          auth: () => auth,
+          database: () => database,
+        ).submit(incomplete, accepted: true),
+        throwsA(
+          isA<SubmissionFailure>().having(
+            (error) => error.issue,
+            'issue',
+            SubmissionIssue.invalid,
+          ),
+        ),
+      );
       const content = ConsultationDraft(
         countryCode: 'CL',
         reason: 'Prueba ficticia',
         details: 'Contenido privado de prueba',
-        clinicalContext: ClinicalContext(modality: 'document_review'),
+        clinicalContext: ClinicalContext(
+          modality: 'document_review',
+          birthDate: BirthDate(2000, 2, 29),
+        ),
       );
       final first = await drafts.save(
-        content,
-        expectedRevision: 0,
-        acceptStorageTerms: true,
-      );
-      final current = await drafts.save(
         content,
         expectedRevision: 1,
         acceptStorageTerms: false,
       );
+      final current = await drafts.save(
+        content,
+        expectedRevision: 2,
+        acceptStorageTerms: false,
+      );
+      final reloaded = (await drafts.load())!;
+      expect(reloaded.content.readyForSubmission, true);
+      expect(reloaded.content.clinicalContext.birthDate!.day, 29);
+      final stored =
+          (await database.collection('consultationDrafts').doc(uid).get())
+              .data()!;
+      expect(stored['clinicalContext']['birthDate'], {
+        'year': 2000,
+        'month': 2,
+        'day': 29,
+      });
+      expect(stored['revision'], 3);
       final documents = ChangingDocuments(
         auth: () => auth,
         database: () => database,
@@ -221,7 +256,7 @@ void main() {
         database: () => database,
       ).load();
       expect(restored!.id, current.id);
-      expect(restored.revision, 2);
+      expect(restored.revision, 3);
       expect(restored.documentCount, 2);
       expect(restored.hasVideo, true);
       expect(await documents.read(current.id, uploaded.id), firstFile.bytes);

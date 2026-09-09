@@ -30,6 +30,7 @@ class GuestRequestScreen extends StatefulWidget {
 class _GuestRequestScreenState extends State<GuestRequestScreen> {
   final _steps = ConsultationStepsController();
   final _scroll = ScrollController();
+  bool _showRequiredErrors = false;
   late final _reason = TextEditingController(
     text: widget.controller.content?.reason ?? '',
   );
@@ -57,9 +58,14 @@ class _GuestRequestScreenState extends State<GuestRequestScreen> {
     previousProposals: _proposals.text,
     clinicalContext: _clinical,
   );
-  void _capture(String _) => widget.controller.update(_content);
+  void _capture(String _) {
+    widget.controller.update(_content);
+    setState(() {});
+  }
+
   void _goTo(int step) {
     FocusScope.of(context).unfocus();
+    if (step == 3) _showRequiredErrors = true;
     _steps.select(step);
     if (_scroll.hasClients) _scroll.jumpTo(0);
   }
@@ -122,6 +128,14 @@ class _GuestRequestScreenState extends State<GuestRequestScreen> {
                 RequestField(
                   label: text.reason,
                   hint: text.reasonHint,
+                  helperText: text.requiredForSubmission,
+                  errorText:
+                      _showRequiredErrors &&
+                          _content.missingSubmissionFields.contains(
+                            SubmissionField.reason,
+                          )
+                      ? text.reasonRequiredError
+                      : null,
                   controller: _reason,
                   onChanged: _capture,
                 ),
@@ -130,6 +144,14 @@ class _GuestRequestScreenState extends State<GuestRequestScreen> {
                   minLines: 4,
                   maxLines: 10,
                   hint: text.detailsHint,
+                  helperText: text.requiredForSubmission,
+                  errorText:
+                      _showRequiredErrors &&
+                          _content.missingSubmissionFields.contains(
+                            SubmissionField.details,
+                          )
+                      ? text.detailsRequiredError
+                      : null,
                   controller: _details,
                   onChanged: _capture,
                 ),
@@ -157,6 +179,7 @@ class _GuestRequestScreenState extends State<GuestRequestScreen> {
               showContext: _steps.index != 2,
               showGoals: _steps.index == 2,
               value: _clinical,
+              showRequiredErrors: _showRequiredErrors,
               onChanged: (value) {
                 _clinical = value;
                 _capture('');

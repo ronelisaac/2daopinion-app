@@ -13,11 +13,13 @@ class ClinicalContextFields extends StatefulWidget {
     required this.onChanged,
     this.showContext = true,
     this.showGoals = true,
+    this.showRequiredErrors = false,
   });
   final ClinicalContext value;
   final ValueChanged<ClinicalContext> onChanged;
   final bool showContext;
   final bool showGoals;
+  final bool showRequiredErrors;
   @override
   State<ClinicalContextFields> createState() => _ClinicalContextFieldsState();
 }
@@ -155,7 +157,16 @@ class _ClinicalContextFieldsState extends State<ClinicalContextFields> {
           DropdownButtonFormField<String>(
             initialValue: _modality,
             isExpanded: true,
-            decoration: InputDecoration(labelText: text.preferredModality),
+            decoration: InputDecoration(
+              labelText: text.preferredModality,
+              helperText: text.requiredForSubmission,
+              helperMaxLines: 3,
+              errorText:
+                  widget.showRequiredErrors && !widget.value.hasChosenModality
+                  ? text.modalityRequiredError
+                  : null,
+              errorMaxLines: 3,
+            ),
             items: [
               DropdownMenuItem(value: '', child: Text(text.modalityUnsure)),
               DropdownMenuItem(

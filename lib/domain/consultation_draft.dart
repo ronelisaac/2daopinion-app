@@ -1,6 +1,8 @@
 import 'clinical_context.dart';
 import 'form_limits.dart';
 
+enum SubmissionField { reason, details, modality }
+
 class ConsultationDraft {
   const ConsultationDraft({
     required this.countryCode,
@@ -21,6 +23,15 @@ class ConsultationDraft {
   final ClinicalContext clinicalContext;
 
   bool get isComplete => reason.trim().isNotEmpty && details.trim().isNotEmpty;
+
+  List<SubmissionField> get missingSubmissionFields => [
+    if (reason.trim().isEmpty) SubmissionField.reason,
+    if (details.trim().isEmpty) SubmissionField.details,
+    if (!clinicalContext.hasChosenModality) SubmissionField.modality,
+  ];
+
+  bool get readyForSubmission =>
+      missingSubmissionFields.isEmpty && withinStorageLimits;
 
   bool get withinStorageLimits =>
       [

@@ -628,6 +628,60 @@ abstract class AppLocalizations {
   /// **'Revisa tu borrador'**
   String get reviewTitle;
 
+  /// No description provided for @requiredForSubmission.
+  ///
+  /// In es, this message translates to:
+  /// **'Requerido para enviar; puedes guardar el borrador sin completarlo.'**
+  String get requiredForSubmission;
+
+  /// No description provided for @reasonRequiredError.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribe el motivo de tu consulta; no puede contener solo espacios.'**
+  String get reasonRequiredError;
+
+  /// No description provided for @detailsRequiredError.
+  ///
+  /// In es, this message translates to:
+  /// **'Describe tu consulta; no puede contener solo espacios.'**
+  String get detailsRequiredError;
+
+  /// No description provided for @modalityRequiredError.
+  ///
+  /// In es, this message translates to:
+  /// **'Elige revisión documental o revisión + consulta antes de enviar.'**
+  String get modalityRequiredError;
+
+  /// No description provided for @requiredChecklistTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Antes de enviar'**
+  String get requiredChecklistTitle;
+
+  /// No description provided for @requiredChecklistNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Completa estos tres campos. Los demás datos del formulario son opcionales en esta etapa. También tendrás que guardar los cambios, resolver los archivos pendientes y aceptar las condiciones de envío. Esto no confirma una revisión médica.'**
+  String get requiredChecklistNotice;
+
+  /// No description provided for @requiredPending.
+  ///
+  /// In es, this message translates to:
+  /// **'Pendiente · completar'**
+  String get requiredPending;
+
+  /// No description provided for @requiredProvided.
+  ///
+  /// In es, this message translates to:
+  /// **'Informado · editar'**
+  String get requiredProvided;
+
+  /// No description provided for @requestLimitsError.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisa los límites de texto, la fecha de nacimiento y los valores seleccionados antes de guardar o enviar.'**
+  String get requestLimitsError;
+
   /// No description provided for @reviewNotice.
   ///
   /// In es, this message translates to:

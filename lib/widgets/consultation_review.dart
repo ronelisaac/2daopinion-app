@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../core/localization.dart';
 import '../domain/consultation_draft.dart';
+import 'consultation_readiness.dart';
 
 class ConsultationReview extends StatelessWidget {
   const ConsultationReview({
@@ -20,6 +21,8 @@ class ConsultationReview extends StatelessWidget {
         Text(text.reviewTitle, style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 12),
         Text(text.reviewNotice),
+        const SizedBox(height: 16),
+        ConsultationReadiness(content: content, onEdit: onEdit),
         const SizedBox(height: 16),
         _ReviewSection(
           title: text.consultationStep,

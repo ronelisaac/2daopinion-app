@@ -53,6 +53,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
   bool _confirming = false;
   bool _savedNotice = false;
   bool _initialConsumed = false;
+  bool _showRequiredErrors = false;
   ClinicalContext _clinical = const ClinicalContext();
   int _clinicalVersion = 0;
 
@@ -127,6 +128,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
       return;
     }
     FocusScope.of(context).unfocus();
+    if (step == 3) _showRequiredErrors = true;
     _steps.select(step);
     if (_scroll.hasClients) _scroll.jumpTo(0);
   }
@@ -294,6 +296,14 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
                           key: const ValueKey('draftReason'),
                           label: text.reason,
                           hint: text.reasonHint,
+                          helperText: text.requiredForSubmission,
+                          errorText:
+                              _showRequiredErrors &&
+                                  _content.missingSubmissionFields.contains(
+                                    SubmissionField.reason,
+                                  )
+                              ? text.reasonRequiredError
+                              : null,
                           controller: _reason,
                           onChanged: _changed,
                         ),
@@ -303,6 +313,14 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
                           maxLines: 10,
                           label: text.details,
                           hint: text.detailsHint,
+                          helperText: text.requiredForSubmission,
+                          errorText:
+                              _showRequiredErrors &&
+                                  _content.missingSubmissionFields.contains(
+                                    SubmissionField.details,
+                                  )
+                              ? text.detailsRequiredError
+                              : null,
                           controller: _details,
                           onChanged: _changed,
                         ),
@@ -334,6 +352,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
                       showContext: _steps.index != 2,
                       showGoals: _steps.index == 2,
                       value: _clinical,
+                      showRequiredErrors: _showRequiredErrors,
                       onChanged: (value) {
                         _clinical = value;
                         _changed('');
