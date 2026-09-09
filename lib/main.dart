@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'connected_app.dart';
+import 'repositories/firebase_consultation_submission_repository.dart';
 import 'domain/country_config.dart';
 import 'repositories/firebase_identity_repository.dart';
 import 'repositories/firebase_consultation_draft_repository.dart';
@@ -26,6 +27,12 @@ void main() {
   const emulators = bool.fromEnvironment('USE_FIREBASE_EMULATORS');
   runApp(
     ConnectedApp(
+      submissionRepository: emulators
+          ? FirebaseConsultationSubmissionRepository(
+              auth: () => FirebaseAuth.instance,
+              database: () => FirebaseFirestore.instance,
+            )
+          : null,
       noticeRepository: emulators
           ? FirebaseNoticeRepository(
               auth: () => FirebaseAuth.instance,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../controllers/consultation_submission_controller.dart';
+import '../widgets/submission_panel.dart';
 import '../controllers/consultation_draft_controller.dart';
 import '../controllers/consultation_steps_controller.dart';
 import '../widgets/consultation_wizard.dart';
@@ -24,12 +26,14 @@ class DraftRequestScreen extends StatefulWidget {
     this.onInitialDraftConsumed,
     this.documents,
     this.library,
+    this.submission,
   });
   final ConsultationDraftController controller;
   final ConsultationDraft? initialDraft;
   final VoidCallback? onInitialDraftConsumed;
   final DocumentSelectionController? documents;
   final PrivateDocumentsController? library;
+  final ConsultationSubmissionController? submission;
   @override
   State<DraftRequestScreen> createState() => _DraftRequestScreenState();
 }
@@ -55,6 +59,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
   void initState() {
     super.initState();
     _load();
+    widget.submission?.load();
   }
 
   Future<void> _load() async {
@@ -176,6 +181,7 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
   @override
   void dispose() {
     widget.library?.dispose();
+    widget.submission?.dispose();
     _steps.dispose();
     _scroll.dispose();
     for (final field in [
@@ -193,11 +199,19 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(
-    listenable: Listenable.merge([widget.controller, _steps, widget.library]),
+    listenable: Listenable.merge([
+      widget.controller,
+      _steps,
+      widget.library,
+      widget.submission,
+      widget.documents,
+    ]),
     builder: (context, child) {
       final controller = widget.controller;
       final text = strings(context);
-      final transferring = widget.library?.transferring ?? false;
+      final transferring =
+          (widget.library?.transferring ?? false) ||
+          (widget.submission?.busy ?? false);
       if (!controller.loaded) {
         return Scaffold(
           appBar: AppBar(title: Text(text.draftTitle)),
@@ -349,7 +363,21 @@ class _DraftRequestScreenState extends State<DraftRequestScreen> {
                 controller: widget.library!,
                 selection: widget.documents!,
               ),
-            Text(text.draftNoSubmission),
+            if (widget.submission == null)
+              Text(text.draftNoSubmission)
+            else if (_steps.isReview)
+              SubmissionPanel(
+                controller: widget.submission!,
+                draft: controller.saved,
+                dirty: _dirty,
+                hasAttachments:
+                    (widget.documents?.documents.isNotEmpty ?? false) ||
+                    (widget.library?.documents.isNotEmpty ?? false),
+                blocked:
+                    controller.busy ||
+                    (widget.library?.busy ?? false) ||
+                    (widget.documents?.busy ?? false),
+              ),
             if (!_steps.isReview)
               TextButton(
                 onPressed: controller.busy ? null : () => _goTo(3),

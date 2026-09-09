@@ -4,6 +4,8 @@ Base Flutter web responsive con identidad Firebase para desarrollo y vista previ
 
 ## Estado
 
+Actualización E2-10: primer circuito de envío y recepción con Firebase emulado, aceptación independiente, copia privada inmutable y comprobante persistente. Solo texto y una recepción por cuenta en esta etapa; archivos/video bloquean el envío, no se omiten. Sin activación remota ni acceso clínico para operadores. [Entrega y límites](docs/E2-10-ENVIO-A-RECEPCION.md).
+
 Actualización E2-09: grabación web MP4 dentro de la aplicación, opcional hasta 30 s, con permisos explícitos, revisión, descarte y confirmación. Reemplaza el botón de adjuntar video. Captura nativa y pruebas en hardware real pendientes; no sube videos remotos. [Alcance y pruebas](docs/E2-09-GRABACION-WEB.md).
 
 Actualización E2-08: campana, centro de avisos, paginación y leído/no leído. Ejemplo público claramente rotulado; persistencia y permisos verificados únicamente en emuladores. No hay emisor automático, push/email ni activación remota. [Entrega, pruebas y pendientes](docs/E2-08-CENTRO-DE-AVISOS.md).

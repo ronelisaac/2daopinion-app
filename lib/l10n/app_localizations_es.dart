@@ -498,6 +498,57 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get submissionTitle => 'Enviar a recepción · Desarrollo local';
+
+  @override
+  String get submissionNotice =>
+      'Primera etapa de pruebas: envía una copia del texto guardado y registra la recepción. El equipo de operación solo verá código, país, modalidad y fecha, no tu contenido clínico. Todavía no incluye archivos, video, pagos ni atención médica. Usa únicamente información ficticia. Una solicitud por cuenta en esta etapa.';
+
+  @override
+  String get submissionTerms =>
+      'Acepto enviar esta copia de prueba y registrar su recepción con la política dev-submission-2026-09-08. Entiendo que no contrata una consulta ni habilita atención médica. Esta aceptación es independiente del registro y del guardado del borrador.';
+
+  @override
+  String get submissionSend => 'Confirmar envío de prueba';
+
+  @override
+  String submissionReceipt(String reference) {
+    return 'Recepción confirmada: $reference';
+  }
+
+  @override
+  String get submissionImmutable =>
+      'Tu comprobante se conserva al volver a entrar. La copia enviada no cambia si editas el borrador; aún no se pueden enviar nuevas solicitudes desde esta cuenta. No hay médico asignado ni pago realizado.';
+
+  @override
+  String get submissionConsentError =>
+      'Acepta las condiciones de este envío de prueba.';
+
+  @override
+  String get submissionUnsavedError =>
+      'Guarda los cambios del borrador antes de enviarlo.';
+
+  @override
+  String get submissionInvalidError =>
+      'Completa motivo, detalle y modalidad, respetando los límites de texto.';
+
+  @override
+  String get submissionAttachmentsError =>
+      'Esta etapa no envía archivos ni video. No se omitirán en silencio: retira la selección para probar solo texto. Si ya reservaste archivos en este borrador, conserva el borrador y espera la integración de documentos.';
+
+  @override
+  String get submissionSessionError =>
+      'Verifica tu sesión, correo y permisos antes de enviar.';
+
+  @override
+  String get submissionConflictError =>
+      'El borrador cambió en otra sesión. Recupera la versión guardada y vuelve a revisarla antes de enviar.';
+
+  @override
+  String get submissionUnavailableError =>
+      'No pudimos confirmar el envío. Reintenta: una recepción ya registrada no se duplica.';
+
+  @override
   String get appTitle => '2daOpinion';
 
   @override

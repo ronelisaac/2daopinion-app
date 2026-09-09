@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'controllers/consultation_submission_controller.dart';
+import 'domain/repositories/consultation_submission_repository.dart';
 import 'controllers/account_controller.dart';
 import 'controllers/guest_draft_controller.dart';
 import 'views/guest_request_screen.dart';
@@ -53,6 +55,7 @@ class ConnectedApp extends StatefulWidget {
     required this.draftRepository,
     this.privateDocumentRepository,
     this.noticeRepository,
+    this.submissionRepository,
   });
   final Future<void> Function() initialize;
   final IdentityRepository identityRepository;
@@ -60,6 +63,7 @@ class ConnectedApp extends StatefulWidget {
   final ConsultationDraftRepository draftRepository;
   final PrivateDocumentRepository? privateDocumentRepository;
   final NoticeRepository? noticeRepository;
+  final ConsultationSubmissionRepository? submissionRepository;
   @override
   State<ConnectedApp> createState() => _ConnectedAppState();
 }
@@ -155,6 +159,9 @@ class _ConnectedAppState extends State<ConnectedApp> {
   Widget _memberRequest() => _guard(
     Builder(
       builder: (_) => DraftRequestScreen(
+        submission: widget.submissionRepository == null
+            ? null
+            : ConsultationSubmissionController(widget.submissionRepository!),
         library: widget.privateDocumentRepository == null
             ? null
             : PrivateDocumentsController(widget.privateDocumentRepository!),

@@ -1,6 +1,7 @@
 # Convenciones de 2daOpinion Pacientes
 
 - Flutter y Firebase directo. No crear una API propia en esta etapa.
+- E2-10: envío a recepción solo en emuladores/debug, texto sin adjuntos, consentimiento independiente y copia/comprobante inmutables. Una recepción por cuenta en esta etapa. Ver docs/E2-10-ENVIO-A-RECEPCION.md; no activar envíos remotos ni desplegar candidatos por inercia. El borrador posterior no altera lo recibido.
 - E2-09 reemplaza adjuntar video por captura web MP4 opcional hasta 30 s; activación e inicio explícitos, revisión y confirmación. Ver docs/E2-09-GRABACION-WEB.md. Captura nativa y hardware real pendientes. No activar cámara/micrófono al entrar, admitir WebM por inferencia ni subir automáticamente.
 - E2-08: avisos persistentes solo en emuladores; ejemplo público separado. No hay productor automático ni push/email. Ver docs/E2-08-CENTRO-DE-AVISOS.md. No activar consultas remotas ni desplegar reglas candidatas sin resolver productor/IAM y autorización.
 - E2-06: la carga privada solo se inyecta con USE_FIREBASE_EMULATORS=true en debug, proyecto demo-2daopinion. No activar el adaptador remoto ni crear buckets sin confirmar costos y validar permisos. Ver docs/E2-06-ARCHIVOS-PRIVADOS-LOCALES.md; cuota de reservas acumulativa, borrado de bytes no libera cuota.

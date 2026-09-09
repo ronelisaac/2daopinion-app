@@ -928,6 +928,84 @@ abstract class AppLocalizations {
   /// **'Paso {step} de 3 · Acceso, datos y verificación'**
   String onboardingProgress(int step);
 
+  /// No description provided for @submissionTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar a recepción · Desarrollo local'**
+  String get submissionTitle;
+
+  /// No description provided for @submissionNotice.
+  ///
+  /// In es, this message translates to:
+  /// **'Primera etapa de pruebas: envía una copia del texto guardado y registra la recepción. El equipo de operación solo verá código, país, modalidad y fecha, no tu contenido clínico. Todavía no incluye archivos, video, pagos ni atención médica. Usa únicamente información ficticia. Una solicitud por cuenta en esta etapa.'**
+  String get submissionNotice;
+
+  /// No description provided for @submissionTerms.
+  ///
+  /// In es, this message translates to:
+  /// **'Acepto enviar esta copia de prueba y registrar su recepción con la política dev-submission-2026-09-08. Entiendo que no contrata una consulta ni habilita atención médica. Esta aceptación es independiente del registro y del guardado del borrador.'**
+  String get submissionTerms;
+
+  /// No description provided for @submissionSend.
+  ///
+  /// In es, this message translates to:
+  /// **'Confirmar envío de prueba'**
+  String get submissionSend;
+
+  /// No description provided for @submissionReceipt.
+  ///
+  /// In es, this message translates to:
+  /// **'Recepción confirmada: {reference}'**
+  String submissionReceipt(String reference);
+
+  /// No description provided for @submissionImmutable.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu comprobante se conserva al volver a entrar. La copia enviada no cambia si editas el borrador; aún no se pueden enviar nuevas solicitudes desde esta cuenta. No hay médico asignado ni pago realizado.'**
+  String get submissionImmutable;
+
+  /// No description provided for @submissionConsentError.
+  ///
+  /// In es, this message translates to:
+  /// **'Acepta las condiciones de este envío de prueba.'**
+  String get submissionConsentError;
+
+  /// No description provided for @submissionUnsavedError.
+  ///
+  /// In es, this message translates to:
+  /// **'Guarda los cambios del borrador antes de enviarlo.'**
+  String get submissionUnsavedError;
+
+  /// No description provided for @submissionInvalidError.
+  ///
+  /// In es, this message translates to:
+  /// **'Completa motivo, detalle y modalidad, respetando los límites de texto.'**
+  String get submissionInvalidError;
+
+  /// No description provided for @submissionAttachmentsError.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta etapa no envía archivos ni video. No se omitirán en silencio: retira la selección para probar solo texto. Si ya reservaste archivos en este borrador, conserva el borrador y espera la integración de documentos.'**
+  String get submissionAttachmentsError;
+
+  /// No description provided for @submissionSessionError.
+  ///
+  /// In es, this message translates to:
+  /// **'Verifica tu sesión, correo y permisos antes de enviar.'**
+  String get submissionSessionError;
+
+  /// No description provided for @submissionConflictError.
+  ///
+  /// In es, this message translates to:
+  /// **'El borrador cambió en otra sesión. Recupera la versión guardada y vuelve a revisarla antes de enviar.'**
+  String get submissionConflictError;
+
+  /// No description provided for @submissionUnavailableError.
+  ///
+  /// In es, this message translates to:
+  /// **'No pudimos confirmar el envío. Reintenta: una recepción ya registrada no se duplica.'**
+  String get submissionUnavailableError;
+
   /// No description provided for @appTitle.
   ///
   /// In es, this message translates to:
